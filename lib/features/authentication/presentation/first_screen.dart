@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:music_game_app/core/common_widgets/custom_gradient_button.dart';
 import 'package:music_game_app/features/authentication/presentation/widgets/auth_button.dart';
 import 'package:music_game_app/core/constants/app_constants.dart';
-
 
 class FirstScreen extends StatelessWidget {
   const FirstScreen({super.key});
@@ -12,7 +12,7 @@ class FirstScreen extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(
-            horizontal: AppConstants.standardPadding
+            horizontal: AppConstants.standardPadding,
           ),
           child: Column(
             children: [
@@ -24,6 +24,20 @@ class FirstScreen extends StatelessWidget {
 
               Column(
                 children: [
+                  CustomGradientButton(
+                    text: 'Continue With Email',
+                    icon: Icons.email_outlined,
+                    onPressed: () {},
+                  ),
+                  SizedBox(height: 15),
+                  CustomGradientButton(
+                    text: 'Continue With Email',
+                    icon: Icons.email_outlined,
+                    onPressed: () {},
+                  ),
+
+                  SizedBox(height: 15),
+
                   AuthButton(
                     iconPath: 'assets/images/Google.png',
                     label: 'Continue with Google',
@@ -31,7 +45,7 @@ class FirstScreen extends StatelessWidget {
                       print("Google Login Tapped!");
                     },
                   ),
-                  SizedBox(height: 15,),
+                  SizedBox(height: 15),
 
                   AuthButton(
                     iconPath: 'assets/images/Apple.png',
@@ -42,7 +56,7 @@ class FirstScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              const Spacer()
+              SizedBox(height: 40,)
             ],
           ),
         ),
