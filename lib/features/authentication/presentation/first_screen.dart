@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:music_game_app/core/common_widgets/custom_gradient_button.dart';
 import 'package:music_game_app/features/authentication/presentation/widgets/auth_button.dart';
 import 'package:music_game_app/core/constants/app_constants.dart';
+import 'package:music_game_app/routes/app_routes.dart';
 
 class FirstScreen extends StatelessWidget {
   const FirstScreen({super.key});
@@ -27,7 +29,7 @@ class FirstScreen extends StatelessWidget {
                   CustomGradientButton(
                     text: 'Continue With Email',
                     icon: Icons.email_outlined,
-                    onPressed: () {},
+                    onPressed: () {Get.toNamed(AppRoutes.emailInputScreen);},
                   ),
                   SizedBox(height: 15),
                   CustomGradientButton(
