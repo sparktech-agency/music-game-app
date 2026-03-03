@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:music_game_app/routes/app_routes.dart';
 
 class EmailController extends GetxController {
 
@@ -15,7 +16,7 @@ class EmailController extends GetxController {
 
       print("Valid Email: $email");
 
-      // উদাহরণ: Get.toNamed('/otp_page');
+     Get.toNamed(AppRoutes.appLanding);
     } else {
 
       Get.snackbar(
