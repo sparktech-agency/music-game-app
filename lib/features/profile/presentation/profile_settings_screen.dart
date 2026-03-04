@@ -1,43 +1,49 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:music_game_app/core/widgets/custom_appbar.dart';
-import 'package:music_game_app/routes/app_routes.dart';
 
-class SettingsScreen extends StatelessWidget {
-  const SettingsScreen({super.key});
+class ProfileSettingsScreen extends StatelessWidget {
+  const ProfileSettingsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF0A0E21),
       appBar: CustomAppBar(
-        title: 'Settings',
+        title: 'Profile Settings',
       ),
       body: Padding(
-        padding: const EdgeInsets.only(top: 20),
+        padding: const EdgeInsets.only(top: 10),
         child: Column(
           children: [
 
             _buildSettingsItem(
               icon: Icons.person_outline,
-              title: "Profile Settings",
+              title: "My Name",
               onTap: () {
-                Get.toNamed(AppRoutes.profileSettings);
+
               },
             ),
-
-            const Divider(color: Colors.white12, thickness: 1, indent: 0, endIndent: 0),
+            const Divider(color: Colors.white12, thickness: 1, height: 1),
 
 
             _buildSettingsItem(
-              icon: Icons.manage_accounts_outlined,
-              title: "Account Settings",
+              icon: Icons.person_outline,
+              title: "My Nickname",
               onTap: () {
-                Get.toNamed(AppRoutes.accountSettings);
+
               },
             ),
+            const Divider(color: Colors.white12, thickness: 1, height: 1),
 
-            const Divider(color: Colors.white12, thickness: 1),
+
+            _buildSettingsItem(
+              icon: Icons.image_outlined,
+              title: "Profile Picture",
+              onTap: () {
+
+              },
+            ),
+            const Divider(color: Colors.white12, thickness: 1, height: 1),
           ],
         ),
       ),
@@ -51,28 +57,27 @@ class SettingsScreen extends StatelessWidget {
     required VoidCallback onTap,
   }) {
     return Theme(
-
       data: ThemeData(
         splashColor: Colors.transparent,
         highlightColor: Colors.transparent,
       ),
       child: ListTile(
         onTap: onTap,
-        leading: Icon(icon, color: Colors.blueAccent, size: 28),
+        leading: Icon(icon, color: Colors.blueAccent, size: 26),
         title: Text(
           title,
           style: const TextStyle(
             color: Colors.white,
-            fontSize: 18,
+            fontSize: 17,
             fontWeight: FontWeight.w400,
           ),
         ),
         trailing: const Icon(
           Icons.arrow_forward_ios,
-          color: Colors.white54,
-          size: 18,
+          color: Colors.white,
+          size: 16,
         ),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
       ),
     );
   }
