@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:music_game_app/features/profile/presentation/profile_screen.dart';
 
 class NavController extends GetxController {
 
@@ -10,7 +11,7 @@ class NavController extends GetxController {
     const Center(child: Text('Let\'s Sing Main Screen', style: TextStyle(color: Colors.white, fontSize: 20))),
     const Center(child: Text('Guide Screen Demo', style: TextStyle(color: Colors.white, fontSize: 20))),
     const Center(child: Text('Song Packs List', style: TextStyle(color: Colors.white, fontSize: 20))),
-    const Center(child: Text('User Profile Screen', style: TextStyle(color: Colors.white, fontSize: 20))),
+    ProfileScreen()
   ];
 
 

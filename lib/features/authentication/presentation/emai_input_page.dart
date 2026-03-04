@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:music_game_app/core/common_widgets/custom_gradient_button.dart';
+import 'package:music_game_app/core/widgets/custom_appbar.dart';
 import 'package:music_game_app/features/authentication/presentation/controllers/email_controller.dart';
 
 class EmailInputPage extends StatelessWidget {
@@ -14,17 +15,11 @@ class EmailInputPage extends StatelessWidget {
       backgroundColor: const Color(0xFF050A18),
 
       resizeToAvoidBottomInset: true,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: Colors.white, size: 20),
-          onPressed: () => Get.back(),
-        ),
-        title: const Text(
-          'Log In/Register',
-          style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w600),
-        ),
+
+      //extendBodyBehindAppBar: true,
+
+      appBar: CustomAppBar(
+        title: 'Log In/Register',
       ),
       body: SafeArea(
         child: Padding(
