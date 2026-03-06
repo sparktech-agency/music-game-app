@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:music_game_app/features/app_landing/presentation/lets_sing_screen.dart';
 import 'package:music_game_app/features/profile/presentation/profile_screen.dart';
+import 'package:music_game_app/features/song_packs/presentation/song_pack_screen.dart';
 
 class NavController extends GetxController {
 
@@ -8,9 +10,9 @@ class NavController extends GetxController {
 
 
   final List<Widget> screens = [
-    const Center(child: Text('Let\'s Sing Main Screen', style: TextStyle(color: Colors.white, fontSize: 20))),
+    LetsSingScreen(),
     const Center(child: Text('Guide Screen Demo', style: TextStyle(color: Colors.white, fontSize: 20))),
-    const Center(child: Text('Song Packs List', style: TextStyle(color: Colors.white, fontSize: 20))),
+    SongPackScreen(),
     ProfileScreen()
   ];
 

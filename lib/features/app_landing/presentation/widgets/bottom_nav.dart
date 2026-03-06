@@ -14,7 +14,14 @@ class BottomNav extends StatelessWidget {
       height: 90,
       width: double.infinity,
       decoration: const BoxDecoration(
-        color: Color(0xFF0066FF),
+        gradient: LinearGradient(
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
+          colors: [
+            Color(0xFF00C6FF),
+            Color(0xFF0072FF),
+          ],
+        ),
       ),
       child: Stack(
         clipBehavior: Clip.none,
@@ -91,8 +98,8 @@ class BottomNav extends StatelessWidget {
               label,
               style: TextStyle(
                 color: Colors.white,
-                fontSize: 12,
-                fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                fontSize: isSelected ? 14 : 15,
+                fontWeight: isSelected ? FontWeight.w900 : FontWeight.normal,
 
                 shadows: isSelected ? [const Shadow(blurRadius: 5, color: Colors.black26)] : null,
               ),
