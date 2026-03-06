@@ -18,8 +18,10 @@ class BottomNav extends StatelessWidget {
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,
           colors: [
+
             Color(0xFF00C6FF),
             Color(0xFF0072FF),
+
           ],
         ),
       ),

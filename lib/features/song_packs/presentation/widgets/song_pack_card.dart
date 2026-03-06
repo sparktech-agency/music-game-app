@@ -104,8 +104,8 @@ class CustomImageClipper extends CustomClipper<Path> {
   Path getClip(Size size) {
     Path path = Path();
     path.lineTo(0, size.height);
-    path.lineTo(size.width * 0.7, size.height);
-    path.quadraticBezierTo(size.width, size.height / 2, size.width * 0.7, 0);
+    path.lineTo(size.width * 0.8, size.height);
+    path.quadraticBezierTo(size.width, size.height / 2, size.width * 0.8, 0);
     path.close();
     return path;
   }
