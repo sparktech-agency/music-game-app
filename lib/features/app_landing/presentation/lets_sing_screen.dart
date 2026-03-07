@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:music_game_app/core/widgets/app_bar_with_logo.dart';
+import 'package:music_game_app/routes/app_routes.dart';
 
 class LetsSingScreen extends StatelessWidget {
   const LetsSingScreen({super.key});
@@ -7,9 +9,8 @@ class LetsSingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
+      // AppBar with Logo widget
       appBar: AppBarWithLogo(userName: "doe john"),
-
       body: Container(
         width: double.infinity,
         height: double.infinity,
@@ -26,9 +27,13 @@ class LetsSingScreen extends StatelessWidget {
         child: Column(
           children: [
             const Spacer(),
-            _buildStartSingingButton(),
-            const SizedBox(height: 120),
 
+            _buildStartSingingButton(
+              onTap: () {
+                Get.toNamed(AppRoutes.letsPlayScreen);
+              },
+            ),
+            const SizedBox(height: 120),
           ],
         ),
       ),
@@ -36,14 +41,16 @@ class LetsSingScreen extends StatelessWidget {
   }
 
 
-  Widget _buildStartSingingButton() {
+  Widget _buildStartSingingButton({required VoidCallback onTap}) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 25),
       height: 85,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(25),
-
-        border: Border.all(color: Colors.white.withValues(alpha: 0.9), width: 3),
+        border: Border.all(
+          color: Colors.white.withValues(alpha: 0.9),
+          width: 3,
+        ),
         boxShadow: [
           BoxShadow(
             color: Colors.cyanAccent.withValues(alpha: 0.5),
@@ -55,34 +62,46 @@ class LetsSingScreen extends StatelessWidget {
           colors: [Color(0xFF43D5FF), Color(0xFF28C2FF)],
         ),
       ),
-      child: Stack(
-        children: [
-
-          Positioned(
-              left: 12,
-              top: 12,
-              child: Icon(Icons.auto_awesome, color: Colors.white.withValues(alpha: 0.7), size: 24)
-          ),
-          Positioned(
-              right: 12,
-              bottom: 12,
-              child: Icon(Icons.auto_awesome, color: Colors.white.withValues(alpha: 0.7), size: 24)
-          ),
-
-          const Center(
-            child: Text(
-              "Let's Start Singing!",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 26,
-                fontWeight: FontWeight.w900,
-                letterSpacing: 1.0,
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(25), // Ripple effect border radius
+          onTap: onTap,
+          child: Stack(
+            children: [
+              Positioned(
+                left: 12,
+                top: 12,
+                child: Icon(
+                  Icons.auto_awesome,
+                  color: Colors.white.withValues(alpha: 0.7),
+                  size: 24,
+                ),
               ),
-            ),
+              Positioned(
+                right: 12,
+                bottom: 12,
+                child: Icon(
+                  Icons.auto_awesome,
+                  color: Colors.white.withValues(alpha: 0.7),
+                  size: 24,
+                ),
+              ),
+              const Center(
+                child: Text(
+                  "Let's Start Singing!",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 26,
+                    fontWeight: FontWeight.w900,
+                    letterSpacing: 1.0,
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
-
 }

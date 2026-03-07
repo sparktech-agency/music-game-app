@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:music_game_app/features/app_landing/presentation/app_landing.dart';
+import 'package:music_game_app/features/app_landing/presentation/lets_play_screen.dart';
 import 'package:music_game_app/features/app_landing/presentation/lets_sing_screen.dart';
 import 'package:music_game_app/features/authentication/presentation/emai_input_page.dart';
 import 'package:music_game_app/features/authentication/presentation/first_screen.dart';
@@ -19,6 +20,7 @@ class AppRoutes{
   static const String profileSettings = "/profileSettings";
   static const String accountSettings = "/accountSettings";
   static const String letsSingScreen = "/letsSingScreen";
+  static const String letsPlayScreen = "/letsPlayScreen";
 
 
 }
@@ -33,5 +35,6 @@ List<GetPage> routes = [
   GetPage(name: AppRoutes.profileSettings, page: () =>  ProfileSettingsScreen()),
   GetPage(name: AppRoutes.accountSettings, page: () =>  AccountSettingsScreen()),
   GetPage(name: AppRoutes.letsSingScreen, page: () =>  LetsSingScreen()),
+  GetPage(name: AppRoutes.letsPlayScreen, page: () =>  LetsPlayScreen()),
 
 ];
