@@ -9,8 +9,8 @@ class SongPackCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 15),
-      height: 160,
+      margin: const EdgeInsets.only(bottom: 14),
+      height: 170,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
         gradient: LinearGradient(
@@ -19,51 +19,98 @@ class SongPackCard extends StatelessWidget {
           end: Alignment.bottomRight,
         ),
       ),
+
+      clipBehavior: Clip.hardEdge,
       child: Stack(
         children: [
 
+          // ==========================================
+          // Left Side: Parallel Curved Borders & Image
+          // ==========================================
+
+
+          // 2. Inner Border
           Positioned(
-            left: 0,
-            top: 0,
-            bottom: 0,
-            child: ClipPath(
-              clipper: CustomImageClipper(),
-              child: Container(
-                width: 130,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage(pack.imageUrl),
-                    fit: BoxFit.cover,
-                  ),
+            left: -100,
+            top: -30,
+            bottom: -30,
+            width: 230,
+            child: Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.white.withValues(alpha: 0.4),
+              ),
+            ),
+          ),
+
+          // 3. Main Image
+          Positioned(
+            left: -90,
+            top: -20,
+            bottom: -20,
+            width: 210,
+            child: Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                image: DecorationImage(
+                  image: AssetImage(pack.imageUrl),
+                  fit: BoxFit.cover,
                 ),
               ),
             ),
           ),
 
+          // ==========================================
+          // Right Side: Content
+          // ==========================================
 
-          Padding(
-            padding: const EdgeInsets.only(left: 130, top: 15, right: 15, bottom: 10),
+          Positioned(
+            left: 135,
+            top: 15,
+            right: 15,
+            bottom: 15,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  pack.title,
-                  style: const TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  pack.description,
-                  style: const TextStyle(color: Colors.white70, fontSize: 13),
-                  maxLines: 2,
-                ),
-                Row(
+                // Title and Description
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Icon(Icons.music_note, color: Colors.white54, size: 16),
-                    Text(pack.songCount, style: const TextStyle(color: Colors.white54, fontSize: 12)),
+                    Text(
+                      pack.title,
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      pack.description,
+                      style: const TextStyle(color: Colors.white70, fontSize: 13),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    const SizedBox(height: 8),
+                    // Song Count
+                    Row(
+                      children: [
+                        const Icon(Icons.music_note, color: Colors.white54, size: 16),
+                        const SizedBox(width: 4),
+                        Text(
+                            pack.songCount,
+                            style: const TextStyle(color: Colors.white54, fontSize: 12)
+                        ),
+                      ],
+                    ),
                   ],
                 ),
+
+                // Bottom Row: Stars & Button
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     const Icon(Icons.auto_awesome, color: Colors.amberAccent, size: 24),
                     _buildOwnedButton(),
@@ -81,33 +128,20 @@ class SongPackCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(
-        color: const Color(0xFF2ecc71),
+        color: const Color(0xFF1ED760),
         borderRadius: BorderRadius.circular(20),
-        boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 4, offset: Offset(0, 2))],
+        boxShadow: const [
+          BoxShadow(color: Colors.black26, blurRadius: 4, offset: Offset(0, 2))
+        ],
       ),
       child: const Row(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Icon(Icons.check_circle_outline, color: Colors.white, size: 18),
-          SizedBox(width: 5),
+          SizedBox(width: 6),
           Text("Owned", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
         ],
       ),
     );
   }
-}
-
-
-class CustomImageClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    Path path = Path();
-    path.lineTo(0, size.height);
-    path.lineTo(size.width * 0.8, size.height);
-    path.quadraticBezierTo(size.width, size.height / 2, size.width * 0.8, 0);
-    path.close();
-    return path;
-  }
-
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }

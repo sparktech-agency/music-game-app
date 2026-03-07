@@ -11,6 +11,7 @@ class AppBarWithLogo extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      scrolledUnderElevation: 0,
       backgroundColor: const Color(0xFF1d1c35),
       elevation: 0,
       titleSpacing: 0,

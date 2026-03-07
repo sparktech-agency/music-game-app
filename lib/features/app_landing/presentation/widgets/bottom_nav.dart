@@ -18,10 +18,8 @@ class BottomNav extends StatelessWidget {
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,
           colors: [
-
             Color(0xFF00C6FF),
             Color(0xFF0072FF),
-
           ],
         ),
       ),
@@ -29,7 +27,7 @@ class BottomNav extends StatelessWidget {
         clipBehavior: Clip.none,
         children: [
 
-          Obx(() => Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               _buildNavItem(0, Icons.mic_rounded, "Let's Sing", controller),
@@ -37,78 +35,79 @@ class BottomNav extends StatelessWidget {
               _buildNavItem(2, Icons.music_note_rounded, "Song Packs", controller),
               _buildNavItem(3, Icons.person_outline_rounded, "Profile", controller),
             ],
-          )),
+          ),
         ],
       ),
     );
   }
 
-
   Widget _buildNavItem(int index, IconData icon, String label, NavController controller) {
 
-    bool isSelected = controller.selectedIndex.value == index;
+    return Obx(() {
 
-    return GestureDetector(
-      onTap: () => controller.changeTab(index),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-        width: isSelected ? 100 : 80,
+      bool isSelected = controller.selectedIndex.value == index;
 
-        margin: EdgeInsets.only(bottom: isSelected ? 20 : 0),
-        decoration: isSelected
-            ? BoxDecoration(
-          color: const Color(0xFF3399FF),
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: Colors.white.withValues(alpha: 0.5), width: 2),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.2),
-              blurRadius: 10,
-              offset: const Offset(0, -5),
-            ),
-          ],
-        )
-            : null,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Stack(
-              alignment: Alignment.center,
-              children: [
+      return GestureDetector(
+        onTap: () => controller.changeTab(index),
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeInOut,
+          width: isSelected ? 100 : 80,
 
-                if (isSelected)
-                  Container(
-                    width: 40,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white.withValues(alpha: 0.2),
-                    ),
-                  ),
+          margin: EdgeInsets.only(bottom: isSelected ? 20 : 0),
+          decoration: isSelected
+              ? BoxDecoration(
+            color: const Color(0xFF3399FF),
+            borderRadius: BorderRadius.circular(10),
 
-                Icon(
-                  icon,
-                  size: isSelected ? 35 : 28,
-                  color: Colors.white,
-                ),
-              ],
-            ),
-            const SizedBox(height: 4),
-
-            Text(
-              label,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: isSelected ? 14 : 14,
-                fontWeight: isSelected ? FontWeight.w900 : FontWeight.normal,
-
-                shadows: isSelected ? [const Shadow(blurRadius: 5, color: Colors.black26)] : null,
+            border: Border.all(color: Colors.white.withValues(alpha: 0.5), width: 2),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.2),
+                blurRadius: 10,
+                offset: const Offset(0, -5),
               ),
-            ),
-          ],
+            ],
+          )
+              : null,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  if (isSelected)
+                    Container(
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white.withValues(alpha: 0.2),
+                      ),
+                    ),
+                  Icon(
+                    icon,
+                    size: isSelected ? 35 : 28,
+                    color: Colors.white,
+                  ),
+                ],
+              ),
+              const SizedBox(height: 4),
+              Text(
+                label,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 14,
+                  fontWeight: isSelected ? FontWeight.w900 : FontWeight.normal,
+                  shadows: isSelected
+                      ? [const Shadow(blurRadius: 5, color: Colors.black26)]
+                      : null,
+                ),
+              ),
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    });
   }
 }
