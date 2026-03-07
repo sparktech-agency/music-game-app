@@ -100,7 +100,7 @@ class BottomNav extends StatelessWidget {
               label,
               style: TextStyle(
                 color: Colors.white,
-                fontSize: isSelected ? 14 : 15,
+                fontSize: isSelected ? 14 : 14,
                 fontWeight: isSelected ? FontWeight.w900 : FontWeight.normal,
 
                 shadows: isSelected ? [const Shadow(blurRadius: 5, color: Colors.black26)] : null,

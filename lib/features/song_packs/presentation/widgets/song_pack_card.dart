@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:music_game_app/features/song_packs/data/song_pack.dart';
 
@@ -25,7 +23,7 @@ class SongPackCard extends StatelessWidget {
         children: [
 
           Positioned(
-            left: -10,
+            left: 0,
             top: 0,
             bottom: 0,
             child: ClipPath(
