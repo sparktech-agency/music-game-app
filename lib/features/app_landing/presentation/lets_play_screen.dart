@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:music_game_app/routes/app_routes.dart';
 
 class LetsPlayScreen extends StatelessWidget {
   const LetsPlayScreen({super.key});
@@ -114,7 +115,7 @@ class LetsPlayScreen extends StatelessWidget {
                     ),
                     child: ElevatedButton(
                       onPressed: () {
-                     // do something
+                        Get.toNamed(AppRoutes.mainSplash);
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.transparent,
