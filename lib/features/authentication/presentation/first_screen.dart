@@ -33,8 +33,8 @@ class FirstScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 15),
                   CustomGradientButton(
-                    text: 'Continue With Email',
-                    icon: Icons.email_outlined,
+                    text: 'Continue With Phone Number',
+                    icon: Icons.phone_in_talk_outlined,
                     onPressed: () {},
                   ),
 

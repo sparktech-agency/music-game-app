@@ -71,7 +71,7 @@ class SingerNumber extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
                   child: GestureDetector(
                     onTap: () {
-                      print("Selected Round: ${controller.selectedRound.value}");
+
                       // Get.toNamed(AppRoutes.nextPage);
                     },
                     child: Container(
