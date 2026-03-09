@@ -73,7 +73,7 @@ class RoundSelection extends StatelessWidget {
                   child: GestureDetector(
                     onTap: () {
 
-                      Get.toNamed(AppRoutes.teamNumber);
+                      controller.proceedToNextPage("numberOfRounds");
                     },
                     child: Container(
                       height: 65,
@@ -107,9 +107,9 @@ class RoundSelection extends StatelessWidget {
 
   Widget _buildRoundCircle(int round) {
     return Obx(() {
-      bool isSelected = controller.selectedRound.value == round;
+      bool isSelected = controller.numberOfRound.value == round;
       return GestureDetector(
-        onTap: () => controller.selectRound(round),
+        onTap: () => controller.selectNumberOfRound(round),
         child: Stack(
           alignment: Alignment.topRight,
           children: [

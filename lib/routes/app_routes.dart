@@ -6,8 +6,12 @@ import 'package:music_game_app/features/app_landing/presentation/lets_sing_scree
 import 'package:music_game_app/features/app_landing/presentation/main_splash.dart';
 import 'package:music_game_app/features/authentication/presentation/emai_input_page.dart';
 import 'package:music_game_app/features/authentication/presentation/first_screen.dart';
+import 'package:music_game_app/features/prerequisite/presentation/player_name_team1.dart';
 import 'package:music_game_app/features/prerequisite/presentation/round_selection.dart';
+import 'package:music_game_app/features/prerequisite/presentation/singer_number.dart';
+import 'package:music_game_app/features/prerequisite/presentation/team_name.dart';
 import 'package:music_game_app/features/prerequisite/presentation/team_number.dart';
+import 'package:music_game_app/features/prerequisite/presentation/which_team.dart';
 import 'package:music_game_app/features/profile/presentation/account_settings_screen.dart';
 import 'package:music_game_app/features/profile/presentation/profile_screen.dart';
 import 'package:music_game_app/features/profile/presentation/profile_settings_screen.dart';
@@ -30,6 +34,10 @@ class AppRoutes{
   static const String afterSplash = "/afterSplash";
   static const String roundSelection = "/roundSelection";
   static const String teamNumber = "/teamNumber";
+  static const String singerNumber = "/singerNumber";
+  static const String teamName = "/teamName";
+  static const String whichTeam = "/whichTeam";
+  static const String playerNameTeam1 = "/playerNameTeam1";
 
 
 }
@@ -49,5 +57,9 @@ List<GetPage> routes = [
   GetPage(name: AppRoutes.afterSplash, page: () =>  AfterSplash()),
   GetPage(name: AppRoutes.roundSelection, page: () =>  RoundSelection()),
   GetPage(name: AppRoutes.teamNumber, page: () =>  TeamNumber()),
+  GetPage(name: AppRoutes.singerNumber, page: () =>  SingerNumber()),
+  GetPage(name: AppRoutes.teamName, page: () =>  TeamName()),
+  GetPage(name: AppRoutes.whichTeam, page: () =>  WhichTeam()),
+  GetPage(name: AppRoutes.playerNameTeam1, page: () => PlayerNameTeam1()),
 
 ];

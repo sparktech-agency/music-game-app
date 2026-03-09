@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:music_game_app/features/prerequisite/presentation/controllers/prerequisite_controller.dart';
+import 'package:music_game_app/routes/app_routes.dart';
 
 
 class SingerNumber extends StatelessWidget {
@@ -61,7 +62,7 @@ class SingerNumber extends StatelessWidget {
 
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [2, 3, 4, 5].map((round) => _buildRoundCircle(round)).toList(),
+                  children: [2, 3, 4, 5].map((singer) => _buildRoundCircle(singer)).toList(),
                 ),
 
                 const Spacer(),
@@ -72,7 +73,7 @@ class SingerNumber extends StatelessWidget {
                   child: GestureDetector(
                     onTap: () {
 
-                      // Get.toNamed(AppRoutes.nextPage);
+                      controller.proceedToNextPage("numberOfSinger");
                     },
                     child: Container(
                       height: 65,
@@ -104,11 +105,11 @@ class SingerNumber extends StatelessWidget {
   }
 
 
-  Widget _buildRoundCircle(int round) {
+  Widget _buildRoundCircle(int singer) {
     return Obx(() {
-      bool isSelected = controller.selectedRound.value == round;
+      bool isSelected = controller.singerNumber.value == singer;
       return GestureDetector(
-        onTap: () => controller.selectRound(round),
+        onTap: () => controller.selectSingerNumber(singer),
         child: Stack(
           alignment: Alignment.topRight,
           children: [
@@ -123,7 +124,7 @@ class SingerNumber extends StatelessWidget {
               ),
               child: Center(
                 child: Text(
-                  '$round',
+                  '$singer',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 24,
