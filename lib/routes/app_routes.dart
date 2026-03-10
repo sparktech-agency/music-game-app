@@ -16,6 +16,8 @@ import 'package:music_game_app/features/profile/presentation/account_settings_sc
 import 'package:music_game_app/features/profile/presentation/profile_screen.dart';
 import 'package:music_game_app/features/profile/presentation/profile_settings_screen.dart';
 import 'package:music_game_app/features/profile/presentation/settings_screen.dart';
+import 'package:music_game_app/features/spin_feature/presentation/spin_front_page.dart';
+import 'package:music_game_app/features/spin_feature/presentation/spin_wheel_page.dart';
 
 
 class AppRoutes{
@@ -38,6 +40,8 @@ class AppRoutes{
   static const String teamName = "/teamName";
   static const String whichTeam = "/whichTeam";
   static const String playerNameTeam1 = "/playerNameTeam1";
+  static const String spinFrontPage = "/spinFrontPage";
+  static const String spinWheelPage = "/spinWheelPage";
 
 
 }
@@ -61,5 +65,7 @@ List<GetPage> routes = [
   GetPage(name: AppRoutes.teamName, page: () =>  TeamName()),
   GetPage(name: AppRoutes.whichTeam, page: () =>  WhichTeam()),
   GetPage(name: AppRoutes.playerNameTeam1, page: () => PlayerNameTeam1()),
+  GetPage(name: AppRoutes.spinFrontPage, page: () => SpinFrontPage()),
+  GetPage(name: AppRoutes.spinWheelPage, page: () => SpinWheelPage()),
 
 ];

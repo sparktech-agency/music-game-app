@@ -127,7 +127,7 @@ class PlayerNameTeam1 extends StatelessWidget {
         gradient: const LinearGradient(colors: [Color(0xFF42E8FF), Color(0xFF3B5CFF)]),
       ),
       child: ElevatedButton(
-        onPressed: () => controller.proceedToNextPage(" "),
+        onPressed: () => controller.proceedToNextPage("teamNickname"),
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.transparent,
           shadowColor: Colors.transparent,

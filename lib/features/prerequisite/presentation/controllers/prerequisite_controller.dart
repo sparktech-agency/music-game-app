@@ -102,6 +102,11 @@ class PrerequisiteController extends GetxController {
     else if (currentPage == "whichTeam") {
       Get.toNamed(AppRoutes.playerNameTeam1);
     }
+
+    else if(currentPage == "teamNickname"){
+      _validateNicknames();
+
+    }
   }
 
 
@@ -117,7 +122,7 @@ class PrerequisiteController extends GetxController {
   void _validateNicknames() {
     bool allFilled = playerControllers.every((c) => c.text.trim().isNotEmpty);
     if (allFilled) {
-      // Proceed to Game
+      Get.toNamed(AppRoutes.spinFrontPage);
     } else {
       _showErrorSnackbar("All player nicknames must be filled");
     }
