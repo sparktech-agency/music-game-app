@@ -2,6 +2,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:music_game_app/features/spin_feature/presentation/controllers/spin_wheel_controller.dart';
+import 'package:music_game_app/routes/app_routes.dart';
 
 class CategoryItem {
   final String label;
@@ -320,26 +321,34 @@ class _SpinWheelPageState extends State<SpinWheelPage>
                   const Spacer(),
 
                   // ===== Get Song Button — CONSTANT, never changes =====
-                  Obx(() => Container(
-                    width: 300,
-                    height: 58,
-                    margin: const EdgeInsets.only(bottom: 34),
-                    decoration: BoxDecoration(
-                      color: controller.hasSpun.value
-                          ? const Color(0xFF3B5CFF)
-                          : const Color(0xFF161B2E),
-                      borderRadius: BorderRadius.circular(32),
-                    ),
-                    child: Center(
-                      child: Text(
-                        "Get Song",
-                        style: TextStyle(
-                          color: controller.hasSpun.value
-                              ? Colors.white
-                              : Colors.white24,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w800,
-                          letterSpacing: 0.5,
+                  Obx(() => GestureDetector(
+                    onTap: controller.hasSpun.value
+                        ? () {
+
+                      Get.toNamed(AppRoutes.songPickLoading);
+                    }
+                        : null,
+                    child: Container(
+                      width: 300,
+                      height: 58,
+                      margin: const EdgeInsets.only(bottom: 34),
+                      decoration: BoxDecoration(
+                        color: controller.hasSpun.value
+                            ? const Color(0xFF3B5CFF)
+                            : const Color(0xFF161B2E),
+                        borderRadius: BorderRadius.circular(32),
+                      ),
+                      child: Center(
+                        child: Text(
+                          "Get Song",
+                          style: TextStyle(
+                            color: controller.hasSpun.value
+                                ? Colors.white
+                                : Colors.white24,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w800,
+                            letterSpacing: 0.5,
+                          ),
                         ),
                       ),
                     ),
@@ -390,7 +399,7 @@ class WheelPainter extends CustomPainter {
         arcAngle,
         true,
         Paint()
-          ..color = Colors.white.withOpacity(0.3)
+          ..color = Colors.white.withValues(alpha: 0.3)
           ..style = PaintingStyle.stroke
           ..strokeWidth = 1.8,
       );
