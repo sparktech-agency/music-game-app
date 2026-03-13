@@ -16,6 +16,7 @@ import 'package:music_game_app/features/profile/presentation/account_settings_sc
 import 'package:music_game_app/features/profile/presentation/profile_screen.dart';
 import 'package:music_game_app/features/profile/presentation/profile_settings_screen.dart';
 import 'package:music_game_app/features/profile/presentation/settings_screen.dart';
+import 'package:music_game_app/features/spin_feature/presentation/selected_song.dart';
 import 'package:music_game_app/features/spin_feature/presentation/song_pick_loading_page.dart';
 import 'package:music_game_app/features/spin_feature/presentation/spin_front_page.dart';
 import 'package:music_game_app/features/spin_feature/presentation/spin_wheel_page.dart';
@@ -44,6 +45,7 @@ class AppRoutes{
   static const String spinFrontPage = "/spinFrontPage";
   static const String spinWheelPage = "/spinWheelPage";
   static const String songPickLoading = "/songPickLoading";
+  static const String selectedSong = "/selectedSong";
 
 
 }
@@ -70,5 +72,6 @@ List<GetPage> routes = [
   GetPage(name: AppRoutes.spinFrontPage, page: () => SpinFrontPage()),
   GetPage(name: AppRoutes.spinWheelPage, page: () => SpinWheelPage()),
   GetPage(name: AppRoutes.songPickLoading, page: () => SongPickLoadingPage()),
+  GetPage(name: AppRoutes.selectedSong, page: () => SelectedSong()),
 
 ];

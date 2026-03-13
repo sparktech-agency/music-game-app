@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:music_game_app/routes/app_routes.dart';
 
 class SongPickLoadingPage extends StatefulWidget {
   const SongPickLoadingPage({super.key});
@@ -15,8 +16,9 @@ class _SongPickLoadingPageState extends State<SongPickLoadingPage> {
     super.initState();
 
     Timer(const Duration(seconds: 3), () {
-      // Get.off(() => const NextPage());
-      debugPrint("3 Seconds Completed! Moving to next screen...");
+
+      Get.offNamed(AppRoutes.selectedSong);
+
     });
   }
 
@@ -39,16 +41,6 @@ class _SongPickLoadingPageState extends State<SongPickLoadingPage> {
                     Color(0xFF050A24),
                   ],
                 ),
-              ),
-            ),
-
-
-            Positioned(
-              top: 15,
-              left: 10,
-              child: IconButton(
-                icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white, size: 22),
-                onPressed: () => Get.back(),
               ),
             ),
 
