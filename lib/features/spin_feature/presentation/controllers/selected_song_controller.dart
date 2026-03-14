@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:music_game_app/routes/app_routes.dart';
 
 class SelectedSongController extends GetxController {
 
@@ -59,14 +60,14 @@ class SelectedSongController extends GetxController {
               const SizedBox(height: 30),
 
 
-              Container(height: 1, color: Colors.white.withOpacity(0.3)),
+              Container(height: 1, color: Colors.white.withValues(alpha: 0.3)),
 
 
               TextButton(
                 onPressed: () {
-                  Get.back();
+                  Get.toNamed(AppRoutes.lyricsPage);
 
-                  print("Proceeding to gameplay...");
+
                 },
                 style: TextButton.styleFrom(
                   minimumSize: const Size(double.infinity, 60),
