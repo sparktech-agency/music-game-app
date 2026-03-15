@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:music_game_app/features/game_play/presentation/controllers/gameplay_controller.dart';
@@ -8,6 +7,7 @@ class GameplayPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     final controller = Get.put(GameplayController());
 
 
@@ -37,7 +37,8 @@ class GameplayPage extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Icon(Icons.arrow_back_ios, color: Colors.white, size: 20),
+          //const Icon(Icons.arrow_back_ios, color: Colors.white, size: 20),
+          const SizedBox(width: 10,),
           Column(
             children: [
               Obx(() => Text(controller.teamInfo.value, style: const TextStyle(color: Colors.white70, fontSize: 12))),
@@ -185,11 +186,14 @@ class GameplayPage extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 15),
-          Container(
-            width: 65,
-            height: 65,
-            decoration: const BoxDecoration(color: Color(0xFFD9A404), shape: BoxShape.circle),
-            child: const Icon(Icons.stop, color: Colors.black, size: 35),
+          GestureDetector(
+            onTap: controller.showPauseDialogue,
+            child: Container(
+              width: 65,
+              height: 65,
+              decoration: const BoxDecoration(color: Color(0xFFD9A404), shape: BoxShape.circle),
+              child: const Icon(Icons.stop, color: Colors.black, size: 35),
+            ),
           ),
         ],
       ),
