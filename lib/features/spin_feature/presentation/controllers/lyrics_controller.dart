@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:music_game_app/routes/app_routes.dart';
 
 class LyricsController extends GetxController {
 
@@ -56,7 +57,7 @@ class LyricsController extends GetxController {
         isCountingDown.value = false;
 
 
-        Get.offNamed('/gameplay_screen');
+        Get.offNamed(AppRoutes.gameplayPage);
       }
     });
   }

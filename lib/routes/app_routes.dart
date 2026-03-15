@@ -6,6 +6,7 @@ import 'package:music_game_app/features/app_landing/presentation/lets_sing_scree
 import 'package:music_game_app/features/app_landing/presentation/main_splash.dart';
 import 'package:music_game_app/features/authentication/presentation/emai_input_page.dart';
 import 'package:music_game_app/features/authentication/presentation/first_screen.dart';
+import 'package:music_game_app/features/game_play/presentation/gameplay_page.dart';
 import 'package:music_game_app/features/prerequisite/presentation/player_name_team1.dart';
 import 'package:music_game_app/features/prerequisite/presentation/round_selection.dart';
 import 'package:music_game_app/features/prerequisite/presentation/singer_number.dart';
@@ -48,6 +49,7 @@ class AppRoutes{
   static const String songPickLoading = "/songPickLoading";
   static const String selectedSong = "/selectedSong";
   static const String lyricsPage = "/lyricsPage";
+  static const String gameplayPage = "/gameplayPage";
 
 
 }
@@ -76,5 +78,6 @@ List<GetPage> routes = [
   GetPage(name: AppRoutes.songPickLoading, page: () => SongPickLoadingPage()),
   GetPage(name: AppRoutes.selectedSong, page: () => SelectedSong()),
   GetPage(name: AppRoutes.lyricsPage, page: () => LyricsPage()),
+  GetPage(name: AppRoutes.gameplayPage, page: () => GameplayPage()),
 
 ];
