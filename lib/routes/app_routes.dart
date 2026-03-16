@@ -6,6 +6,8 @@ import 'package:music_game_app/features/app_landing/presentation/lets_sing_scree
 import 'package:music_game_app/features/app_landing/presentation/main_splash.dart';
 import 'package:music_game_app/features/authentication/presentation/emai_input_page.dart';
 import 'package:music_game_app/features/authentication/presentation/first_screen.dart';
+import 'package:music_game_app/features/authentication/presentation/phone_input_page.dart';
+import 'package:music_game_app/features/authentication/presentation/set_password_page.dart';
 import 'package:music_game_app/features/game_play/presentation/gameplay_page.dart';
 import 'package:music_game_app/features/prerequisite/presentation/player_name_team1.dart';
 import 'package:music_game_app/features/prerequisite/presentation/round_selection.dart';
@@ -29,6 +31,10 @@ class AppRoutes{
 
   static const String firstScreen = "/firstScreen";
   static const String emailInputScreen = "/emailInputScreen";
+  static const String phoneInputScreen = "/phoneInputScreen";
+
+  static const String setPassScreen = "/setPassScreen";
+
   static const String appLanding = "/appLanding";
   static const String profileScreen = "/profileScreen";
   static const String settingsScreen = "/settingsScreen";
@@ -58,6 +64,10 @@ class AppRoutes{
 List<GetPage> routes = [
   GetPage(name: AppRoutes.firstScreen, page: () => const FirstScreen()),
   GetPage(name: AppRoutes.emailInputScreen, page: () => const EmailInputPage()),
+  GetPage(name: AppRoutes.phoneInputScreen, page: () => const PhoneInputPage()),
+
+  GetPage(name: AppRoutes.setPassScreen, page: () => const SetPasswordPage()),
+
   GetPage(name: AppRoutes.appLanding, page: () =>  AppLanding()),
   GetPage(name: AppRoutes.profileScreen, page: () =>  ProfileScreen()),
   GetPage(name: AppRoutes.settingsScreen, page: () =>  SettingsScreen()),

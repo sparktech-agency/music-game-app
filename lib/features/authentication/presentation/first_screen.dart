@@ -31,11 +31,13 @@ class FirstScreen extends StatelessWidget {
                     icon: Icons.email_outlined,
                     onPressed: () {Get.toNamed(AppRoutes.emailInputScreen);},
                   ),
+
                   SizedBox(height: 15),
+
                   CustomGradientButton(
                     text: 'Continue With Phone Number',
                     icon: Icons.phone_in_talk_outlined,
-                    onPressed: () {},
+                    onPressed: () {Get.toNamed(AppRoutes.phoneInputScreen);},
                   ),
 
                   SizedBox(height: 15),
