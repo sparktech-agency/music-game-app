@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:music_game_app/core/common_widgets/custom_gradient_button.dart';
 import 'package:music_game_app/features/authentication/presentation/widgets/auth_button.dart';
@@ -20,7 +21,13 @@ class FirstScreen extends StatelessWidget {
             children: [
               const Spacer(),
 
-              Center(child: Image.asset('assets/images/logo.png')),
+              Center(
+                child: SvgPicture.asset(
+                  'assets/images/logo.svg',
+                  width: 120,
+                  height: 120,
+                ),
+              ),
 
               const Spacer(),
 

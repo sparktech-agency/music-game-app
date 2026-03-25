@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:music_game_app/routes/app_routes.dart';
 
 class LetsPlayScreen extends StatelessWidget {
@@ -10,142 +11,173 @@ class LetsPlayScreen extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          // 1. Background Gradient
-          Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  Color(0xFF1A1B4B), // Deep blue/purple
-                  Color(0xFF2339ED), // Bright blue
-                ],
-              ),
+
+          Positioned.fill(
+            child: Image.asset(
+              'assets/images/lets_play_bg.png',
+              fit: BoxFit.cover,
             ),
           ),
 
-          // 2. Main Content
+
+          Positioned(
+            top: MediaQuery.of(context).size.height * 0.08,
+            left: 0,
+            right: 0,
+            child: Image.asset(
+              'assets/images/lets_play.gif',
+              height: MediaQuery.of(context).size.height * 0.55,
+              fit: BoxFit.cover,
+            ),
+          ),
+
           SafeArea(
             child: Column(
               children: [
-                // Top Close Button
+
                 Align(
                   alignment: Alignment.topRight,
-                  child: IconButton(
-                    icon: const Icon(Icons.close, color: Colors.white, size: 30),
-                    onPressed: () => Get.back(),
-                  ),
-                ),
-
-                const Spacer(flex: 2), // Space for top characters/images
-
-                // 3. Shining Text Box (Pixel Perfect)
-                Center(
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(25),
-                      border: Border.all(
-                        color: const Color(0xFF68FBFF).withValues(alpha: 0.8), // Cyan border
-                        width: 2.5,
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: const Color(0xFF68FBFF).withValues(alpha: 0.3),
-                          blurRadius: 20,
-                          spreadRadius: 2,
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        RichText(
-                          textAlign: TextAlign.center,
-                          text: const TextSpan(
-                            style: TextStyle(fontSize: 32, color: Colors.white),
-                            children: [
-                              TextSpan(text: "No "),
-                              TextSpan(
-                                text: "Music",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                            ],
-                          ),
-                        ),
-                        RichText(
-                          textAlign: TextAlign.center,
-                          text: const TextSpan(
-                            style: TextStyle(fontSize: 32, color: Colors.white),
-                            children: [
-                              TextSpan(text: "Just your "),
-                              TextSpan(
-                                text: "Voice",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 10),
+                    child: IconButton(
+                      icon: const Icon(Icons.close, color: Colors.white, size: 35),
+                      onPressed: () => Get.back(),
                     ),
                   ),
                 ),
 
-                const SizedBox(height: 40),
+                const Spacer(flex: 12),
 
 
+                _buildShiningTextBox(),
 
-                const Spacer(),
+                const Spacer(flex: 4),
 
-                // 5. Shining "Let's Play" Button
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 50),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width * 0.8,
-                    height: 65,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(35),
 
-                      gradient: const LinearGradient(
-                        colors: [
-                          Color(0xFF3FE7FE), // Light Cyan
-                          Color(0xFF3D5AFE), // Royal Blue
-                        ],
-                      ),
-                    ),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Get.toNamed(AppRoutes.mainSplash);
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.transparent,
-                        shadowColor: Colors.transparent,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(35),
-                        ),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          Text(
-                            "Let's Play",
-                            style: TextStyle(
-                              fontSize: 22,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          SizedBox(width: 10),
-                          Icon(Icons.play_circle_fill, color: Colors.white, size: 28),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+                _buildLetsPlayButton(context),
+
+                const SizedBox(height: 18),
               ],
             ),
           ),
         ],
+      ),
+    );
+  }
+
+
+  Widget _buildShiningTextBox() {
+    return Stack(
+      clipBehavior: Clip.none,
+      alignment: Alignment.center,
+      children: [
+
+        Container(
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(25),
+            border: Border.all(
+              color: const Color(0xFF42E8FF).withValues(alpha: 0.8),
+              width: 3.5,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: const Color(0xFF42E8FF).withValues(alpha: 0.3),
+                blurRadius: 20,
+                spreadRadius: 2,
+              ),
+            ],
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _buildRichText("No ", "Music"),
+              const SizedBox(height: 5),
+              _buildRichText("Just your ", "Voice"),
+            ],
+          ),
+        ),
+
+
+        Positioned(
+          top: -34,
+          right: -30,
+          child: SvgPicture.asset(
+            'assets/images/sparkling.svg',
+            width: 80,
+            height: 80,
+            colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+          ),
+        ),
+
+
+        Positioned(
+          bottom:-34,
+          left: -30,
+          child: SvgPicture.asset(
+            'assets/images/sparkling.svg',
+            width: 80,
+            height: 80,
+            colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+          ),
+        ),
+      ],
+    );
+  }
+
+
+  Widget _buildRichText(String normal, String bold) {
+    return RichText(
+      textAlign: TextAlign.center,
+      text: TextSpan(
+        style: const TextStyle(fontSize: 34, color: Colors.white, letterSpacing: 0.5),
+        children: [
+          TextSpan(text: normal, style: const TextStyle(fontWeight: FontWeight.w300)),
+          TextSpan(text: bold, style: const TextStyle(fontWeight: FontWeight.w900)),
+        ],
+      ),
+    );
+  }
+
+
+  Widget _buildLetsPlayButton(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width * 0.75,
+      height: 60,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(35),
+        gradient: const LinearGradient(
+          colors: [Color(0xFF42E8FF), Color(0xFF3B82F6)],
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: const Color(0xFF3B82F6).withValues(alpha: 0.4),
+            blurRadius: 15,
+            offset: const Offset(0, 8),
+          ),
+        ],
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(35),
+          onTap: () => Get.toNamed(AppRoutes.mainSplash),
+          child: const Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "Let's Play",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(width: 12),
+              Icon(Icons.play_circle_fill, color: Colors.white, size: 30),
+            ],
+          ),
+        ),
       ),
     );
   }
