@@ -4,44 +4,98 @@ import 'package:music_game_app/features/prerequisite/presentation/controllers/pr
 
 
 class WhichTeam extends StatelessWidget {
+
+
   const WhichTeam({super.key});
 
   @override
   Widget build(BuildContext context) {
     final PrerequisiteController controller = Get.find<PrerequisiteController>();
 
+    const Color brandBlue = Color(0xFF2254C9);
+
     return Scaffold(
       body: Stack(
         children: [
           // //==== 1. Background Gradient or Image ====
-          Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [Color(0xFF6366F1), Color(0xFF1E40AF), Color(0xFF000000)],
-              ),
+          Positioned.fill(
+            child: Image.asset(
+              'assets/images/all_game_setup.png',
+              fit: BoxFit.cover,
             ),
           ),
 
           // //==== 2. Character Illustration (Use Image.asset here later) ====
+
           Positioned(
-            top: 100,
+            top: 120,
+            left: 60,
+            right: 0,
+            child: ColorFiltered(
+
+              colorFilter: const ColorFilter.matrix(<double>[
+                // R  G  B  A  Const
+                0.2126, 0.7152, 0.0722, 0, 0,
+                0.2126, 0.7152, 0.0722, 0, 0,
+                0.2126, 0.7152, 0.0722, 0, 0,
+                0, 0, 0, 1, 0,
+              ]),
+              child: Image.asset(
+                'assets/images/three_singer.png',
+                fit: BoxFit.contain,
+                height: MediaQuery.sizeOf(context).height * 0.40,
+              ),
+            ),
+          ),
+
+
+          Positioned(
+            top: 280,
+            left: -60,
+            right: 0,
+            child:Image.asset(
+              'assets/images/three_singer.png',
+              fit: BoxFit.contain,
+              height: MediaQuery.sizeOf(context).height * 0.40,
+            ),
+          ),
+
+
+
+
+          Positioned(
+            bottom: 0,
             left: 0,
             right: 0,
-            child: Center(
-              child: Opacity(
-                opacity: 0.9,
-                // //==== Placeholder for your characters ====
-                child: Container(
-                  height: 350,
-                  width: double.infinity,
-                  color: Colors.transparent,
-                  child: const Icon(Icons.people_alt, size: 200, color: Colors.white24),
+            height: MediaQuery.sizeOf(context).height * 0.6,
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    brandBlue.withValues(alpha: 0.0),
+                    brandBlue.withValues(alpha: 1.0),
+                    brandBlue.withValues(alpha: 1.0),
+                  ],
                 ),
               ),
             ),
           ),
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
           // //==== 3. Custom AppBar Over Stack ====
           Positioned(
@@ -61,7 +115,7 @@ class WhichTeam extends StatelessWidget {
               children: [
                 const Text(
                   'Please select',
-                  style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w600),
+                  style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 25),
 

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:music_game_app/routes/app_routes.dart';
 
@@ -20,18 +21,15 @@ class _MainSplashState extends State<MainSplash> {
   }
 
   void _startLoading() {
-
     Timer.periodic(const Duration(milliseconds: 35), (timer) {
       if (_progress < 1.0) {
         setState(() {
-
-          _progress += 0.06;
+          _progress += 0.01;
         });
       } else {
         timer.cancel();
       }
     });
-
 
     Timer(const Duration(milliseconds: 3500), () {
       if (mounted) {
@@ -42,100 +40,81 @@ class _MainSplashState extends State<MainSplash> {
 
   @override
   Widget build(BuildContext context) {
-
     final double screenWidth = MediaQuery.sizeOf(context).width;
 
     return Scaffold(
       body: Stack(
         children: [
-
           Positioned.fill(
-            child: Container(
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [Color(0xFF0F172A), Color(0xFF1E293B), Color(0xFF334155)],
-                ),
-              ),
+            child: Image.asset(
+              'assets/images/loading_bg.png',
+              fit: BoxFit.cover,
             ),
           ),
 
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: Image.asset(
+              'assets/images/loading_cartoon.png',
+              fit: BoxFit.cover,
+              height: MediaQuery.sizeOf(context).height * 0.65,
+            ),
+          ),
 
           SafeArea(
             child: Column(
               children: [
-                const Spacer(flex: 2),
-
-
-                const Text(
-                  'Lyricraze',
-                  style: TextStyle(
-                    fontSize: 48,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                    letterSpacing: 2,
-                    fontFamily: 'Orbitron',
+                const SizedBox(height: 60),
+                Center(
+                  child: SvgPicture.asset(
+                    'assets/images/logo.svg',
+                    width: 100,
+                    height: 100,
                   ),
                 ),
-
-                const Spacer(flex: 3),
-
+                const Spacer(),
 
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 40),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 30,
+                    vertical: 40,
+                  ),
                   child: Container(
-                    height: 60,
+                    height: 65,
                     width: double.infinity,
-                    clipBehavior: Clip.antiAlias,
                     decoration: BoxDecoration(
-                      color: Colors.black.withValues(alpha: 0.5),
-                      borderRadius: BorderRadius.circular(30),
+                      color: const Color(0xFF0F172A).withValues(alpha: 0.9),
+                      borderRadius: BorderRadius.circular(35),
                     ),
                     child: Stack(
                       children: [
-
                         AnimatedContainer(
-                          duration: const Duration(seconds: 3),
-                          curve: Curves.easeInOut,
-                          width: screenWidth * _progress,
+                          duration: const Duration(milliseconds: 300),
+                          width: (screenWidth - 60) * _progress,
                           decoration: BoxDecoration(
                             gradient: const LinearGradient(
                               colors: [Color(0xFF42E8E0), Color(0xFF7BFFFA)],
                             ),
-                            borderRadius: BorderRadius.circular(30),
+                            borderRadius: BorderRadius.circular(35),
                           ),
                         ),
 
-
                         Center(
-                          child: TweenAnimationBuilder<double>(
-                            tween: Tween(begin: 0, end: 100),
-                            duration: const Duration(seconds: 3),
-                            builder: (context, value, child) {
-                              return Text(
-                                '${value.toInt()}%',
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 22,
-                                  fontWeight: FontWeight.w900,
-                                  shadows: [
-                                    Shadow(
-                                      blurRadius: 10,
-                                      color: Colors.black45,
-                                      offset: Offset(0, 2),
-                                    )
-                                  ],
-                                ),
-                              );
-                            },
+                          child: Text(
+                            '${(_progress * 100).toInt()}%',
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 28,
+                              fontWeight: FontWeight.w900,
+                            ),
                           ),
                         ),
                       ],
                     ),
                   ),
                 ),
-                const SizedBox(height: 60),
               ],
             ),
           ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:music_game_app/features/prerequisite/presentation/controllers/prerequisite_controller.dart';
-import 'package:music_game_app/routes/app_routes.dart';
+
 
 
 class SingerNumber extends StatelessWidget {
@@ -11,19 +11,54 @@ class SingerNumber extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    const Color brandBlue = Color(0xFF2254C9);
     return Scaffold(
       body: Stack(
         children: [
 
-          Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [Color(0xFF5C62FF), Color(0xFF2E33FF), Color(0xFF191ED2)],
+          Positioned.fill(
+            child: Image.asset(
+              'assets/images/all_game_setup.png',
+              fit: BoxFit.cover,
+            ),
+          ),
+
+
+          Positioned(
+            top: 150,
+            left: 0,
+            right: 0,
+            child: Obx(() => Image.asset(
+              controller.currentSingerImage,
+              fit: BoxFit.contain,
+              height: MediaQuery.sizeOf(context).height * 0.60,
+            )),
+          ),
+
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: MediaQuery.sizeOf(context).height * 0.6,
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    brandBlue.withValues(alpha: 0.0),
+                    brandBlue.withValues(alpha: 1.0),
+                    brandBlue.withValues(alpha: 1.0),
+                  ],
+                ),
               ),
             ),
           ),
+
+
+
+
 
 
           SafeArea(
@@ -51,11 +86,11 @@ class SingerNumber extends StatelessWidget {
                 const Spacer(),
 
 
-                const SizedBox(height: 250),
+                SizedBox(height: MediaQuery.sizeOf(context).height * 0.50,),
 
                 const Text(
                   'Please select',
-                  style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w500),
+                  style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 25),
 

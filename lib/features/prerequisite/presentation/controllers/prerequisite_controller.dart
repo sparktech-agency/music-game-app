@@ -12,6 +12,21 @@ class PrerequisiteController extends GetxController {
     numberOfRound.value = round;
   }
 
+
+  final Map<int, String> _roundImages = {
+    2: 'assets/images/two_player.png',
+    3: 'assets/images/three_player.png',
+    4: 'assets/images/four_player.png',
+  };
+
+  String get currentRoundImage => _roundImages[numberOfRound.value] ?? 'assets/images/three_player.png';
+
+
+
+
+
+
+
   // ==== Screen: Team Number ==== //
 
   var teamNumber = 2.obs;
@@ -28,6 +43,15 @@ class PrerequisiteController extends GetxController {
     singerNumber.value = singer;
     generatePlayerFields(singer);
   }
+
+  final Map<int, String> _singerImages = {
+    2: 'assets/images/two_singer.png',
+    3: 'assets/images/three_singer.png',
+    4: 'assets/images/four_singer.png',
+    5: 'assets/images/five_singer.png',
+  };
+
+  String get currentSingerImage => _singerImages[singerNumber.value] ?? 'assets/images/two_singer.png';
 
 
 

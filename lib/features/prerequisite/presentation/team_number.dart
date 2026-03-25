@@ -11,23 +11,95 @@ class TeamNumber extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const Color brandBlue = Color(0xFF2254C9);
     return Scaffold(
       body: Stack(
         children: [
 
-          Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [Color(0xFF5C62FF), Color(0xFF2E33FF), Color(0xFF191ED2)],
+          Positioned.fill(
+            child: Image.asset(
+              'assets/images/all_game_setup.png',
+              fit: BoxFit.cover,
+            ),
+          ),
+
+
+
+          Obx(() {
+            int count = controller.teamNumber.value;
+
+            final List<Map<String, double>> positions;
+
+            if (count == 2) {
+              positions = [
+                {'top': 180, 'left': 30, 'height': 0.24},
+                {'top': 310, 'left': -30, 'height': 0.27},
+              ];
+            } else if (count == 3) {
+              positions = [
+                {'top': 140, 'left': -130, 'height': 0.18},
+                {'top': 240, 'left': 130, 'height': 0.22},
+                {'top': 360, 'left': -30, 'height': 0.27},
+              ];
+            } else {
+              positions = [
+                {'top': 240, 'left': -160, 'height': 0.14},
+                {'top': 240, 'left': 160, 'height': 0.14},
+                {'top': 360, 'left': -160, 'height': 0.16},
+                {'top': 360, 'left': 200, 'height': 0.16},
+              ];
+            }
+
+            return Stack(
+              children: List.generate(count, (index) {
+                return AnimatedPositioned(
+                  duration: const Duration(milliseconds: 400),
+                  curve: Curves.easeInOut,
+                  top: positions[index]['top'],
+                  left: positions[index]['left'],
+                  right: 0,
+                  child: AnimatedScale(
+                    duration: const Duration(milliseconds: 300),
+                    scale: 1.0,
+                    child: Image.asset(
+                      'assets/images/team_selection.png',
+                      fit: BoxFit.contain,
+                      height: MediaQuery.sizeOf(context).height * positions[index]['height']!,
+                    ),
+                  ),
+                );
+              }),
+            );
+          }),
+
+
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            height: MediaQuery.sizeOf(context).height * 0.6,
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    brandBlue.withValues(alpha: 0.0),
+                    brandBlue.withValues(alpha: 1.0),
+                    brandBlue.withValues(alpha: 1.0),
+                  ],
+                ),
               ),
             ),
           ),
 
 
+
+
+
           SafeArea(
             child: Column(
+
               children: [
 
                 Padding(
@@ -51,18 +123,18 @@ class TeamNumber extends StatelessWidget {
                 const Spacer(),
 
 
-                const SizedBox(height: 250),
+                SizedBox(height: MediaQuery.sizeOf(context).height * 0.50,),
 
                 const Text(
                   'Please select',
-                  style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w500),
+                  style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 25),
 
 
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [2, 3, 4, 5].map((team) => _buildRoundCircle(team)).toList(),
+                  children: [2, 3, 4].map((team) => _buildRoundCircle(team)).toList(),
                 ),
 
                 const Spacer(),

@@ -11,16 +11,21 @@ class AfterSplash extends StatelessWidget {
       body: Stack(
         children: [
 
-          Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  Color(0xFF003399),
-                  Color(0xFF000000),
-                ],
-              ),
+          Positioned.fill(
+            child: Image.asset(
+              'assets/images/guide_bg.png',
+              fit: BoxFit.cover,
+            ),
+          ),
+
+          Positioned(
+            bottom: 30,
+            left: 0,
+            right: 0,
+            child: Image.asset(
+              'assets/images/mascot_one.png',
+              fit: BoxFit.contain,
+              height: MediaQuery.sizeOf(context).height * 0.60,
             ),
           ),
 
@@ -60,21 +65,6 @@ class AfterSplash extends StatelessWidget {
                   ),
 
                   const Spacer(),
-
-
-                  Container(
-                    height: 300,
-                    width: double.infinity,
-                    decoration: const BoxDecoration(
-                      // image: DecorationImage(image: AssetImage('assets/character.png')),
-                    ),
-                    child: const Center(
-                      child: Icon(Icons.emoji_emotions, size: 100, color: Colors.blueAccent),
-                    ),
-                  ),
-
-                  const Spacer(),
-
 
                   GestureDetector(
                     onTap: () {
