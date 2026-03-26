@@ -88,10 +88,9 @@ class _SpinFrontPageState extends State<SpinFrontPage> {
           ),
         ),
         child: Center(
-          child: Opacity(
-            opacity: 0.5,
-            // //==== Placeholder for Image.asset ====
-            child: Icon(Icons.music_note, size: 150, color: Colors.white.withOpacity(0.5)),
+          child: Image.asset(
+            'assets/images/count_down.png',
+            fit: BoxFit.contain,
           ),
         ),
       ),
@@ -100,31 +99,26 @@ class _SpinFrontPageState extends State<SpinFrontPage> {
 
   Widget _buildAnimatedTimer() {
     return Obx(() {
-      return Container(
-        height: 80, // //==== Height adjusted for the wheel effect ====
-        width: 60,
-        alignment: Alignment.center,
-        child: controller.showCross.value
-            ? const Icon(Icons.close, color: Colors.white, size: 40)
-            : IgnorePointer( // //==== IgnorePointer to prevent user from manually scrolling ====
-          child: ListWheelScrollView(
-            controller: controller.scrollController,
-            itemExtent: 60, // //==== Each number's height ====
-            physics: const NeverScrollableScrollPhysics(),
-            children: List.generate(5, (index) {
-              return Center(
-                child: Text(
-                  "${5 - index}", // //==== Displays 5, 4, 3, 2, 1 ====
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 45,
-                    fontWeight: FontWeight.w900,
-                    shadows: [Shadow(color: Colors.black26, blurRadius: 10)],
-                  ),
-                ),
-              );
-            }),
+      if (controller.showCross.value) {
+        return GestureDetector(
+          onTap: () {
+
+
+          },
+          child: const Icon(
+              Icons.close,
+              color: Colors.white,
+              size: 30
           ),
+        );
+      }
+
+      return SizedBox(
+        height: 100,
+        width: 100,
+        child: Image.asset(
+          'assets/images/five_sec_timer.gif',
+          fit: BoxFit.contain,
         ),
       );
     });
@@ -178,16 +172,6 @@ class _SpinFrontPageState extends State<SpinFrontPage> {
             )
                 : null,
             color: isEnabled ? null : const Color(0xFF161B2E),
-            // //==== Adds a premium glow when enabled ====
-            boxShadow: isEnabled
-                ? [
-              BoxShadow(
-                color: const Color(0xFF42E8FF).withOpacity(0.3),
-                blurRadius: 12,
-                offset: const Offset(0, 4),
-              )
-            ]
-                : [],
           ),
           child: Center(
             child: AnimatedDefaultTextStyle(

@@ -22,11 +22,6 @@ class PrerequisiteController extends GetxController {
   String get currentRoundImage => _roundImages[numberOfRound.value] ?? 'assets/images/three_player.png';
 
 
-
-
-
-
-
   // ==== Screen: Team Number ==== //
 
   var teamNumber = 2.obs;
@@ -62,6 +57,9 @@ class PrerequisiteController extends GetxController {
   void selectTeam(int teamNum) {
     selectedTeam.value = teamNum;
   }
+
+
+
 
 
 

@@ -27,38 +27,35 @@ class WhichTeam extends StatelessWidget {
 
           // //==== 2. Character Illustration (Use Image.asset here later) ====
 
-          Positioned(
-            top: 120,
-            left: 60,
-            right: 0,
-            child: ColorFiltered(
-
-              colorFilter: const ColorFilter.matrix(<double>[
-                // R  G  B  A  Const
-                0.2126, 0.7152, 0.0722, 0, 0,
-                0.2126, 0.7152, 0.0722, 0, 0,
-                0.2126, 0.7152, 0.0722, 0, 0,
-                0, 0, 0, 1, 0,
-              ]),
-              child: Image.asset(
-                'assets/images/three_singer.png',
-                fit: BoxFit.contain,
-                height: MediaQuery.sizeOf(context).height * 0.40,
-              ),
-            ),
-          ),
+          Obx(() {
+            bool isTeam1 = controller.selectedTeam.value == 1;
 
 
-          Positioned(
-            top: 280,
-            left: -60,
-            right: 0,
-            child:Image.asset(
-              'assets/images/three_singer.png',
-              fit: BoxFit.contain,
-              height: MediaQuery.sizeOf(context).height * 0.40,
-            ),
-          ),
+            final team1Character = _buildAnimatedCharacter(
+              key: const ValueKey('team1'),
+              context: context,
+              isSelected: isTeam1,
+              top: isTeam1 ? 280 : 120,
+              left: isTeam1 ? -60 : 60,
+              imagePath: 'assets/images/three_singer.png',
+            );
+
+            final team2Character = _buildAnimatedCharacter(
+              key: const ValueKey('team2'),
+              context: context,
+              isSelected: !isTeam1,
+              top: !isTeam1 ? 280 : 120,
+              left: !isTeam1 ? -60 : 60,
+              imagePath: 'assets/images/three_singer.png',
+            );
+
+
+            return Stack(
+              children: isTeam1
+                  ? [team2Character, team1Character]
+                  : [team1Character, team2Character],
+            );
+          }),
 
 
 
@@ -82,19 +79,6 @@ class WhichTeam extends StatelessWidget {
               ),
             ),
           ),
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
           // //==== 3. Custom AppBar Over Stack ====
@@ -232,4 +216,49 @@ class WhichTeam extends StatelessWidget {
       ),
     );
   }
+
+
+  //=======swap effect========//
+
+  Widget _buildAnimatedCharacter({
+    Key? key,
+    required BuildContext context,
+    required bool isSelected,
+    required double top,
+    required double left,
+    required String imagePath,
+  }) {
+    return AnimatedPositioned(
+      key: key,
+      duration: const Duration(milliseconds: 600),
+      curve: Curves.easeInOut,
+      top: top,
+      left: left,
+      right: 0,
+      child: AnimatedScale(
+        duration: const Duration(milliseconds: 600),
+        scale: isSelected ? 1.1 : 0.85,
+        child: AnimatedOpacity(
+          duration: const Duration(milliseconds: 400),
+          opacity: isSelected ? 1.0 : 1.0,
+          child: ColorFiltered(
+            colorFilter: isSelected
+                ? const ColorFilter.mode(Colors.transparent, BlendMode.multiply)
+                : const ColorFilter.matrix(<double>[
+              0.2126, 0.7152, 0.0722, 0, 0,
+              0.2126, 0.7152, 0.0722, 0, 0,
+              0.2126, 0.7152, 0.0722, 0, 0,
+              0, 0, 0, 1, 0,
+            ]),
+            child: Image.asset(
+              imagePath,
+              fit: BoxFit.contain,
+              height: MediaQuery.sizeOf(context).height * 0.40,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
 }
