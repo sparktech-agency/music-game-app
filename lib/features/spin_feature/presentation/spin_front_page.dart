@@ -150,11 +150,9 @@ class _SpinFrontPageState extends State<SpinFrontPage> {
 
   Widget _buildSpinButton() {
     return Obx(() {
-      // //==== Reactive variable from controller to toggle state ====
       final bool isEnabled = controller.isButtonEnabled.value;
 
       return GestureDetector(
-        // //==== Calls onSpinTap only when timer ends and button is enabled ====
         onTap: isEnabled ? () => controller.onSpinTap() : null,
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 500),
@@ -163,15 +161,15 @@ class _SpinFrontPageState extends State<SpinFrontPage> {
           height: 65,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(35),
-            // //==== Switches from Solid Color to Gradient smoothly ====
-            gradient: isEnabled
-                ? const LinearGradient(
-              colors: [Color(0xFF42E8FF), Color(0xFF3B5CFF)],
+
+            gradient: LinearGradient(
+              colors: isEnabled
+                  ? [const Color(0xFF42E8FF), const Color(0xFF3B5CFF)]
+                  : [const Color(0xFF161B2E), const Color(0xFF161B2E)],
               begin: Alignment.centerLeft,
               end: Alignment.centerRight,
-            )
-                : null,
-            color: isEnabled ? null : const Color(0xFF161B2E),
+            ),
+
           ),
           child: Center(
             child: AnimatedDefaultTextStyle(
