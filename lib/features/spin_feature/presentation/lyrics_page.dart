@@ -18,11 +18,13 @@ class LyricsPage extends StatelessWidget {
           SafeArea(
             child: Column(
               children: [
+
                 _buildAppBar(controller),
                 _buildSongHeader(controller),
                 _buildLyricsList(controller),
                 _buildStartButton(controller),
                 const SizedBox(height: 30),
+
               ],
             ),
           ),
@@ -36,6 +38,7 @@ class LyricsPage extends StatelessWidget {
 
 
   PreferredSizeWidget _buildAppBar(LyricsController controller) {
+
     return AppBar(
       backgroundColor: const Color(0xFF0A0E21),
       elevation: 0,
@@ -67,8 +70,6 @@ class LyricsPage extends StatelessWidget {
       ],
     );
   }
-
-
   Widget _buildSongHeader(LyricsController controller) {
     return Container(
       padding: const EdgeInsets.all(12),
@@ -106,8 +107,6 @@ class LyricsPage extends StatelessWidget {
       ),
     );
   }
-
-
   Widget _buildLyricsList(LyricsController controller) {
     return Expanded(
       child: ListView.builder(
@@ -133,8 +132,6 @@ class LyricsPage extends StatelessWidget {
       ),
     );
   }
-
-
   Widget _buildStartButton(LyricsController controller) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -166,9 +163,8 @@ class LyricsPage extends StatelessWidget {
       ),
     );
   }
-
-
   Widget _buildTimerOverlay(LyricsController controller) {
+
     return Container(
       color: Colors.black.withValues(alpha: 0.85),
       width: double.infinity,
