@@ -24,8 +24,8 @@ class FirstScreen extends StatelessWidget {
               Center(
                 child: SvgPicture.asset(
                   'assets/images/logo.svg',
-                  width: 120,
-                  height: 120,
+                  width: 80,
+                  height: 80,
                 ),
               ),
 
