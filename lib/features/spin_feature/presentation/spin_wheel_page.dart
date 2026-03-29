@@ -65,7 +65,7 @@ class _SpinWheelPageState extends State<SpinWheelPage>
     );
 
     // Set initial rotation so blank slice (index 0) is under the top pointer.
-    // Pointer is at top = angle -π/2 in Flutter canvas coords (canvas starts at right=0, goes clockwise).
+    // Pointer is at top = angle -π/2 in Flutter canvas co ords (canvas starts at right=0, goes clockwise).
     // Segment i center = i * itemAngle + itemAngle/2
     // We want: segmentCenter(0) + _currentRotation ≡ -π/2  (mod 2π)
     // => _currentRotation = -π/2 - itemAngle/2
@@ -113,31 +113,36 @@ class _SpinWheelPageState extends State<SpinWheelPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
+      body: SizedBox(
         width: double.infinity,
         height: double.infinity,
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [Color(0xFF1A0B2E), Color(0xFF090415)],
-          ),
-        ),
+
         child: Stack(
           children: [
-            // Background decorations
-            Positioned(top: 170, left: 16,
-                child: Icon(Icons.star_rounded, color: const Color(0xFFFFD54F), size: 40)),
-            Positioned(top: 140, right: 20,
-                child: Icon(Icons.star_rounded, color: const Color(0xFFFFD54F), size: 28)),
-            Positioned(bottom: 170, left: 12,
-                child: Icon(Icons.star_rounded, color: const Color(0xFFFFD54F), size: 36)),
-            Positioned(bottom: 90, right: 18,
-                child: Opacity(opacity: 0.22,
-                    child: Icon(Icons.music_note, color: Colors.purple[200], size: 52))),
-            Positioned(bottom: 120, right: 58,
-                child: Opacity(opacity: 0.16,
-                    child: Icon(Icons.music_note, color: Colors.purple[200], size: 28))),
+
+
+            Positioned.fill(
+              child: Image.asset(
+                'assets/images/music_notes.gif',
+                fit: BoxFit.cover,
+              ),
+            ),
+
+
+            Positioned.fill(
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      const Color(0xFF1A0B2E).withValues(alpha: 0.9),
+                      const Color(0xFF090415).withValues(alpha: 0.7),
+                    ],
+                  ),
+                ),
+              ),
+            ),
 
             SafeArea(
               child: Column(
@@ -244,14 +249,14 @@ class _SpinWheelPageState extends State<SpinWheelPage>
                           shape: BoxShape.circle,
                           boxShadow: [
                             BoxShadow(
-                              color: const Color(0xFF3B5CFF).withOpacity(0.4),
+                              color: const Color(0xFF3B5CFF).withValues(alpha: 0.4),
                               blurRadius: 32,
                               spreadRadius: 8,
                             ),
                           ],
                           border: Border.all(
-                            color: const Color(0xFF4A6FFF).withOpacity(0.75),
-                            width: 9,
+                            color: const Color(0xFF4A6FFF).withValues(alpha: 0.75),
+                            width: 10,
                           ),
                         ),
                       ),
@@ -298,7 +303,7 @@ class _SpinWheelPageState extends State<SpinWheelPage>
                             ),
                             boxShadow: [
                               BoxShadow(
-                                color: _resultColor.withOpacity(0.55),
+                                color: _resultColor.withValues(alpha: 0.55),
                                 blurRadius: 18,
                                 spreadRadius: 2,
                               ),
@@ -418,7 +423,7 @@ class WheelPainter extends CustomPainter {
           style: const TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.w900,
-            fontSize: 12,
+            fontSize: 16,
             shadows: [Shadow(color: Colors.black54, blurRadius: 4)],
           ),
         ),

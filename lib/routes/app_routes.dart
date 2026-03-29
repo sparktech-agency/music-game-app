@@ -4,7 +4,7 @@ import 'package:music_game_app/features/app_landing/presentation/app_landing.dar
 import 'package:music_game_app/features/app_landing/presentation/lets_play_screen.dart';
 import 'package:music_game_app/features/app_landing/presentation/lets_sing_screen.dart';
 import 'package:music_game_app/features/app_landing/presentation/main_splash.dart';
-import 'package:music_game_app/features/authentication/presentation/emai_input_page.dart';
+import 'package:music_game_app/features/authentication/presentation/email_input_page.dart';
 import 'package:music_game_app/features/authentication/presentation/first_screen.dart';
 import 'package:music_game_app/features/authentication/presentation/phone_input_page.dart';
 import 'package:music_game_app/features/authentication/presentation/set_password_page.dart';
@@ -24,6 +24,8 @@ import 'package:music_game_app/features/spin_feature/presentation/selected_song.
 import 'package:music_game_app/features/spin_feature/presentation/song_pick_loading_page.dart';
 import 'package:music_game_app/features/spin_feature/presentation/spin_front_page.dart';
 import 'package:music_game_app/features/spin_feature/presentation/spin_wheel_page.dart';
+import 'package:music_game_app/features/welcome_splash/presentation/two_button_page.dart';
+import 'package:music_game_app/features/welcome_splash/presentation/welcome_splash.dart';
 
 
 class AppRoutes{
@@ -32,8 +34,10 @@ class AppRoutes{
   static const String firstScreen = "/firstScreen";
   static const String emailInputScreen = "/emailInputScreen";
   static const String phoneInputScreen = "/phoneInputScreen";
-
   static const String setPassScreen = "/setPassScreen";
+
+  static const String welcomeSplash = "/welcomeSplash";
+  static const String twoButtonPage = "/twoButtonPage";
 
   static const String appLanding = "/appLanding";
   static const String profileScreen = "/profileScreen";
@@ -65,8 +69,9 @@ List<GetPage> routes = [
   GetPage(name: AppRoutes.firstScreen, page: () => const FirstScreen()),
   GetPage(name: AppRoutes.emailInputScreen, page: () => const EmailInputPage()),
   GetPage(name: AppRoutes.phoneInputScreen, page: () => const PhoneInputPage()),
-
   GetPage(name: AppRoutes.setPassScreen, page: () => const SetPasswordPage()),
+  GetPage(name: AppRoutes.welcomeSplash, page: () =>  WelcomeSplash()),
+  GetPage(name: AppRoutes.twoButtonPage, page: () =>  TwoButtonPage()),
 
   GetPage(name: AppRoutes.appLanding, page: () =>  AppLanding()),
   GetPage(name: AppRoutes.profileScreen, page: () =>  ProfileScreen()),

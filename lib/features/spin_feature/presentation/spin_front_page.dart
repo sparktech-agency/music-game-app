@@ -52,7 +52,6 @@ class _SpinFrontPageState extends State<SpinFrontPage> {
                       color: Colors.white,
                       fontSize: 32,
                       fontWeight: FontWeight.bold,
-                      height: 1.2,
                     ),
                   ),
                   const SizedBox(height: 10),
@@ -158,7 +157,7 @@ class _SpinFrontPageState extends State<SpinFrontPage> {
           duration: const Duration(milliseconds: 500),
           curve: Curves.easeInOut,
           width: double.infinity,
-          height: 65,
+          height: 60,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(35),
 
@@ -178,9 +177,8 @@ class _SpinFrontPageState extends State<SpinFrontPage> {
                 color: isEnabled ? Colors.white : Colors.white.withValues(alpha: 0.3),
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
-                letterSpacing: 1.2,
               ),
-              child: const Text("Spin Category"),
+              child: const Text("Spin for a Category"),
             ),
           ),
         ),

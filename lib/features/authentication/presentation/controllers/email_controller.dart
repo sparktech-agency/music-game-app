@@ -16,7 +16,9 @@ class EmailController extends GetxController {
 
       print("Valid Email: $email");
 
-     Get.toNamed(AppRoutes.appLanding);
+     //Get.toNamed(AppRoutes.appLanding);
+
+      Get.toNamed(AppRoutes.welcomeSplash);
     } else {
 
       Get.snackbar(

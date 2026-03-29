@@ -41,8 +41,8 @@ class AfterSplash extends StatelessWidget {
                     'Hi John!',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 28,
-                      fontWeight: FontWeight.w900,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                   const SizedBox(height: 10),
@@ -59,8 +59,7 @@ class AfterSplash extends StatelessWidget {
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 48,
-                      fontWeight: FontWeight.w900,
-                      letterSpacing: 1.2,
+                      fontWeight: FontWeight.w800,
                     ),
                   ),
 
@@ -72,7 +71,7 @@ class AfterSplash extends StatelessWidget {
                     },
                     child: Container(
                       width: double.infinity,
-                      height: 65,
+                      height: 60,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(35),
                         gradient: const LinearGradient(

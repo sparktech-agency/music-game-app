@@ -166,14 +166,14 @@ class LetsPlayScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                "Let's Play",
+                "Play",
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(width: 12),
+              SizedBox(width: 2),
               Icon(Icons.play_circle_fill, color: Colors.white, size: 30),
             ],
           ),

@@ -10,62 +10,63 @@ class SelectedSong extends StatelessWidget {
     final SelectedSongController controller = Get.put(SelectedSongController());
 
     return Scaffold(
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color(0xFF8B46FF),
-              Color(0xFF3388FF),
-            ],
-          ),
-        ),
-        child: SafeArea(
 
-              child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Column(
-                    children: [
-                      // AppBar Section
-                      Align(
-                        alignment: Alignment.topRight,
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 5),
-                          child: IconButton(
-                            icon: const Icon(Icons.close, color: Colors.white, size: 35),
-                            onPressed: () => Get.back(),
-                          ),
-                        ),
-                      ),
+      body: SizedBox(
+        child: Stack(
+          children: [
 
-                      const Text(
-                        "Show to opponent", //
-                        style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600),
-                      ),
-                      const SizedBox(height: 10),
-
-                      _buildUserProfile(controller),
-
-                      const SizedBox(height: 20),
-
-                      _buildSongCard(controller),
-
-                      const Spacer(),
-
-                      _buildNextButton(controller),
-                      const SizedBox(height: 30),
-                    ],
-                  ),
-                ),
+            Positioned.fill(
+              child: Image.asset(
+                'assets/images/selected_bg.png',
+                fit: BoxFit.cover,
+              ),
             ),
 
 
+
+            SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                child: Column(
+                  children: [
+
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 5),
+                        child: IconButton(
+                          icon: const Icon(Icons.close, color: Colors.white, size: 28),
+                          onPressed: () => Get.back(),
+                        ),
+                      ),
+                    ),
+
+                    const Text(
+                      "Show to opponent",
+                      style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600),
+                    ),
+                    const SizedBox(height: 10),
+
+                    _buildUserProfile(controller),
+
+                    const SizedBox(height: 20),
+
+                    _buildSongCard(controller),
+
+                    const Spacer(),
+
+                    _buildNextButton(controller),
+                    const SizedBox(height: 30),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
+
 
   Widget _buildUserProfile(SelectedSongController controller) {
     return Column(
@@ -103,10 +104,11 @@ class SelectedSong extends StatelessWidget {
         width: double.infinity,
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
         decoration: BoxDecoration(
+          color: Colors.white.withValues(alpha: 0.05), // কার্ডকে একটু ফুটিয়ে তুলতে হালকা ব্যাকগ্রাউন্ড
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
-            color: Colors.white.withValues(alpha: 0.8),
-            width: 4,
+            color: Colors.white.withValues(alpha: 0.6),
+            width: 2,
           ),
         ),
         child: Column(
@@ -177,7 +179,7 @@ class SelectedSong extends StatelessWidget {
         onTap: () => controller.onNext(),
         child: Container(
           width: double.infinity,
-          height: 65,
+          height: 60,
           decoration: BoxDecoration(
             gradient: const LinearGradient(
               colors: [
@@ -192,7 +194,7 @@ class SelectedSong extends StatelessWidget {
           child: const Center(
             child: Text(
               "Next", //
-              style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.w900),
+              style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold),
             ),
           ),
         ),

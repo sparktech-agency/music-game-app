@@ -9,62 +9,67 @@ class SongPackScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final controller = Get.put(SongPackController());
 
     return Scaffold(
 
-      backgroundColor: const Color(0xFF1d1c35),
-
       appBar: AppBarWithLogo(userName: "doe john"),
 
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      body: Stack(
         children: [
 
-          const Padding(
-            padding: EdgeInsets.fromLTRB(20, 20, 20, 10),
-            child: Text(
-              "My Song Packs",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 26,
-                fontWeight: FontWeight.bold,
-                letterSpacing: 0.8,
-              ),
+          Positioned.fill(
+            child: Image.asset(
+              'assets/images/songs_packs_bg.png',
+              fit: BoxFit.cover,
             ),
           ),
 
-          Expanded(
-            child: Obx(
-                  () {
 
-                if (controller.songPacks.isEmpty) {
-                  return const Center(
-                    child: CircularProgressIndicator(color: Colors.white),
-                  );
-                }
 
-                return ListView.builder(
-
-                  padding: const EdgeInsets.only(
-                    left: 20,
-                    right: 20,
-                    top: 10,
-                    bottom: 100,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Padding(
+                padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+                child: Text(
+                  "My Song Packs",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
                   ),
+                ),
+              ),
 
-                  physics: const BouncingScrollPhysics(),
-                  itemCount: controller.songPacks.length,
-                  itemBuilder: (context, index) {
+              Expanded(
+                child: Obx(
+                      () {
+                    if (controller.songPacks.isEmpty) {
+                      return const Center(
+                        child: CircularProgressIndicator(color: Colors.white),
+                      );
+                    }
 
-                    return RepaintBoundary(
-                      child: SongPackCard(pack: controller.songPacks[index]),
+                    return ListView.builder(
+                      padding: const EdgeInsets.only(
+                        left: 20,
+                        right: 20,
+                        top: 10,
+                        bottom: 100,
+                      ),
+                      physics: const BouncingScrollPhysics(),
+                      itemCount: controller.songPacks.length,
+                      itemBuilder: (context, index) {
+                        return RepaintBoundary(
+                          child: SongPackCard(pack: controller.songPacks[index]),
+                        );
+                      },
                     );
                   },
-                );
-              },
-            ),
+                ),
+              ),
+            ],
           ),
         ],
       ),
