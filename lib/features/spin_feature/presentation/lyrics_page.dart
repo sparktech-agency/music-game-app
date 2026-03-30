@@ -72,10 +72,13 @@ class LyricsPage extends StatelessWidget {
   }
   Widget _buildSongHeader(LyricsController controller) {
     return Container(
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
       decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          colors: [Color(0xFF1E40AF), Color(0xFF1E3A8A)],
+        gradient: LinearGradient(colors: [Color(0xFF1E40AF), Color(0xFF1D4ED8)]),
+
+        border: Border(
+          top: BorderSide(color: Colors.white, width: 2),
+          bottom: BorderSide(color: Colors.white, width: 2),
         ),
       ),
       child: Row(
@@ -83,25 +86,27 @@ class LyricsPage extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(8),
             child: Image.asset(
-              controller.albumArt.value,
-              width: 55,
-              height: 55,
+              'assets/images/one_direction.jpg',
+              width: 45,
+              height: 45,
               fit: BoxFit.cover,
             ),
           ),
-          const SizedBox(width: 15),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                controller.songTitle.value,
-                style: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              Text(
-                controller.artistName.value,
-                style: const TextStyle(color: Colors.white70, fontSize: 14),
-              ),
-            ],
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Obx(() => Text(
+                  controller.songTitle.value,
+                  style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+                )),
+                Obx(() => Text(
+                  controller.artistName.value,
+                  style: const TextStyle(color: Colors.white70, fontSize: 13),
+                )),
+              ],
+            ),
           ),
         ],
       ),
@@ -156,7 +161,7 @@ class LyricsPage extends StatelessWidget {
           child: const Center(
             child: Text(
               "Tap to Start",
-              style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.w900),
+              style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold),
             ),
           ),
         ),
