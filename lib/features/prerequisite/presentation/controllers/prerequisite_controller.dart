@@ -122,7 +122,7 @@ class PrerequisiteController extends GetxController {
     }
 
     else if (currentPage == "whichTeam") {
-      Get.toNamed(AppRoutes.playerNameTeam1);
+      Get.toNamed(AppRoutes.playerName);
     }
 
     else if(currentPage == "teamNickname"){

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:music_game_app/features/spin_feature/presentation/controllers/lyrics_controller.dart';
 
 class LyricsPage extends StatelessWidget {
+
   const LyricsPage({super.key});
 
   @override
@@ -70,6 +71,7 @@ class LyricsPage extends StatelessWidget {
       ],
     );
   }
+
   Widget _buildSongHeader(LyricsController controller) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
@@ -112,6 +114,7 @@ class LyricsPage extends StatelessWidget {
       ),
     );
   }
+
   Widget _buildLyricsList(LyricsController controller) {
     return Expanded(
       child: ListView.builder(
@@ -137,6 +140,7 @@ class LyricsPage extends StatelessWidget {
       ),
     );
   }
+
   Widget _buildStartButton(LyricsController controller) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -168,6 +172,7 @@ class LyricsPage extends StatelessWidget {
       ),
     );
   }
+
   Widget _buildTimerOverlay(LyricsController controller) {
 
     return Container(

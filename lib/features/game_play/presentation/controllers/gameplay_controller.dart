@@ -6,13 +6,12 @@ class GameplayController extends GetxController {
   static const int maxSeconds = 30;
 
   var teamInfo = "Team 1 | Round 1".obs;
-  var singerStatus = "doejohn is singing".obs;
+  var singerStatus = "doe john is singing".obs;
   var songTitle = "Night Changes".obs;
   var artistName = "One Direction".obs;
 
   var songsGuessed = 0.obs;
   var totalSongs = 6;
-
 
   var timeElapsed = "0:00".obs;
   var mainTimer = "00:00:00".obs;
@@ -30,6 +29,7 @@ class GameplayController extends GetxController {
   Timer? _timer;
   int _seconds = 0;
 
+
   @override
   void onInit() {
     super.onInit();
@@ -46,20 +46,15 @@ class GameplayController extends GetxController {
 
       _seconds++;
 
-
       final duration = Duration(seconds: _seconds);
       mainTimer.value = "${duration.inHours.toString().padLeft(2, '0')}:"
           "${(duration.inMinutes % 60).toString().padLeft(2, '0')}:"
           "${(duration.inSeconds % 60).toString().padLeft(2, '0')}";
 
-
       timeElapsed.value = "${(duration.inMinutes % 60)}:${(duration.inSeconds % 60).toString().padLeft(2, '0')}";
 
-
       if (_seconds % 5 == 0 && currentLyricIndex.value < lyrics.length - 1) {
-
         currentLyricIndex.value++;
-
       }
     });
   }
@@ -67,11 +62,95 @@ class GameplayController extends GetxController {
   void onCorrectGuess() {
     if (songsGuessed.value < totalSongs) {
       songsGuessed.value++;
+      showCorrectGuessModal();
     }
   }
 
+  // Correctly Guessed Modal (Bottom Sheet)
+  void showCorrectGuessModal() {
 
-//Dialogue box
+
+    Get.bottomSheet(
+      Container(
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 30),
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Color(0xFF42E8FF), Color(0xFF3B5CFF)],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(25),
+            topRight: Radius.circular(25),
+          ),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // Success Icon
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.white.withValues(alpha: 0.2),
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(
+                Icons.check_circle,
+                color: Colors.white,
+                size: 30,
+              ),
+            ),
+            const SizedBox(height: 10),
+
+            // Success Text
+            const Text(
+              "Correct Guess",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 24,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            const SizedBox(height: 10),
+
+            // Stop Song Button
+            GestureDetector(
+              onTap: () {
+                _timer?.cancel();
+                Get.back();
+                // Timer remains stopped
+              },
+              child: Container(
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: const Center(
+                  child: Text(
+                    "Stop Song",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 15),
+          ],
+        ),
+      ),
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      enableDrag: true,
+    );
+  }
+
+
+  // I Give up MODAL
   void showPauseDialogue() {
     _timer?.cancel();
 
@@ -79,18 +158,16 @@ class GameplayController extends GetxController {
       Dialog(
         backgroundColor: Colors.transparent,
         child: Container(
-          width: double.infinity,
           padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
           decoration: BoxDecoration(
             color: const Color(0xFF333333),
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: BorderRadius.circular(10),
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-
-              const Icon(Icons.lightbulb_outline, color: Color(0xFFFBBF24), size: 80),
-              const SizedBox(height: 20),
+              const Icon(Icons.lightbulb_outline, color: Color(0xFFFBBF24), size: 40),
+              const SizedBox(height: 10),
 
               const Text(
                 "Do you want to end your turn?",
@@ -113,7 +190,7 @@ class GameplayController extends GetxController {
               GestureDetector(
                 onTap: () {
                   Get.back();
-
+                  // Don't restart timer when ending turn
                 },
                 child: Container(
                   width: double.infinity,

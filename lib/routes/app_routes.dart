@@ -9,7 +9,7 @@ import 'package:music_game_app/features/authentication/presentation/first_screen
 import 'package:music_game_app/features/authentication/presentation/phone_input_page.dart';
 import 'package:music_game_app/features/authentication/presentation/set_password_page.dart';
 import 'package:music_game_app/features/game_play/presentation/gameplay_page.dart';
-import 'package:music_game_app/features/prerequisite/presentation/player_name_team1.dart';
+import 'package:music_game_app/features/prerequisite/presentation/player_name.dart';
 import 'package:music_game_app/features/prerequisite/presentation/round_selection.dart';
 import 'package:music_game_app/features/prerequisite/presentation/singer_number.dart';
 import 'package:music_game_app/features/prerequisite/presentation/team_name.dart';
@@ -53,7 +53,7 @@ class AppRoutes{
   static const String singerNumber = "/singerNumber";
   static const String teamName = "/teamName";
   static const String whichTeam = "/whichTeam";
-  static const String playerNameTeam1 = "/playerNameTeam1";
+  static const String playerName = "/playerName";
   static const String spinFrontPage = "/spinFrontPage";
   static const String spinWheelPage = "/spinWheelPage";
   static const String songPickLoading = "/songPickLoading";
@@ -87,7 +87,7 @@ List<GetPage> routes = [
   GetPage(name: AppRoutes.singerNumber, page: () =>  SingerNumber()),
   GetPage(name: AppRoutes.teamName, page: () =>  TeamName()),
   GetPage(name: AppRoutes.whichTeam, page: () =>  WhichTeam()),
-  GetPage(name: AppRoutes.playerNameTeam1, page: () => PlayerNameTeam1()),
+  GetPage(name: AppRoutes.playerName, page: () => PlayerName()),
   GetPage(name: AppRoutes.spinFrontPage, page: () => SpinFrontPage()),
   GetPage(name: AppRoutes.spinWheelPage, page: () => SpinWheelPage()),
   GetPage(name: AppRoutes.songPickLoading, page: () => SongPickLoadingPage()),

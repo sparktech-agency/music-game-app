@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:music_game_app/features/prerequisite/presentation/controllers/prerequisite_controller.dart';
 
-class PlayerNameTeam1 extends StatelessWidget {
-  const PlayerNameTeam1({super.key});
+class PlayerName extends StatelessWidget {
+  const PlayerName({super.key});
 
   @override
   Widget build(BuildContext context) {
     final PrerequisiteController controller = Get.find<PrerequisiteController>();
+
+
 
     return Scaffold(
       backgroundColor: const Color(0xFF050A18),
@@ -61,8 +63,8 @@ class PlayerNameTeam1 extends StatelessWidget {
         onPressed: () => Get.back(),
       ),
       centerTitle: true,
-      title: const Text(
-        'Please enter the player\nnicknames for [Team 1 Name]',
+      title: Text(
+        'Please enter the player\nnicknames for [Team ${controller.selectedTeam} Name]',
         textAlign: TextAlign.center,
         style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
       ),

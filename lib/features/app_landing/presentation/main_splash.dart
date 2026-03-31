@@ -70,8 +70,8 @@ class _MainSplashState extends State<MainSplash> {
                 Center(
                   child: SvgPicture.asset(
                     'assets/images/logo.svg',
-                    width: 100,
-                    height: 100,
+                    width: 80,
+                    height: 80,
                   ),
                 ),
                 const Spacer(),
