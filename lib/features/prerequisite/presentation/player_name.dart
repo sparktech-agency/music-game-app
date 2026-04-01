@@ -3,10 +3,12 @@ import 'package:get/get.dart';
 import 'package:music_game_app/features/prerequisite/presentation/controllers/prerequisite_controller.dart';
 
 class PlayerName extends StatelessWidget {
+
   const PlayerName({super.key});
 
   @override
   Widget build(BuildContext context) {
+
     final PrerequisiteController controller = Get.find<PrerequisiteController>();
 
 
@@ -46,6 +48,7 @@ class PlayerName extends StatelessWidget {
               ),
 
               _buildNextButton(controller),
+
               const SizedBox(height: 20),
             ],
           ),
@@ -63,11 +66,18 @@ class PlayerName extends StatelessWidget {
         onPressed: () => Get.back(),
       ),
       centerTitle: true,
-      title: Text(
-        'Please enter the player\nnicknames for [Team ${controller.selectedTeam} Name]',
-        textAlign: TextAlign.center,
-        style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
-      ),
+      title: Obx(() {
+
+        String currentTeamName = (controller.selectedTeam.value == 1)
+            ? controller.team1Controller.text
+            : controller.team2Controller.text;
+
+        return Text(
+          'Please enter the player\nnicknames for [$currentTeamName]',
+          textAlign: TextAlign.center,
+          style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+        );
+      }),
       actions: [
         IconButton(
           icon: const Icon(Icons.close, color: Colors.white, size: 28),
@@ -96,6 +106,7 @@ class PlayerName extends StatelessWidget {
   }
 
   Widget _buildNicknameTextField(int index, PrerequisiteController controller) {
+
     return TextField(
       controller: controller.playerControllers[index],
       style: const TextStyle(color: Colors.white),

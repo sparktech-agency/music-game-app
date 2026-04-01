@@ -50,12 +50,19 @@ class PrerequisiteController extends GetxController {
 
 
 
+
+
+
   //==== Screen: Which Team =====//
 
   var selectedTeam = 1.obs;
 
   void selectTeam(int teamNum) {
     selectedTeam.value = teamNum;
+
+    generatePlayerFields(singerNumber.value);
+
+    playerControllers.refresh();
   }
 
 
@@ -64,8 +71,12 @@ class PrerequisiteController extends GetxController {
 
 
   // ==== Screen: Team Names ==== //
+
   late TextEditingController team1Controller;
   late TextEditingController team2Controller;
+
+  var team1Nicknames = <String>[].obs;
+  var team2Nicknames = <String>[].obs;
 
 
   // ==== Screen: Team nickNames ==== //
@@ -74,8 +85,8 @@ class PrerequisiteController extends GetxController {
   //==========Initialization Method========
   @override
   void onInit() {
-    super.onInit();
     // //==== Initializing TextControllers once to avoid rebuild lags ====
+    super.onInit();
     team1Controller = TextEditingController(text: "Team 1");
     team2Controller = TextEditingController(text: "Team 2");
 
@@ -94,6 +105,10 @@ class PrerequisiteController extends GetxController {
       List.generate(count, (index) => TextEditingController()),
     );
   }
+
+
+
+
 
 // //==== CLEAR TEXT FIELD LOGIC ====
   void clearField(TextEditingController controller) {
@@ -141,12 +156,49 @@ class PrerequisiteController extends GetxController {
     }
   }
 
+
+  final RxSet<int> _completedTeams = <int>{}.obs;
+
   void _validateNicknames() {
+
     bool allFilled = playerControllers.every((c) => c.text.trim().isNotEmpty);
-    if (allFilled) {
-      Get.toNamed(AppRoutes.spinFrontPage);
-    } else {
+    if (!allFilled) {
       _showErrorSnackbar("All player nicknames must be filled");
+      return;
+    }
+
+    List<String> nicknames = playerControllers.map((e) => e.text.trim()).toList();
+    if (selectedTeam.value == 1) {
+      team1Nicknames.assignAll(nicknames);
+    } else {
+      team2Nicknames.assignAll(nicknames);
+    }
+
+
+    _completedTeams.add(selectedTeam.value);
+
+
+    if (_completedTeams.length < 2) {
+
+      selectedTeam.value = (selectedTeam.value == 1) ? 2 : 1;
+
+
+      generatePlayerFields(singerNumber.value);
+
+
+      playerControllers.refresh();
+
+    } else {
+
+      debugPrint("======== GAME DATA SUMMARY ========");
+      debugPrint("Team 1 (${team1Controller.text}): $team1Nicknames");
+      debugPrint("Team 2 (${team2Controller.text}): $team2Nicknames");
+      debugPrint("Total Rounds: ${numberOfRound.value}");
+      debugPrint("Singers per Round: ${singerNumber.value}");
+      debugPrint("===================================");
+
+      _completedTeams.clear();
+      Get.toNamed(AppRoutes.spinFrontPage);
     }
   }
 
