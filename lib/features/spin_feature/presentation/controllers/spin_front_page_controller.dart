@@ -9,8 +9,8 @@ class SpinFrontPageController extends GetxController {
   Timer? _timer;
 
   @override
-  void onInit() {
-    super.onInit();
+  void onReady() {
+    super.onReady();
     startTimer();
   }
 

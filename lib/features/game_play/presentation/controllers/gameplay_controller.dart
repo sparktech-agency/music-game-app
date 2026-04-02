@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:music_game_app/routes/app_routes.dart';
 
 class GameplayController extends GetxController {
   static const int maxSeconds = 30;
@@ -31,8 +32,8 @@ class GameplayController extends GetxController {
 
 
   @override
-  void onInit() {
-    super.onInit();
+  void onReady() {
+    super.onReady();
     startGameplayTimer();
   }
 
@@ -61,7 +62,8 @@ class GameplayController extends GetxController {
 
   void onCorrectGuess() {
     if (songsGuessed.value < totalSongs) {
-      songsGuessed.value++;
+      //songsGuessed.value++;
+      _timer?.cancel();
       showCorrectGuessModal();
     }
   }
@@ -116,7 +118,7 @@ class GameplayController extends GetxController {
             // Stop Song Button
             GestureDetector(
               onTap: () {
-                _timer?.cancel();
+
                 Get.back();
                 // Timer remains stopped
               },
@@ -190,6 +192,9 @@ class GameplayController extends GetxController {
               GestureDetector(
                 onTap: () {
                   Get.back();
+                  Future.delayed(Duration.zero, () {
+                    Get.offNamed(AppRoutes.spinFrontPage);
+                  });
                   // Don't restart timer when ending turn
                 },
                 child: Container(

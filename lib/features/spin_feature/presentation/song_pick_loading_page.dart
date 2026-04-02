@@ -58,7 +58,7 @@ class _SongPickLoadingPageState extends State<SongPickLoadingPage> {
 
 
                     const Text(
-                      "Your Song Is About to Be Picked",
+                      "Your song is about to be selected",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.white,
