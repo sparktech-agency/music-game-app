@@ -34,7 +34,9 @@ class GameplayController extends GetxController {
   @override
   void onReady() {
     super.onReady();
-    startGameplayTimer();
+    Future.delayed(const Duration(seconds: 1), () {
+      startGameplayTimer();
+    });
   }
 
   void startGameplayTimer() {

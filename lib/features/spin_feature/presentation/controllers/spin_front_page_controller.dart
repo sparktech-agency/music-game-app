@@ -9,23 +9,32 @@ class SpinFrontPageController extends GetxController {
   Timer? _timer;
 
   @override
-  void onReady() {
-    super.onReady();
-    startTimer();
+  void onInit() {
+    super.onInit();
+    resetAndStartTimer();
   }
 
   // Timer Logic
-  void startTimer() {
+  void resetAndStartTimer() {
+
     _timer?.cancel();
+
+
     showCross.value = false;
     isButtonEnabled.value = false;
 
 
     _timer = Timer(const Duration(seconds: 6), () {
-      showCross.value = true;
-      isButtonEnabled.value = true;
+      if (!isClosed) {
+        showCross.value = true;
+        isButtonEnabled.value = true;
+      }
     });
   }
+
+
+
+
 
 
   void onSpinTap() {
