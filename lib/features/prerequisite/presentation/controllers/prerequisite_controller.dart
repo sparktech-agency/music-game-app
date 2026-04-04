@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:music_game_app/features/game_play/presentation/controllers/game_controller.dart';
 import 'package:music_game_app/routes/app_routes.dart';
 
 class PrerequisiteController extends GetxController {
 
   // ==== Screen: Round Selection ==== //
-  var numberOfRound = 3.obs;
+  var numberOfRound = 2.obs;
 
 
   void selectNumberOfRound(int round) {
@@ -57,8 +58,12 @@ class PrerequisiteController extends GetxController {
 
   var selectedTeam = 1.obs;
 
-  void selectTeam(int teamNum) {
-    selectedTeam.value = teamNum;
+  var myTeam = 0.obs;
+
+  void selectTeam(int teamNumber) {
+    myTeam.value = teamNumber;
+    selectedTeam.value = teamNumber;
+
 
     generatePlayerFields(singerNumber.value);
 
@@ -190,15 +195,25 @@ class PrerequisiteController extends GetxController {
 
     } else {
 
-      debugPrint("======== GAME DATA SUMMARY ========");
-      debugPrint("Team 1 (${team1Controller.text}): $team1Nicknames");
-      debugPrint("Team 2 (${team2Controller.text}): $team2Nicknames");
-      debugPrint("Total Rounds: ${numberOfRound.value}");
-      debugPrint("Singers per Round: ${singerNumber.value}");
-      debugPrint("===================================");
+      final gameController = Get.put(GameController(), permanent: true);
+
+
+      gameController.initializeGame(
+        numberOfRounds: numberOfRound.value,
+        numberOfTeams: teamNumber.value,
+        numberOfSingers: singerNumber.value,
+        t1Name: team1Controller.text.trim(),
+        t2Name: team2Controller.text.trim(),
+        myTeam: myTeam.value,
+        t1Players: team1Nicknames,
+        t2Players: team2Nicknames,
+      );
 
       _completedTeams.clear();
-      Get.toNamed(AppRoutes.spinFrontPage);
+      Get.offNamedUntil(
+        AppRoutes.spinFrontPage,
+            (route) => route.settings.name == AppRoutes.appLanding,
+      );
     }
   }
 

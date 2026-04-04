@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:music_game_app/features/game_play/presentation/controllers/game_controller.dart';
 import 'package:music_game_app/features/spin_feature/presentation/controllers/spin_front_page_controller.dart';
 
 class SpinFrontPage extends StatelessWidget {
@@ -7,12 +8,12 @@ class SpinFrontPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Get.put-এর সাথে tag ব্যবহার করলে প্রতিবার নতুন কন্ট্রোলার তৈরি হবে
-    // ফলে onInit() কল হবে এবং টাইমার ফ্রেশ ভাবে শুরু হবে।
+
     final SpinFrontPageController controller = Get.put(
       SpinFrontPageController(),
       tag: DateTime.now().millisecondsSinceEpoch.toString(),
     );
+    final gameController = Get.find<GameController>();
 
     return Scaffold(
       backgroundColor: const Color(0xFF0A0E21),
@@ -38,12 +39,12 @@ class SpinFrontPage extends StatelessWidget {
               child: Column(
                 children: [
                   const SizedBox(height: 20),
-                  const Text(
-                    "Team 1, Your\nCategory Awaits!",
+                  Text(
+                    "Team ${gameController.currentTurn}, Your\nCategory Awaits!",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 32,
+                      fontSize: 24,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -114,7 +115,7 @@ class SpinFrontPage extends StatelessWidget {
         width: 80,
         child: Image.asset(
           'assets/images/five_sec_timer.gif',
-          key: UniqueKey(), // GIF-কে প্রতিবার রিস্টার্ট করাবে
+          key: UniqueKey(),
           fit: BoxFit.contain,
         ),
       );
@@ -182,7 +183,7 @@ class SpinFrontPage extends StatelessWidget {
   }
 }
 
-// Clipper আগের মতোই থাকবে...
+
 class CustomBottomCurveClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {

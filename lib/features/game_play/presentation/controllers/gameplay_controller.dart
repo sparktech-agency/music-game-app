@@ -1,9 +1,12 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:music_game_app/features/game_play/presentation/controllers/game_controller.dart';
 import 'package:music_game_app/routes/app_routes.dart';
 
 class GameplayController extends GetxController {
+  final GameController gameController = Get.find<GameController>();
+
   static const int maxSeconds = 30;
 
   var teamInfo = "Team 1 | Round 1".obs;
@@ -12,7 +15,7 @@ class GameplayController extends GetxController {
   var artistName = "One Direction".obs;
 
   var songsGuessed = 0.obs;
-  var totalSongs = 6;
+  var totalSongs = 1;
 
   var timeElapsed = "0:00".obs;
   var mainTimer = "00:00:00".obs;
@@ -29,7 +32,6 @@ class GameplayController extends GetxController {
 
   Timer? _timer;
   int _seconds = 0;
-
 
   @override
   void onReady() {
@@ -50,11 +52,13 @@ class GameplayController extends GetxController {
       _seconds++;
 
       final duration = Duration(seconds: _seconds);
-      mainTimer.value = "${duration.inHours.toString().padLeft(2, '0')}:"
+      mainTimer.value =
+          "${duration.inHours.toString().padLeft(2, '0')}:"
           "${(duration.inMinutes % 60).toString().padLeft(2, '0')}:"
           "${(duration.inSeconds % 60).toString().padLeft(2, '0')}";
 
-      timeElapsed.value = "${(duration.inMinutes % 60)}:${(duration.inSeconds % 60).toString().padLeft(2, '0')}";
+      timeElapsed.value =
+          "${(duration.inMinutes % 60)}:${(duration.inSeconds % 60).toString().padLeft(2, '0')}";
 
       if (_seconds % 5 == 0 && currentLyricIndex.value < lyrics.length - 1) {
         currentLyricIndex.value++;
@@ -63,17 +67,16 @@ class GameplayController extends GetxController {
   }
 
   void onCorrectGuess() {
-    if (songsGuessed.value < totalSongs) {
-      //songsGuessed.value++;
-      _timer?.cancel();
-      showCorrectGuessModal();
-    }
+    _timer?.cancel();
+    songsGuessed.value++;
+    int points = (_seconds < maxSeconds) ? 1 : 0;
+    gameController.updateScore(points);
+
+    showCorrectGuessModal();
   }
 
   // Correctly Guessed Modal (Bottom Sheet)
   void showCorrectGuessModal() {
-
-
     Get.bottomSheet(
       Container(
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 30),
@@ -120,8 +123,8 @@ class GameplayController extends GetxController {
             // Stop Song Button
             GestureDetector(
               onTap: () {
-
                 Get.back();
+                _showTurnTransition();
                 // Timer remains stopped
               },
               child: Container(
@@ -153,7 +156,6 @@ class GameplayController extends GetxController {
     );
   }
 
-
   // I Give up MODAL
   void showPauseDialogue() {
     _timer?.cancel();
@@ -170,7 +172,11 @@ class GameplayController extends GetxController {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Icon(Icons.lightbulb_outline, color: Color(0xFFFBBF24), size: 40),
+              const Icon(
+                Icons.lightbulb_outline,
+                color: Color(0xFFFBBF24),
+                size: 40,
+              ),
               const SizedBox(height: 10),
 
               const Text(
@@ -194,9 +200,7 @@ class GameplayController extends GetxController {
               GestureDetector(
                 onTap: () {
                   Get.back();
-                  Future.delayed(Duration.zero, () {
-                    Get.offNamed(AppRoutes.spinFrontPage);
-                  });
+                  _showTurnTransition();
                   // Don't restart timer when ending turn
                 },
                 child: Container(
@@ -240,6 +244,46 @@ class GameplayController extends GetxController {
       ),
       barrierDismissible: false,
     );
+  }
+
+  // Transition splash
+
+  void _showTurnTransition() {
+    gameController.switchTurnAndCheckRound();
+
+    Get.dialog(
+      Scaffold(
+        backgroundColor: const Color(0xFF0A0E21).withValues(alpha: 0.5),
+        body: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Icon(Icons.swap_horiz, color: Colors.white, size: 80),
+              const SizedBox(height: 20),
+              Text(
+                "Next: ${gameController.currentTurn}'s Turn",
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 10),
+              const Text(
+                "Get Ready!",
+                style: TextStyle(color: Colors.white70, fontSize: 18),
+              ),
+            ],
+          ),
+        ),
+      ),
+      barrierDismissible: false,
+    );
+
+    Future.delayed(const Duration(seconds: 3), () {
+      Get.delete<GameplayController>();
+      Get.offNamed(AppRoutes.spinFrontPage);
+    });
   }
 
   @override

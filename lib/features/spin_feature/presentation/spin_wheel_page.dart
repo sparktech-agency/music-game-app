@@ -330,7 +330,7 @@ class _SpinWheelPageState extends State<SpinWheelPage>
                     onTap: controller.hasSpun.value
                         ? () {
 
-                      Get.toNamed(AppRoutes.songPickLoading);
+                      Get.offNamed(AppRoutes.songPickLoading);
                     }
                         : null,
                     child: Container(

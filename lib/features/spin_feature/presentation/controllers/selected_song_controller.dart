@@ -66,7 +66,7 @@ class SelectedSongController extends GetxController {
               TextButton(
                 onPressed: () {
                   Get.back();
-                  Get.toNamed(AppRoutes.lyricsPage);
+                  Get.offNamed(AppRoutes.lyricsPage);
 
 
                 },
