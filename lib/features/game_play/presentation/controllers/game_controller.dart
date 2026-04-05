@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:music_game_app/features/game_play/presentation/widgets/result_screen.dart';
 
 class GameController extends GetxController{
 
@@ -62,7 +63,7 @@ class GameController extends GetxController{
         currentRound.value++;
         currentTurn.value = 1;
       } else {
-        _showFinalResult();
+        Get.off(() => const ResultScreen());
       }
     }
   }

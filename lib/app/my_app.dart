@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
       ),
 
       initialRoute: AppRoutes.firstScreen,
+      //initialRoute: AppRoutes.resultPage,
       getPages: routes,
     );
   }

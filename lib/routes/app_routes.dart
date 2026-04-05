@@ -9,6 +9,7 @@ import 'package:music_game_app/features/authentication/presentation/first_screen
 import 'package:music_game_app/features/authentication/presentation/phone_input_page.dart';
 import 'package:music_game_app/features/authentication/presentation/set_password_page.dart';
 import 'package:music_game_app/features/game_play/presentation/gameplay_page.dart';
+import 'package:music_game_app/features/game_play/presentation/widgets/result_screen.dart';
 import 'package:music_game_app/features/prerequisite/presentation/player_name.dart';
 import 'package:music_game_app/features/prerequisite/presentation/round_selection.dart';
 import 'package:music_game_app/features/prerequisite/presentation/singer_number.dart';
@@ -60,6 +61,7 @@ class AppRoutes{
   static const String selectedSong = "/selectedSong";
   static const String lyricsPage = "/lyricsPage";
   static const String gameplayPage = "/gameplayPage";
+  static const String resultPage = "/resultPage";
 
 
 }
@@ -94,5 +96,6 @@ List<GetPage> routes = [
   GetPage(name: AppRoutes.selectedSong, page: () => SelectedSong()),
   GetPage(name: AppRoutes.lyricsPage, page: () => LyricsPage()),
   GetPage(name: AppRoutes.gameplayPage, page: () => GameplayPage()),
+  GetPage(name: AppRoutes.resultPage, page: () => ResultScreen()),
 
 ];

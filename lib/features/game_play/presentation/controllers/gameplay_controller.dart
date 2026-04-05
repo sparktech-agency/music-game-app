@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:music_game_app/features/game_play/presentation/controllers/game_controller.dart';
+import 'package:music_game_app/features/game_play/presentation/widgets/result_screen.dart';
 import 'package:music_game_app/routes/app_routes.dart';
 
 class GameplayController extends GetxController {
@@ -249,41 +250,54 @@ class GameplayController extends GetxController {
   // Transition splash
 
   void _showTurnTransition() {
-    gameController.switchTurnAndCheckRound();
 
-    Get.dialog(
-      Scaffold(
-        backgroundColor: const Color(0xFF0A0E21).withValues(alpha: 0.5),
-        body: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Icon(Icons.swap_horiz, color: Colors.white, size: 80),
-              const SizedBox(height: 20),
-              Text(
-                "Next: ${gameController.currentTurn}'s Turn",
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
+    bool isGameFinished = (gameController.currentTurn.value == 2 &&
+        gameController.currentRound.value == gameController.totalRounds.value);
+
+    if (isGameFinished) {
+
+      Get.off(() => const ResultScreen());
+    } else {
+
+      gameController.switchTurnAndCheckRound();
+
+      Get.dialog(
+        Scaffold(
+          backgroundColor: const Color(0xFF0A0E21).withValues(alpha: 0.7),
+          body: Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(Icons.swap_horiz, color: Colors.white, size: 80),
+                const SizedBox(height: 20),
+                Text(
+                  "Next: ${gameController.currentTurn}'s Turn",
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 10),
-              const Text(
-                "Get Ready!",
-                style: TextStyle(color: Colors.white70, fontSize: 18),
-              ),
-            ],
+                const SizedBox(height: 10),
+                const Text(
+                  "Get Ready!",
+                  style: TextStyle(color: Colors.white70, fontSize: 18),
+                ),
+              ],
+            ),
           ),
         ),
-      ),
-      barrierDismissible: false,
-    );
+        barrierDismissible: false,
+      );
 
-    Future.delayed(const Duration(seconds: 3), () {
-      Get.delete<GameplayController>();
-      Get.offNamed(AppRoutes.spinFrontPage);
-    });
+      Future.delayed(const Duration(seconds: 3), () {
+        Get.delete<GameplayController>();
+        Get.offNamedUntil(
+          AppRoutes.spinFrontPage,
+              (route) => route.settings.name == AppRoutes.appLanding,
+        );
+      });
+    }
   }
 
   @override
