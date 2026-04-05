@@ -109,12 +109,13 @@ class SpinFrontPage extends StatelessWidget {
           ),
         );
       }
-
+      const String assetPath = 'assets/images/five_sec_timer.gif';
+      AssetImage(assetPath).evict();
       return SizedBox(
         height: 80,
         width: 80,
         child: Image.asset(
-          'assets/images/five_sec_timer.gif',
+          assetPath,
           key: UniqueKey(),
           fit: BoxFit.contain,
         ),
