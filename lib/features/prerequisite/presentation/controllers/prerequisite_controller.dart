@@ -58,7 +58,7 @@ class PrerequisiteController extends GetxController {
 
   var selectedTeam = 1.obs;
 
-  var myTeam = 0.obs;
+  var myTeam = 1.obs;
 
   void selectTeam(int teamNumber) {
     myTeam.value = teamNumber;

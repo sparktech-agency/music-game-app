@@ -263,7 +263,7 @@ class GameplayController extends GetxController {
 
       Get.dialog(
         Scaffold(
-          backgroundColor: const Color(0xFF0A0E21).withValues(alpha: 0.7),
+          backgroundColor: const Color(0xFF0A0E21).withValues(alpha: 0.8),
           body: Center(
             child: Column(
               mainAxisSize: MainAxisSize.min,

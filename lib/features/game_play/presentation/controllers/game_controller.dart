@@ -4,9 +4,9 @@ import 'package:music_game_app/features/game_play/presentation/widgets/result_sc
 
 class GameController extends GetxController{
 
-  var totalRounds = 0.obs;
-  var totalTeams = 0.obs;
-  var totalSingers = 0.obs;
+  var totalRounds = 2.obs;
+  var totalTeams = 2.obs;
+  var totalSingers = 2.obs;
 
   var team1Name = "".obs;
   var team2Name = "".obs;

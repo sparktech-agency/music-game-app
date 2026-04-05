@@ -15,7 +15,7 @@ class _SongPickLoadingPageState extends State<SongPickLoadingPage> {
   void initState() {
     super.initState();
 
-    Timer(const Duration(seconds: 3), () {
+    Timer(const Duration(seconds: 2), () {
 
       Get.offNamed(AppRoutes.selectedSong);
 
@@ -62,10 +62,8 @@ class _SongPickLoadingPageState extends State<SongPickLoadingPage> {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 26,
-                        fontWeight: FontWeight.w900,
-                        letterSpacing: 0.5,
-                        height: 1.2,
+                        fontSize: 24,
+                        fontWeight: FontWeight.w700,
                       ),
                     ),
 

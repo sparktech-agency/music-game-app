@@ -185,16 +185,16 @@ class LyricsPage extends StatelessWidget {
           const Text(
             "Song\nstarts in",
             textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.white, fontSize: 45, fontWeight: FontWeight.w900, height: 1.1),
+            style: TextStyle(color: Colors.white, fontSize: 32, fontWeight: FontWeight.w700),
           ),
           const SizedBox(height: 20),
 
           SizedBox(
-            height: 150,
+            height: 80,
             child: IgnorePointer(
               child: ListWheelScrollView(
                 controller: controller.scrollController,
-                itemExtent: 140,
+                itemExtent: 80,
                 physics: const NeverScrollableScrollPhysics(),
                 children: List.generate(5, (index) {
                   return Center(
@@ -202,8 +202,8 @@ class LyricsPage extends StatelessWidget {
                       "${5 - index}",
                       style: const TextStyle(
                         color: Color(0xFF42E8FF),
-                        fontSize: 100,
-                        fontWeight: FontWeight.w900,
+                        fontSize: 60,
+                        fontWeight: FontWeight.w700,
                       ),
                     ),
                   );
