@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+
 import 'package:get/get.dart';
 import 'package:music_game_app/features/game_play/presentation/widgets/result_screen.dart';
 
@@ -66,16 +66,6 @@ class GameController extends GetxController{
         Get.off(() => const ResultScreen());
       }
     }
-  }
-
-  void _showFinalResult() {
-    debugPrint("======== FINAL RESULT ========");
-    debugPrint("${team1Name.value}: ${team1Score.value}");
-    debugPrint("${team2Name.value}: ${team2Score.value}");
-    if (team1Score.value > team2Score.value) debugPrint("Winner: ${team1Name.value}");
-    else if (team2Score.value > team1Score.value) debugPrint("Winner: ${team2Name.value}");
-    else debugPrint("Match Draw!");
-    debugPrint("==============================");
   }
 
 }

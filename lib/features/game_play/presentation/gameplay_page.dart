@@ -138,6 +138,7 @@ class GameplayPage extends StatelessWidget {
     );
   }
   Widget _buildScoreAndSmallTimer(GameplayController controller) {
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
       child: Row(
