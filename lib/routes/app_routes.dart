@@ -68,13 +68,13 @@ class AppRoutes{
 
 
 List<GetPage> routes = [
+
   GetPage(name: AppRoutes.firstScreen, page: () => const FirstScreen()),
   GetPage(name: AppRoutes.emailInputScreen, page: () => const EmailInputPage()),
   GetPage(name: AppRoutes.phoneInputScreen, page: () => const PhoneInputPage()),
   GetPage(name: AppRoutes.setPassScreen, page: () => const SetPasswordPage()),
   GetPage(name: AppRoutes.welcomeSplash, page: () =>  WelcomeSplash()),
   GetPage(name: AppRoutes.twoButtonPage, page: () =>  TwoButtonPage()),
-
   GetPage(name: AppRoutes.appLanding, page: () =>  AppLanding()),
   GetPage(name: AppRoutes.profileScreen, page: () =>  ProfileScreen()),
   GetPage(name: AppRoutes.settingsScreen, page: () =>  SettingsScreen()),

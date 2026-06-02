@@ -3,15 +3,17 @@ import 'package:get/get.dart';
 import 'package:music_game_app/core/common_widgets/custom_gradient_button.dart';
 import 'package:music_game_app/core/widgets/custom_appbar.dart';
 import 'package:music_game_app/features/authentication/presentation/controllers/email_controller.dart';
+import 'package:music_game_app/features/authentication/presentation/controllers/password_controller.dart';
 
 class EmailInputPage extends StatelessWidget {
   const EmailInputPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // //==== Use Get.put() or Get.find() outside the build method if using Bindings (Best Practice) ====
-    // //==== For now, ensuring it's initialized only once ====
+    //==== Use Get.put() or Get.find() outside the build method if using Bindings (Best Practice) ====
+   //==== For now, ensuring it's initialized only once ====
     final EmailController controller = Get.put(EmailController());
+    final PasswordController passController = Get.put(PasswordController());
 
     return Scaffold(
       backgroundColor: const Color(0xFF050A18),
@@ -33,17 +35,53 @@ class EmailInputPage extends StatelessWidget {
                     children: [
                       const SizedBox(height: 40),
                       const Text(
-                        'Enter Your Email Address',
+                        'Please Login',
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 22,
+                          fontSize: 20,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      const SizedBox(height: 40),
+                      const SizedBox(height: 20),
 
                       // //==== TextField wrapped in a focused block for better readability ====
                       _buildEmailField(controller),
+
+                      const SizedBox(height: 20),
+
+                      Obx(() => _buildPasswordField(
+                        controller: passController.passwordController,
+                        hint: "Enter password",
+                        isVisible: passController.isPasswordVisible.value,
+                        onToggle: passController.togglePasswordVisibility,
+                      )),
+
+                      const SizedBox(height: 10),
+
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text(
+                            "Don''t Have an Account? ",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: (){},
+                            child: const Text(
+                              'Register',
+                              style: TextStyle(
+                                color: Colors.cyan,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),
@@ -58,7 +96,7 @@ class EmailInputPage extends StatelessWidget {
     );
   }
 
-  // //==== Extracted Email Field as a method to keep build method lean and memory efficient ====
+  //==== Extracted Email Field as a method to keep build method lean and memory efficient ====
   Widget _buildEmailField(EmailController controller) {
     return TextField(
       controller: controller.emailController,
@@ -89,7 +127,7 @@ class EmailInputPage extends StatelessWidget {
     );
   }
 
-  // //==== Extracted Bottom area to avoid deep nesting ====
+ //==== Extracted Bottom area to avoid deep nesting ====
   Widget _buildBottomActionArea(EmailController controller) {
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -109,6 +147,43 @@ class EmailInputPage extends StatelessWidget {
         ),
         const SizedBox(height: 20),
       ],
+    );
+  }
+
+
+  Widget _buildPasswordField({
+    required TextEditingController controller,
+    required String hint,
+    required bool isVisible,
+    required VoidCallback onToggle,
+  }) {
+    return TextField(
+      controller: controller,
+      obscureText: !isVisible,
+      style: const TextStyle(color: Colors.white),
+      decoration: InputDecoration(
+        hintText: hint,
+        hintStyle: const TextStyle(color: Colors.grey, fontSize: 16),
+        filled: true,
+        fillColor: const Color(0xFF101625),
+        contentPadding: const EdgeInsets.symmetric(vertical: 18, horizontal: 20),
+        suffixIcon: IconButton(
+          icon: Icon(
+            isVisible ? Icons.visibility : Icons.visibility_off_outlined,
+            color: Colors.grey,
+            size: 20,
+          ),
+          onPressed: onToggle,
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(25),
+          borderSide: const BorderSide(color: Color(0xFF1E2746)),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(25),
+          borderSide: const BorderSide(color: Colors.blueAccent),
+        ),
+      ),
     );
   }
 }
