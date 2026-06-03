@@ -36,7 +36,7 @@ class FirstScreen extends StatelessWidget {
                   CustomGradientButton(
                     text: 'Continue With Email',
                     icon: Icons.email_outlined,
-                    onPressed: () {Get.toNamed(AppRoutes.emailInputScreen);},
+                    onPressed: () {Get.toNamed(AppRoutes.loginPage);},
                   ),
 
                   SizedBox(height: 15),

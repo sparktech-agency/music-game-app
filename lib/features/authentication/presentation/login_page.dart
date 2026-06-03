@@ -2,25 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:music_game_app/core/common_widgets/custom_gradient_button.dart';
 import 'package:music_game_app/core/widgets/custom_appbar.dart';
-import 'package:music_game_app/features/authentication/presentation/controllers/email_controller.dart';
-import 'package:music_game_app/features/authentication/presentation/controllers/password_controller.dart';
+import 'package:music_game_app/features/authentication/presentation/controllers/login_controller.dart';
 
-class EmailInputPage extends StatelessWidget {
-  const EmailInputPage({super.key});
+class LogInPage extends GetView<LoginController> {
+  const LogInPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    //==== Use Get.put() or Get.find() outside the build method if using Bindings (Best Practice) ====
-   //==== For now, ensuring it's initialized only once ====
-    final EmailController controller = Get.put(EmailController());
-    final PasswordController passController = Get.put(PasswordController());
-
     return Scaffold(
       backgroundColor: const Color(0xFF050A18),
       resizeToAvoidBottomInset: true,
-      appBar: const CustomAppBar(
-        title: 'Log In/Register',
-      ),
+      appBar: const CustomAppBar(title: 'Log In/Register'),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25),
@@ -28,7 +20,6 @@ class EmailInputPage extends StatelessWidget {
             children: [
               Expanded(
                 child: SingleChildScrollView(
-                  // //==== Physics added to ensure smooth scrolling on all devices ====
                   physics: const BouncingScrollPhysics(),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -44,16 +35,15 @@ class EmailInputPage extends StatelessWidget {
                       ),
                       const SizedBox(height: 20),
 
-                      // //==== TextField wrapped in a focused block for better readability ====
                       _buildEmailField(controller),
 
                       const SizedBox(height: 20),
 
                       Obx(() => _buildPasswordField(
-                        controller: passController.passwordController,
+                        controller: controller.passwordController,
                         hint: "Enter password",
-                        isVisible: passController.isPasswordVisible.value,
-                        onToggle: passController.togglePasswordVisibility,
+                        isVisible: controller.isPasswordVisible.value,
+                        onToggle: controller.togglePasswordVisibility,
                       )),
 
                       const SizedBox(height: 10),
@@ -62,7 +52,7 @@ class EmailInputPage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           const Text(
-                            "Don''t Have an Account? ",
+                            "Don't Have an Account? ",
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 14,
@@ -70,7 +60,7 @@ class EmailInputPage extends StatelessWidget {
                             ),
                           ),
                           GestureDetector(
-                            onTap: (){},
+                            onTap: () {},
                             child: const Text(
                               'Register',
                               style: TextStyle(
@@ -87,7 +77,6 @@ class EmailInputPage extends StatelessWidget {
                 ),
               ),
 
-              // //==== Bottom section for Action Buttons ====
               _buildBottomActionArea(controller),
             ],
           ),
@@ -96,13 +85,11 @@ class EmailInputPage extends StatelessWidget {
     );
   }
 
-  //==== Extracted Email Field as a method to keep build method lean and memory efficient ====
-  Widget _buildEmailField(EmailController controller) {
+  Widget _buildEmailField(LoginController controller) {
     return TextField(
       controller: controller.emailController,
       keyboardType: TextInputType.emailAddress,
       style: const TextStyle(color: Colors.white),
-      // //==== Setting textInputAction to 'next' or 'done' improves UX ====
       textInputAction: TextInputAction.done,
       decoration: InputDecoration(
         hintText: 'Enter email',
@@ -127,14 +114,13 @@ class EmailInputPage extends StatelessWidget {
     );
   }
 
- //==== Extracted Bottom area to avoid deep nesting ====
-  Widget _buildBottomActionArea(EmailController controller) {
+  Widget _buildBottomActionArea(LoginController controller) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         CustomGradientButton(
-          text: "Next",
-          onPressed: () => controller.verifyEmail(),
+          text: "Login",
+          onPressed: () => controller.login(),
         ),
         const SizedBox(height: 20),
         const Text(
@@ -149,7 +135,6 @@ class EmailInputPage extends StatelessWidget {
       ],
     );
   }
-
 
   Widget _buildPasswordField({
     required TextEditingController controller,

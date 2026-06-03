@@ -4,9 +4,11 @@ import 'package:music_game_app/features/app_landing/presentation/app_landing.dar
 import 'package:music_game_app/features/app_landing/presentation/lets_play_screen.dart';
 import 'package:music_game_app/features/app_landing/presentation/lets_sing_screen.dart';
 import 'package:music_game_app/features/app_landing/presentation/main_splash.dart';
-import 'package:music_game_app/features/authentication/presentation/email_input_page.dart';
+import 'package:music_game_app/features/authentication/presentation/bindings/auth_bindings.dart';
+import 'package:music_game_app/features/authentication/presentation/login_page.dart';
 import 'package:music_game_app/features/authentication/presentation/first_screen.dart';
 import 'package:music_game_app/features/authentication/presentation/phone_input_page.dart';
+import 'package:music_game_app/features/authentication/presentation/registration_page.dart';
 import 'package:music_game_app/features/authentication/presentation/set_password_page.dart';
 import 'package:music_game_app/features/game_play/presentation/gameplay_page.dart';
 import 'package:music_game_app/features/game_play/presentation/widgets/result_screen.dart';
@@ -33,7 +35,8 @@ class AppRoutes{
   AppRoutes._();
 
   static const String firstScreen = "/firstScreen";
-  static const String emailInputScreen = "/emailInputScreen";
+  static const String loginPage = "/loginPage";
+  static const String registrationPage = "/registrationPage";
   static const String phoneInputScreen = "/phoneInputScreen";
   static const String setPassScreen = "/setPassScreen";
 
@@ -70,7 +73,21 @@ class AppRoutes{
 List<GetPage> routes = [
 
   GetPage(name: AppRoutes.firstScreen, page: () => const FirstScreen()),
-  GetPage(name: AppRoutes.emailInputScreen, page: () => const EmailInputPage()),
+
+  GetPage(
+      name: AppRoutes.loginPage,
+      page: () => const LogInPage(),
+      binding: AuthBindings()
+  ),
+
+  GetPage(
+      name: AppRoutes.registrationPage,
+      page: () => const RegistrationPage(),
+      binding: AuthBindings()
+  ),
+
+
+
   GetPage(name: AppRoutes.phoneInputScreen, page: () => const PhoneInputPage()),
   GetPage(name: AppRoutes.setPassScreen, page: () => const SetPasswordPage()),
   GetPage(name: AppRoutes.welcomeSplash, page: () =>  WelcomeSplash()),
