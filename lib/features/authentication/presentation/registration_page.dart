@@ -97,20 +97,6 @@ class RegistrationPage extends GetView<RegistrationController> {
   }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   Widget _buildBottomActionArea(RegistrationController controller) {
     return Column(
       mainAxisSize: MainAxisSize.min,

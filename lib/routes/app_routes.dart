@@ -10,6 +10,7 @@ import 'package:music_game_app/features/authentication/presentation/first_screen
 import 'package:music_game_app/features/authentication/presentation/phone_input_page.dart';
 import 'package:music_game_app/features/authentication/presentation/registration_page.dart';
 import 'package:music_game_app/features/authentication/presentation/set_password_page.dart';
+import 'package:music_game_app/features/authentication/presentation/verify_code_page.dart';
 import 'package:music_game_app/features/game_play/presentation/gameplay_page.dart';
 import 'package:music_game_app/features/game_play/presentation/widgets/result_screen.dart';
 import 'package:music_game_app/features/prerequisite/presentation/player_name.dart';
@@ -37,6 +38,7 @@ class AppRoutes{
   static const String firstScreen = "/firstScreen";
   static const String loginPage = "/loginPage";
   static const String registrationPage = "/registrationPage";
+  static const String verifyCodePage = "/verifyCodePage";
   static const String phoneInputScreen = "/phoneInputScreen";
   static const String setPassScreen = "/setPassScreen";
 
@@ -83,6 +85,12 @@ List<GetPage> routes = [
   GetPage(
       name: AppRoutes.registrationPage,
       page: () => const RegistrationPage(),
+      binding: AuthBindings()
+  ),
+
+  GetPage(
+      name: AppRoutes.verifyCodePage,
+      page: () => const VerifyCodePage(),
       binding: AuthBindings()
   ),
 

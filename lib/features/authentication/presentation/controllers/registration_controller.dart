@@ -72,7 +72,7 @@ class RegistrationController extends GetxController {
     isLoading.value = false;
 
     // Navigate to landing or login page after successful registration
-    Get.offAllNamed(AppRoutes.appLanding);
+    Get.toNamed(AppRoutes.verifyCodePage);
     // or maybe navigate to login: Get.offAllNamed(AppRoutes.login);
   }
 
