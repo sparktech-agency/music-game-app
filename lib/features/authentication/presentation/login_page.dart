@@ -3,6 +3,9 @@ import 'package:get/get.dart';
 import 'package:music_game_app/core/common_widgets/custom_gradient_button.dart';
 import 'package:music_game_app/core/widgets/custom_appbar.dart';
 import 'package:music_game_app/features/authentication/presentation/controllers/login_controller.dart';
+import 'package:music_game_app/features/authentication/presentation/widgets/custom_email_field.dart';
+import 'package:music_game_app/features/authentication/presentation/widgets/custom_password_field.dart';
+import 'package:music_game_app/routes/app_routes.dart';
 
 class LogInPage extends GetView<LoginController> {
   const LogInPage({super.key});
@@ -35,15 +38,14 @@ class LogInPage extends GetView<LoginController> {
                       ),
                       const SizedBox(height: 20),
 
-                      _buildEmailField(controller),
+                      CustomEmailField(controller: controller.emailController),
 
                       const SizedBox(height: 20),
 
-                      Obx(() => _buildPasswordField(
-                        controller: controller.passwordController,
-                        hint: "Enter password",
-                        isVisible: controller.isPasswordVisible.value,
-                        onToggle: controller.togglePasswordVisibility,
+                      Obx(() => CustomPasswordField(
+                          controller: controller.passwordController,
+                          isVisible: controller.isPasswordVisible.value,
+                          onToggle: controller.togglePasswordVisibility
                       )),
 
                       const SizedBox(height: 10),
@@ -60,7 +62,7 @@ class LogInPage extends GetView<LoginController> {
                             ),
                           ),
                           GestureDetector(
-                            onTap: () {},
+                            onTap: () {Get.toNamed(AppRoutes.registrationPage);},
                             child: const Text(
                               'Register',
                               style: TextStyle(
@@ -76,8 +78,11 @@ class LogInPage extends GetView<LoginController> {
                   ),
                 ),
               ),
-
-              _buildBottomActionArea(controller),
+              CustomGradientButton(
+                  text: "Login",
+                  onPressed: ()=> controller.login()
+              ),
+              const SizedBox(height: 24)
             ],
           ),
         ),
@@ -85,90 +90,6 @@ class LogInPage extends GetView<LoginController> {
     );
   }
 
-  Widget _buildEmailField(LoginController controller) {
-    return TextField(
-      controller: controller.emailController,
-      keyboardType: TextInputType.emailAddress,
-      style: const TextStyle(color: Colors.white),
-      textInputAction: TextInputAction.done,
-      decoration: InputDecoration(
-        hintText: 'Enter email',
-        hintStyle: const TextStyle(color: Colors.grey),
-        prefixIcon: const Icon(Icons.email_outlined, color: Colors.grey),
-        filled: true,
-        fillColor: const Color(0xFF101625),
-        contentPadding: const EdgeInsets.symmetric(vertical: 20),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(25),
-          borderSide: const BorderSide(color: Color(0xFF1E2746)),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(25),
-          borderSide: const BorderSide(color: Color(0xFF1E2746)),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(25),
-          borderSide: const BorderSide(color: Colors.blueAccent),
-        ),
-      ),
-    );
-  }
 
-  Widget _buildBottomActionArea(LoginController controller) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        CustomGradientButton(
-          text: "Login",
-          onPressed: () => controller.login(),
-        ),
-        const SizedBox(height: 20),
-        const Text(
-          'We need to verify if the email has been registered with Lyricraze',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: Colors.grey,
-            fontSize: 14,
-          ),
-        ),
-        const SizedBox(height: 20),
-      ],
-    );
-  }
 
-  Widget _buildPasswordField({
-    required TextEditingController controller,
-    required String hint,
-    required bool isVisible,
-    required VoidCallback onToggle,
-  }) {
-    return TextField(
-      controller: controller,
-      obscureText: !isVisible,
-      style: const TextStyle(color: Colors.white),
-      decoration: InputDecoration(
-        hintText: hint,
-        hintStyle: const TextStyle(color: Colors.grey, fontSize: 16),
-        filled: true,
-        fillColor: const Color(0xFF101625),
-        contentPadding: const EdgeInsets.symmetric(vertical: 18, horizontal: 20),
-        suffixIcon: IconButton(
-          icon: Icon(
-            isVisible ? Icons.visibility : Icons.visibility_off_outlined,
-            color: Colors.grey,
-            size: 20,
-          ),
-          onPressed: onToggle,
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(25),
-          borderSide: const BorderSide(color: Color(0xFF1E2746)),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(25),
-          borderSide: const BorderSide(color: Colors.blueAccent),
-        ),
-      ),
-    );
-  }
 }
