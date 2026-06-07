@@ -9,7 +9,7 @@ class PhoneController extends GetxController {
   void verifyPhone() {
     String phoneNumber = selectedCountryCode.value + phoneController.text;
     if (phoneController.text.isNotEmpty) {
-      Get.toNamed(AppRoutes.setPassScreen);
+      Get.toNamed(AppRoutes.verifyPhonePage);
 
     } else {
       Get.snackbar(

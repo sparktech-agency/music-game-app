@@ -3,11 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:music_game_app/core/widgets/custom_appbar.dart';
-import 'package:music_game_app/features/authentication/presentation/controllers/verify_code_controller.dart';
+import 'package:music_game_app/features/authentication/presentation/controllers/verify_email_controller.dart';
 import 'package:pinput/pinput.dart';
 
-class VerifyCodePage extends GetView<VerifyCodeController> {
-  const VerifyCodePage({super.key});
+class VerifyEmailPage extends GetView<VerifyEmailController> {
+  const VerifyEmailPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class VerifyCodePage extends GetView<VerifyCodeController> {
               const SizedBox(height: 40),
 
               const Text(
-                "Lyricraze Has Sent a Code to Your Phone\nPlease allow up to 3 minutes for it to arrive, then enter it below.",
+                "Lyricraze Has Sent a Code to Your Email\nPlease allow up to 3 minutes for it to arrive, then enter it below.",
                 textAlign: TextAlign.center,
                 style: TextStyle(color: Colors.white, fontSize: 16),
               ),

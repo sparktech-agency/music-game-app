@@ -5,12 +5,14 @@ import 'package:music_game_app/features/app_landing/presentation/lets_play_scree
 import 'package:music_game_app/features/app_landing/presentation/lets_sing_screen.dart';
 import 'package:music_game_app/features/app_landing/presentation/main_splash.dart';
 import 'package:music_game_app/features/authentication/presentation/bindings/auth_bindings.dart';
+import 'package:music_game_app/features/authentication/presentation/enter_email_page.dart';
 import 'package:music_game_app/features/authentication/presentation/login_page.dart';
 import 'package:music_game_app/features/authentication/presentation/first_screen.dart';
 import 'package:music_game_app/features/authentication/presentation/phone_input_page.dart';
 import 'package:music_game_app/features/authentication/presentation/registration_page.dart';
 import 'package:music_game_app/features/authentication/presentation/set_password_page.dart';
-import 'package:music_game_app/features/authentication/presentation/verify_code_page.dart';
+import 'package:music_game_app/features/authentication/presentation/verify_email_page.dart';
+import 'package:music_game_app/features/authentication/presentation/verify_phone_page.dart';
 import 'package:music_game_app/features/game_play/presentation/gameplay_page.dart';
 import 'package:music_game_app/features/game_play/presentation/widgets/result_screen.dart';
 import 'package:music_game_app/features/prerequisite/presentation/player_name.dart';
@@ -38,7 +40,9 @@ class AppRoutes{
   static const String firstScreen = "/firstScreen";
   static const String loginPage = "/loginPage";
   static const String registrationPage = "/registrationPage";
-  static const String verifyCodePage = "/verifyCodePage";
+  static const String verifyEmailPage = "/verifyEmailPage";
+  static const String verifyPhonePage = "/verifyPhonePage";
+  static const String enterEmailPage = "/enterEmailPage";
   static const String phoneInputScreen = "/phoneInputScreen";
   static const String setPassScreen = "/setPassScreen";
 
@@ -89,8 +93,20 @@ List<GetPage> routes = [
   ),
 
   GetPage(
-      name: AppRoutes.verifyCodePage,
-      page: () => const VerifyCodePage(),
+      name: AppRoutes.verifyEmailPage,
+      page: () => const VerifyEmailPage(),
+      binding: AuthBindings()
+  ),
+
+  GetPage(
+      name: AppRoutes.verifyPhonePage,
+      page: () => const VerifyPhonePage(),
+      binding: AuthBindings()
+  ),
+
+  GetPage(
+      name: AppRoutes.enterEmailPage,
+      page: () => const EnterEmailPage(),
       binding: AuthBindings()
   ),
 

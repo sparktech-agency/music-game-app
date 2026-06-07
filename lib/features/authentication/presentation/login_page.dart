@@ -50,6 +50,25 @@ class LogInPage extends GetView<LoginController> {
 
                       const SizedBox(height: 10),
 
+
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: GestureDetector(
+                          onTap: (){Get.toNamed(AppRoutes.enterEmailPage);},
+                          child: Text(
+                            'Forgot Password?',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      const SizedBox(height: 30),
+
+
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
