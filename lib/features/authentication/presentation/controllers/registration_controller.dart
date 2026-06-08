@@ -1,79 +1,101 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:music_game_app/features/authentication/domain/usecases/register_usecase.dart';
 import 'package:music_game_app/routes/app_routes.dart';
 
 class RegistrationController extends GetxController {
-  // Text Controllers
+  // UseCase Injection
+  final RegisterUseCase _registerUseCase;
+  RegistrationController({required RegisterUseCase registerUseCase}) : _registerUseCase = registerUseCase;
+
+  // Text Editing Controllers
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
 
-  // Reactive States
-  final isLoading = false.obs;
-  final isPasswordVisible = false.obs;
-  final isConfirmPasswordVisible = false.obs;
+  // Reactive States (Private setters are standard for preventing external state mutation)
+  final _isLoading = false.obs;
+  bool get isLoading => _isLoading.value;
 
-  // Toggle password visibility
-  void togglePasswordVisibility() {
-    isPasswordVisible.value = !isPasswordVisible.value;
-  }
+  final _isPasswordVisible = false.obs;
+  bool get isPasswordVisible => _isPasswordVisible.value;
 
-  void toggleConfirmPasswordVisibility() {
-    isConfirmPasswordVisible.value = !isConfirmPasswordVisible.value;
-  }
+  final _isConfirmPasswordVisible = false.obs;
+  bool get isConfirmPasswordVisible => _isConfirmPasswordVisible.value;
 
-  // Registration Method
+  // Visibility Toggles
+  void togglePasswordVisibility() => _isPasswordVisible.value = !_isPasswordVisible.value;
+  void toggleConfirmPasswordVisibility() => _isConfirmPasswordVisible.value = !_isConfirmPasswordVisible.value;
+
+  // Main Registration Logic
   Future<void> register() async {
     final email = emailController.text.trim();
     final password = passwordController.text.trim();
     final confirmPassword = confirmPasswordController.text.trim();
 
-    // Basic empty check
+    // Input Validation Guard Clauses
     if (email.isEmpty || password.isEmpty || confirmPassword.isEmpty) {
-      Get.snackbar('Error', 'All fields are required',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.redAccent,
-          colorText: Colors.white);
+      _showErrorSnackbar('All fields are required');
       return;
     }
 
-    // Email format validation
     if (!GetUtils.isEmail(email)) {
-      Get.snackbar('Error', 'Invalid email format',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.redAccent,
-          colorText: Colors.white);
+      _showErrorSnackbar('Invalid email format');
       return;
     }
 
-    // Password length check (optional)
     if (password.length < 6) {
-      Get.snackbar('Error', 'Password must be at least 6 characters',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.redAccent,
-          colorText: Colors.white);
+      _showErrorSnackbar('Password must be at least 6 characters');
       return;
     }
 
-    // Confirm password match
     if (password != confirmPassword) {
-      Get.snackbar('Error', 'Passwords do not match',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.redAccent,
-          colorText: Colors.white);
+      _showErrorSnackbar('Passwords do not match');
       return;
     }
 
-    isLoading.value = true;
+    try {
+      _isLoading.value = true;
 
-    // Simulate API call
-    await Future.delayed(const Duration(seconds: 2));
+      // Actual Clean UseCase Trigger
+      final result = await _registerUseCase.call(email, password);
 
-    isLoading.value = false;
+      if (result.success) {
+        _showSuccessSnackbar(result.message.isNotEmpty ? result.message : 'Registration successful!');
 
-    // Navigate to landing or login page after successful registration
-    Get.toNamed(AppRoutes.verifyEmailPage);
-    // or maybe navigate to login: Get.offAllNamed(AppRoutes.login);
+        // Target Next Step Route Execution
+        Get.toNamed(AppRoutes.verifyEmailPage);
+      } else {
+        _showErrorSnackbar(result.message);
+      }
+    } catch (e) {
+      _showErrorSnackbar('An unexpected error occurred: ${e.toString()}');
+    } finally {
+      _isLoading.value = false;
+    }
+  }
+
+  // Common Snackbar Helper functions
+  void _showErrorSnackbar(String message) {
+    Get.snackbar(
+      'Error',
+      message,
+      snackPosition: SnackPosition.BOTTOM,
+      backgroundColor: Colors.redAccent,
+      colorText: Colors.white,
+      margin: const EdgeInsets.all(15),
+    );
+  }
+
+  void _showSuccessSnackbar(String message) {
+    Get.snackbar(
+      'Success',
+      message,
+      snackPosition: SnackPosition.BOTTOM,
+      backgroundColor: Colors.green,
+      colorText: Colors.white,
+      margin: const EdgeInsets.all(15),
+    );
   }
 
   @override

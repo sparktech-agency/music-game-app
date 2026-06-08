@@ -12,6 +12,13 @@ class RegistrationPage extends GetView<RegistrationController> {
 
   @override
   Widget build(BuildContext context) {
+    // Standard configurations extracted into variables for readability
+    const textStyleLink = TextStyle(
+      color: Colors.cyan,
+      fontSize: 14,
+      fontWeight: FontWeight.w600,
+    );
+
     return Scaffold(
       backgroundColor: const Color(0xFF050A18),
       resizeToAvoidBottomInset: true,
@@ -38,28 +45,29 @@ class RegistrationPage extends GetView<RegistrationController> {
                       ),
                       const SizedBox(height: 20),
 
+                      // Email Field
                       CustomEmailField(controller: controller.emailController),
-
                       const SizedBox(height: 20),
 
+                      // Password Field
                       Obx(() => CustomPasswordField(
-                          hint: "Set your password",
-                          controller: controller.passwordController,
-                          isVisible: controller.isPasswordVisible.value,
-                          onToggle: controller.togglePasswordVisibility
+                        hint: "Set your password",
+                        controller: controller.passwordController,
+                        isVisible: controller.isPasswordVisible,
+                        onToggle: controller.togglePasswordVisibility,
                       )),
-
                       const SizedBox(height: 20),
 
+                      // Confirm Password Field
                       Obx(() => CustomPasswordField(
-                          hint: "Confirm your password",
-                          controller: controller.confirmPasswordController,
-                          isVisible: controller.isConfirmPasswordVisible.value,
-                          onToggle: controller.toggleConfirmPasswordVisibility
+                        hint: "Confirm your password",
+                        controller: controller.confirmPasswordController,
+                        isVisible: controller.isConfirmPasswordVisible,
+                        onToggle: controller.toggleConfirmPasswordVisibility,
                       )),
+                      const SizedBox(height: 20),
 
-                      const SizedBox(height: 10),
-
+                      // Navigation Switcher Option Link
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -72,15 +80,8 @@ class RegistrationPage extends GetView<RegistrationController> {
                             ),
                           ),
                           GestureDetector(
-                            onTap: () {Get.offNamed(AppRoutes.loginPage);},
-                            child: const Text(
-                              'Login',
-                              style: TextStyle(
-                                color: Colors.cyan,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
+                            onTap: () => Get.offNamed(AppRoutes.loginPage),
+                            child: const Text('Login', style: textStyleLink),
                           ),
                         ],
                       ),
@@ -88,7 +89,8 @@ class RegistrationPage extends GetView<RegistrationController> {
                   ),
                 ),
               ),
-             _buildBottomActionArea(controller)
+              // Bottom Section Area (Context reactive via controller injection)
+              _buildBottomActionArea(),
             ],
           ),
         ),
@@ -96,15 +98,23 @@ class RegistrationPage extends GetView<RegistrationController> {
     );
   }
 
-
-  Widget _buildBottomActionArea(RegistrationController controller) {
+  // Private sub-view widget matching industry standard patterns
+  Widget _buildBottomActionArea() {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        CustomGradientButton(
-          text: "Register",
-          onPressed: () => controller.register(),
-        ),
+        // Obx added here to handle dynamic button loading transitions natively
+        Obx(() {
+          return controller.isLoading
+              ? const Padding(
+            padding: EdgeInsets.symmetric(vertical: 10),
+            child: CircularProgressIndicator(color: Colors.cyan),
+          )
+              : CustomGradientButton(
+            text: "Register",
+            onPressed: () => controller.register(),
+          );
+        }),
         const SizedBox(height: 20),
         const Text(
           'We need to verify if the email has been registered with Lyricraze',

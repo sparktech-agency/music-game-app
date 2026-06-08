@@ -45,12 +45,12 @@ class VerifyEmailPage extends GetView<VerifyEmailController> {
                   inputFormatters: [
                     FilteringTextInputFormatter.digitsOnly, // only digits allowed
                   ],
-                onCompleted: (pin) {} //controller.verifyCode(pin),
+                onCompleted: controller.verifyCode,//controller.verifyCode(pin),
               ),
 
               const SizedBox(height: 20),
               GestureDetector(
-                onTap: (){},//controller.resendCode,
+                onTap: controller.resendCode,//controller.resendCode,
                 child: Text.rich(
                   TextSpan(
                     style: const TextStyle(color: Colors.white, fontSize: 14), // base style (no bold)

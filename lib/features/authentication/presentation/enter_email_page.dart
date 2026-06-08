@@ -38,17 +38,6 @@ class EnterEmailPage extends GetView<EnterEmailController> {
 
                       CustomEmailField(controller: controller.emailController),
 
-                      const SizedBox(height: 20),
-
-
-
-                      const SizedBox(height: 10),
-
-
-
-                      const SizedBox(height: 30),
-
-
                     ],
                   ),
                 ),
