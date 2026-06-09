@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:music_game_app/features/prerequisite/presentation/controllers/prerequisite_controller.dart';
+import 'package:music_game_app/features/session/presentation/controllers/prerequisite_controller.dart';
 
 
 class TeamName extends StatelessWidget {

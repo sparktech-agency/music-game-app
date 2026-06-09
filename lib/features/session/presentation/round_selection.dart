@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:music_game_app/features/prerequisite/presentation/controllers/prerequisite_controller.dart';
+import 'package:music_game_app/features/session/presentation/controllers/round_selection_controller.dart';
 
 
 
-class TeamNumber extends StatelessWidget {
-  TeamNumber({super.key});
+class RoundSelection extends GetView<RoundSelectionController> {
+  const RoundSelection({super.key});
 
-  final PrerequisiteController controller = Get.put(PrerequisiteController());
 
   @override
   Widget build(BuildContext context) {
     const Color brandBlue = Color(0xFF2254C9);
+
     return Scaffold(
       body: Stack(
         children: [
@@ -23,55 +23,16 @@ class TeamNumber extends StatelessWidget {
             ),
           ),
 
-
-
-          Obx(() {
-            int count = controller.teamNumber.value;
-
-            final List<Map<String, double>> positions;
-
-            if (count == 2) {
-              positions = [
-                {'top': 180, 'left': 30, 'height': 0.24},
-                {'top': 310, 'left': -30, 'height': 0.27},
-              ];
-            } else if (count == 3) {
-              positions = [
-                {'top': 140, 'left': -130, 'height': 0.18},
-                {'top': 240, 'left': 130, 'height': 0.22},
-                {'top': 360, 'left': -30, 'height': 0.27},
-              ];
-            } else {
-              positions = [
-                {'top': 240, 'left': -160, 'height': 0.14},
-                {'top': 240, 'left': 160, 'height': 0.14},
-                {'top': 360, 'left': -160, 'height': 0.16},
-                {'top': 360, 'left': 200, 'height': 0.16},
-              ];
-            }
-
-            return Stack(
-              children: List.generate(count, (index) {
-                return AnimatedPositioned(
-                  duration: const Duration(milliseconds: 400),
-                  curve: Curves.easeInOut,
-                  top: positions[index]['top'],
-                  left: positions[index]['left'],
-                  right: 0,
-                  child: AnimatedScale(
-                    duration: const Duration(milliseconds: 300),
-                    scale: 1.0,
-                    child: Image.asset(
-                      'assets/images/team_selection.png',
-                      fit: BoxFit.contain,
-                      height: MediaQuery.sizeOf(context).height * positions[index]['height']!,
-                    ),
-                  ),
-                );
-              }),
-            );
-          }),
-
+          Positioned(
+            top: 150,
+            left: 0,
+            right: 0,
+            child: Obx(() => Image.asset(
+              controller.currentRoundImage,
+              fit: BoxFit.contain,
+              height: MediaQuery.sizeOf(context).height * 0.60,
+            )),
+          ),
 
           Positioned(
             bottom: 0,
@@ -93,13 +54,8 @@ class TeamNumber extends StatelessWidget {
             ),
           ),
 
-
-
-
-
           SafeArea(
             child: Column(
-
               children: [
 
                 Padding(
@@ -110,7 +66,7 @@ class TeamNumber extends StatelessWidget {
                       IconButton(onPressed: () => Get.back(), icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white)),
                       const Expanded(
                         child: Text(
-                          'How many teams\nwill participate?',
+                          'How many rounds\nto play?',
                           textAlign: TextAlign.center,
                           style: TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.bold, height: 1.2),
                         ),
@@ -134,7 +90,7 @@ class TeamNumber extends StatelessWidget {
 
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [2, 3, 4].map((team) => _buildRoundCircle(team)).toList(),
+                  children: [2, 3, 4].map((round) => _buildRoundCircle(round)).toList(),
                 ),
 
                 const Spacer(),
@@ -145,7 +101,7 @@ class TeamNumber extends StatelessWidget {
                   child: GestureDetector(
                     onTap: () {
 
-                      controller.proceedToNextPage("numberOfTeam");
+                      controller.proceedToNextPage();
                     },
                     child: Container(
                       height: 65,
@@ -177,11 +133,11 @@ class TeamNumber extends StatelessWidget {
   }
 
 
-  Widget _buildRoundCircle(int team) {
+  Widget _buildRoundCircle(int round) {
     return Obx(() {
-      bool isSelected = controller.teamNumber.value == team;
+      bool isSelected = controller.numberOfRound.value == round;
       return GestureDetector(
-        onTap: () => controller.selectTeamNumber(team),
+        onTap: () => controller.selectNumberOfRound(round),
         child: Stack(
           alignment: Alignment.topRight,
           children: [
@@ -196,7 +152,7 @@ class TeamNumber extends StatelessWidget {
               ),
               child: Center(
                 child: Text(
-                  '$team',
+                  '$round',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 24,

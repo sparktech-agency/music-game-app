@@ -15,16 +15,17 @@ import 'package:music_game_app/features/authentication/presentation/verify_email
 import 'package:music_game_app/features/authentication/presentation/verify_phone_page.dart';
 import 'package:music_game_app/features/game_play/presentation/gameplay_page.dart';
 import 'package:music_game_app/features/game_play/presentation/widgets/result_screen.dart';
-import 'package:music_game_app/features/prerequisite/presentation/player_name.dart';
-import 'package:music_game_app/features/prerequisite/presentation/round_selection.dart';
-import 'package:music_game_app/features/prerequisite/presentation/singer_number.dart';
-import 'package:music_game_app/features/prerequisite/presentation/team_name.dart';
-import 'package:music_game_app/features/prerequisite/presentation/team_number.dart';
-import 'package:music_game_app/features/prerequisite/presentation/which_team.dart';
 import 'package:music_game_app/features/profile/presentation/account_settings_screen.dart';
 import 'package:music_game_app/features/profile/presentation/profile_screen.dart';
 import 'package:music_game_app/features/profile/presentation/profile_settings_screen.dart';
 import 'package:music_game_app/features/profile/presentation/settings_screen.dart';
+import 'package:music_game_app/features/session/presentation/bindings/session_bindings.dart';
+import 'package:music_game_app/features/session/presentation/player_name.dart';
+import 'package:music_game_app/features/session/presentation/round_selection.dart';
+import 'package:music_game_app/features/session/presentation/singer_number.dart';
+import 'package:music_game_app/features/session/presentation/team_name.dart';
+import 'package:music_game_app/features/session/presentation/team_number.dart';
+import 'package:music_game_app/features/session/presentation/which_team.dart';
 import 'package:music_game_app/features/spin_feature/presentation/lyrics_page.dart';
 import 'package:music_game_app/features/spin_feature/presentation/selected_song.dart';
 import 'package:music_game_app/features/spin_feature/presentation/song_pick_loading_page.dart';
@@ -125,9 +126,32 @@ List<GetPage> routes = [
   GetPage(name: AppRoutes.letsPlayScreen, page: () =>  LetsPlayScreen()),
   GetPage(name: AppRoutes.mainSplash, page: () =>  MainSplash()),
   GetPage(name: AppRoutes.afterSplash, page: () =>  AfterSplash()),
-  GetPage(name: AppRoutes.roundSelection, page: () =>  RoundSelection()),
-  GetPage(name: AppRoutes.teamNumber, page: () =>  TeamNumber()),
-  GetPage(name: AppRoutes.singerNumber, page: () =>  SingerNumber()),
+
+
+
+
+
+
+  GetPage(
+      name: AppRoutes.roundSelection,
+      page: () =>  RoundSelection(),
+      binding: SessionBindings()
+  ),
+
+  GetPage(
+      name: AppRoutes.teamNumber,
+      page: () =>  TeamNumber(),
+      binding: SessionBindings()
+  ),
+
+
+  GetPage(
+      name: AppRoutes.singerNumber,
+      page: () =>  SingerNumber(),
+      binding: SessionBindings()
+  ),
+
+
   GetPage(name: AppRoutes.teamName, page: () =>  TeamName()),
   GetPage(name: AppRoutes.whichTeam, page: () =>  WhichTeam()),
   GetPage(name: AppRoutes.playerName, page: () => PlayerName()),
