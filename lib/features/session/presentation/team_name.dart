@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:music_game_app/features/session/presentation/controllers/prerequisite_controller.dart';
+import 'package:music_game_app/features/session/presentation/controllers/team_name_controller.dart';
 
 
-class TeamName extends StatelessWidget {
+class TeamName extends GetView<TeamNameController> {
   const TeamName({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // //==== Injecting Controller ====
-    final PrerequisiteController controller = Get.put(PrerequisiteController());
+
 
     return Scaffold(
       backgroundColor: const Color(0xFF0A0E21), // Dark Navy Background
@@ -28,13 +27,19 @@ class TeamName extends StatelessWidget {
                       const SizedBox(height: 30),
                       _buildInputLabel("Team 1 Name"),
                       const SizedBox(height: 10),
-                      _buildTeamTextField(controller.team1Controller, controller),
+                      _buildTeamTextField(
+                        controller.team1Controller,
+                        controller,
+                      ),
 
                       const SizedBox(height: 25),
 
                       _buildInputLabel("Team 2 Name"),
                       const SizedBox(height: 10),
-                      _buildTeamTextField(controller.team2Controller, controller),
+                      _buildTeamTextField(
+                        controller.team2Controller,
+                        controller,
+                      ),
                     ],
                   ),
                 ),
@@ -54,7 +59,11 @@ class TeamName extends StatelessWidget {
       backgroundColor: Colors.transparent,
       elevation: 0,
       leading: IconButton(
-        icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white, size: 20),
+        icon: const Icon(
+          Icons.arrow_back_ios_new,
+          color: Colors.white,
+          size: 20,
+        ),
         onPressed: () => Get.back(),
       ),
       centerTitle: true,
@@ -88,7 +97,10 @@ class TeamName extends StatelessWidget {
   }
 
   // //==== Optimized TextField with Clear functionality ====
-  Widget _buildTeamTextField(TextEditingController textController, PrerequisiteController controller) {
+  Widget _buildTeamTextField(
+    TextEditingController textController,
+    TeamNameController controller,
+  ) {
     return TextField(
       controller: textController,
       style: const TextStyle(color: Colors.white, fontSize: 16),
@@ -107,13 +119,16 @@ class TeamName extends StatelessWidget {
           borderRadius: BorderRadius.circular(30),
           borderSide: const BorderSide(color: Colors.blueAccent, width: 1.5),
         ),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 20,
+          vertical: 18,
+        ),
       ),
     );
   }
 
   // //==== Pixel Perfect Gradient Button ====
-  Widget _buildNextButton(PrerequisiteController controller) {
+  Widget _buildNextButton(TeamNameController controller) {
     return Container(
       width: double.infinity,
       height: 60,
@@ -129,11 +144,13 @@ class TeamName extends StatelessWidget {
         ),
       ),
       child: ElevatedButton(
-        onPressed: () => controller.proceedToNextPage("teamName"),
+        onPressed: () => controller.proceedToNextPage(),
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.transparent,
           shadowColor: Colors.transparent,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
         ),
         child: const Text(
           'Next',

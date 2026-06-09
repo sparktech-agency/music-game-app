@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:music_game_app/features/session/presentation/controllers/prerequisite_controller.dart';
+import 'package:music_game_app/features/session/presentation/controllers/which_team_controller.dart';
 
-
-class WhichTeam extends StatelessWidget {
-
-
+class WhichTeam extends GetView<WhichTeamController> {
   const WhichTeam({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final PrerequisiteController controller = Get.find<PrerequisiteController>();
+
 
     const Color brandBlue = Color(0xFF2254C9);
 
@@ -26,10 +23,8 @@ class WhichTeam extends StatelessWidget {
           ),
 
           // //==== 2. Character Illustration (Use Image.asset here later) ====
-
           Obx(() {
             bool isTeam1 = controller.selectedTeam.value == 1;
-
 
             final team1Character = _buildAnimatedCharacter(
               key: const ValueKey('team1'),
@@ -49,16 +44,12 @@ class WhichTeam extends StatelessWidget {
               imagePath: 'assets/images/three_singer.png',
             );
 
-
             return Stack(
               children: isTeam1
                   ? [team2Character, team1Character]
                   : [team1Character, team2Character],
             );
           }),
-
-
-
 
           Positioned(
             bottom: 0,
@@ -80,14 +71,8 @@ class WhichTeam extends StatelessWidget {
             ),
           ),
 
-
           // //==== 3. Custom AppBar Over Stack ====
-          Positioned(
-            top: 40,
-            left: 10,
-            right: 10,
-            child: _buildHeader(),
-          ),
+          Positioned(top: 40, left: 10, right: 10, child: _buildHeader()),
 
           // //==== 4. Selection UI & Next Button ====
           Positioned(
@@ -99,11 +84,15 @@ class WhichTeam extends StatelessWidget {
               children: [
                 const Text(
                   'Please select',
-                  style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 const SizedBox(height: 25),
 
-                // //==== Team Selectors Row ====
+                //==== Team Selectors Row ====
                 Row(
                   children: [
                     Expanded(child: _buildTeamCard(1, "Team 1", controller)),
@@ -135,7 +124,11 @@ class WhichTeam extends StatelessWidget {
         const Text(
           'Which team do you\nbelong?',
           textAlign: TextAlign.center,
-          style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold),
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         IconButton(
           icon: const Icon(Icons.close, color: Colors.white, size: 30),
@@ -145,7 +138,11 @@ class WhichTeam extends StatelessWidget {
     );
   }
 
-  Widget _buildTeamCard(int teamNum, String title, PrerequisiteController controller) {
+  Widget _buildTeamCard(
+    int teamNum,
+    String title,
+    WhichTeamController controller,
+  ) {
     return Obx(() {
       bool isSelected = controller.selectedTeam.value == teamNum;
       return GestureDetector(
@@ -156,7 +153,9 @@ class WhichTeam extends StatelessWidget {
             Container(
               height: 65,
               decoration: BoxDecoration(
-                color: isSelected ? const Color(0xFF42E8FF) : Colors.transparent,
+                color: isSelected
+                    ? const Color(0xFF42E8FF)
+                    : Colors.transparent,
                 borderRadius: BorderRadius.circular(35),
                 border: Border.all(
                   color: isSelected ? Colors.transparent : Colors.white,
@@ -181,8 +180,15 @@ class WhichTeam extends StatelessWidget {
                 right: 5,
                 child: Container(
                   padding: const EdgeInsets.all(4),
-                  decoration: const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
-                  child: const Icon(Icons.check, size: 16, color: Color(0xFF42E8FF)),
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Icon(
+                    Icons.check,
+                    size: 16,
+                    color: Color(0xFF42E8FF),
+                  ),
                 ),
               ),
           ],
@@ -191,7 +197,7 @@ class WhichTeam extends StatelessWidget {
     });
   }
 
-  Widget _buildNextButton(PrerequisiteController controller) {
+  Widget _buildNextButton(WhichTeamController controller) {
     return Container(
       width: double.infinity,
       height: 60,
@@ -202,21 +208,26 @@ class WhichTeam extends StatelessWidget {
         ),
       ),
       child: ElevatedButton(
-        onPressed: ()=> controller.proceedToNextPage("whichTeam"),
+        onPressed: () => controller.proceedToNextPage(),
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.transparent,
           shadowColor: Colors.transparent,
           elevation: 0,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(35)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(35),
+          ),
         ),
         child: const Text(
           'Next',
-          style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
     );
   }
-
 
   //=======swap effect========//
 
@@ -245,11 +256,27 @@ class WhichTeam extends StatelessWidget {
             colorFilter: isSelected
                 ? const ColorFilter.mode(Colors.transparent, BlendMode.multiply)
                 : const ColorFilter.matrix(<double>[
-              0.2126, 0.7152, 0.0722, 0, 0,
-              0.2126, 0.7152, 0.0722, 0, 0,
-              0.2126, 0.7152, 0.0722, 0, 0,
-              0, 0, 0, 1, 0,
-            ]),
+                    0.2126,
+                    0.7152,
+                    0.0722,
+                    0,
+                    0,
+                    0.2126,
+                    0.7152,
+                    0.0722,
+                    0,
+                    0,
+                    0.2126,
+                    0.7152,
+                    0.0722,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                  ]),
             child: Image.asset(
               imagePath,
               fit: BoxFit.contain,
@@ -260,5 +287,4 @@ class WhichTeam extends StatelessWidget {
       ),
     );
   }
-
 }

@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:music_game_app/features/session/presentation/controllers/player_name_controller.dart';
 
-import 'package:music_game_app/features/session/presentation/controllers/prerequisite_controller.dart';
-
-class PlayerName extends StatelessWidget {
-
+class PlayerName extends GetView<PlayerNameController> {
   const PlayerName({super.key});
 
   @override
   Widget build(BuildContext context) {
 
-    final PrerequisiteController controller = Get.find<PrerequisiteController>();
-
-
+    final PlayerNameController controller = Get.put(PlayerNameController());
 
     return Scaffold(
       backgroundColor: const Color(0xFF050A18),
@@ -22,34 +18,37 @@ class PlayerName extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             children: [
-              // //==== Subtitle: You belong on this team ====
               const SizedBox(height: 10),
               _buildTeamStatus(),
               const SizedBox(height: 20),
 
               Expanded(
-                child: Obx(() => ListView.separated(
-                  physics: const BouncingScrollPhysics(),
-                  itemCount: controller.playerControllers.length,
-                  separatorBuilder: (_, __) => const SizedBox(height: 20),
-                  itemBuilder: (context, index) {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Player ${index + 1} Nickname",
-                          style: const TextStyle(color: Color(0xFF9EADDC), fontSize: 16),
-                        ),
-                        const SizedBox(height: 8),
-                        _buildNicknameTextField(index, controller),
-                      ],
-                    );
-                  },
-                )),
+                child: Obx(
+                      () => ListView.separated(
+                    physics: const BouncingScrollPhysics(),
+                    itemCount: controller.playerControllers.length,
+                    separatorBuilder: (_, __) => const SizedBox(height: 20),
+                    itemBuilder: (context, index) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Player ${index + 1} Nickname",
+                            style: const TextStyle(
+                              color: Color(0xFF9EADDC),
+                              fontSize: 16,
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          _buildNicknameTextField(index, controller),
+                        ],
+                      );
+                    },
+                  ),
+                ),
               ),
 
               _buildNextButton(controller),
-
               const SizedBox(height: 20),
             ],
           ),
@@ -58,7 +57,7 @@ class PlayerName extends StatelessWidget {
     );
   }
 
-  PreferredSizeWidget _buildAppBar(PrerequisiteController controller) {
+  PreferredSizeWidget _buildAppBar(PlayerNameController controller) {
     return AppBar(
       backgroundColor: Colors.transparent,
       elevation: 0,
@@ -67,18 +66,15 @@ class PlayerName extends StatelessWidget {
         onPressed: () => Get.back(),
       ),
       centerTitle: true,
-      title: Obx(() {
-
-        String currentTeamName = (controller.selectedTeam.value == 1)
-            ? controller.team1Controller.text
-            : controller.team2Controller.text;
-
-        return Text(
-          'Please enter the player\nnicknames for [$currentTeamName]',
-          textAlign: TextAlign.center,
-          style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
-        );
-      }),
+      title: Text(
+        'Please enter the player\nnicknames for [${controller.teamName}]',
+        textAlign: TextAlign.center,
+        style: const TextStyle(
+          color: Colors.white,
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
       actions: [
         IconButton(
           icon: const Icon(Icons.close, color: Colors.white, size: 28),
@@ -94,7 +90,10 @@ class PlayerName extends StatelessWidget {
       children: [
         Container(
           padding: const EdgeInsets.all(4),
-          decoration: const BoxDecoration(color: Colors.green, shape: BoxShape.circle),
+          decoration: const BoxDecoration(
+            color: Colors.green,
+            shape: BoxShape.circle,
+          ),
           child: const Icon(Icons.check, size: 12, color: Colors.white),
         ),
         const SizedBox(width: 8),
@@ -106,8 +105,7 @@ class PlayerName extends StatelessWidget {
     );
   }
 
-  Widget _buildNicknameTextField(int index, PrerequisiteController controller) {
-
+  Widget _buildNicknameTextField(int index, PlayerNameController controller) {
     return TextField(
       controller: controller.playerControllers[index],
       style: const TextStyle(color: Colors.white),
@@ -132,22 +130,33 @@ class PlayerName extends StatelessWidget {
     );
   }
 
-  Widget _buildNextButton(PrerequisiteController controller) {
+  Widget _buildNextButton(PlayerNameController controller) {
     return Container(
       width: double.infinity,
       height: 60,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
-        gradient: const LinearGradient(colors: [Color(0xFF42E8FF), Color(0xFF3B5CFF)]),
+        gradient: const LinearGradient(
+          colors: [Color(0xFF42E8FF), Color(0xFF3B5CFF)],
+        ),
       ),
       child: ElevatedButton(
-        onPressed: () => controller.proceedToNextPage("teamNickname"),
+        onPressed: () => controller.proceedToNextPage(),
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.transparent,
           shadowColor: Colors.transparent,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
         ),
-        child: const Text('Next', style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)),
+        child: const Text(
+          'Next',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ),
     );
   }

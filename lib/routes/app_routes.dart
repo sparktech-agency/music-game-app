@@ -152,9 +152,34 @@ List<GetPage> routes = [
   ),
 
 
-  GetPage(name: AppRoutes.teamName, page: () =>  TeamName()),
-  GetPage(name: AppRoutes.whichTeam, page: () =>  WhichTeam()),
-  GetPage(name: AppRoutes.playerName, page: () => PlayerName()),
+  GetPage(
+      name: AppRoutes.teamName,
+      page: () =>  TeamName(),
+      binding: SessionBindings()
+  ),
+
+
+  GetPage(
+      name: AppRoutes.whichTeam,
+      page: () =>  WhichTeam(),
+      binding: SessionBindings()
+  ),
+
+
+
+
+  GetPage(
+      name: AppRoutes.playerName,
+      page: () => PlayerName(),
+      binding: SessionBindings()
+  ),
+
+
+
+
+
+
+
   GetPage(name: AppRoutes.spinFrontPage, page: () => SpinFrontPage()),
   GetPage(name: AppRoutes.spinWheelPage, page: () => SpinWheelPage()),
   GetPage(name: AppRoutes.songPickLoading, page: () => SongPickLoadingPage()),

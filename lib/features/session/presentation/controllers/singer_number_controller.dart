@@ -6,7 +6,7 @@ class SingerNumberController extends GetxController {
   var singerNumber = 2.obs;
 
   // Observable current singer image
-  var currentSingerImage = ''.obs;
+  var currentSingerImage = 'assets/images/two_singer.png'.obs;
 
   // Select singer number
   void selectSingerNumber(int number) {
@@ -14,7 +14,7 @@ class SingerNumberController extends GetxController {
 
     switch (number) {
       case 2:
-        currentSingerImage.value = 'assets/images/two_singer.png';
+        currentSingerImage.value = currentSingerImage.value;
         break;
       case 3:
         currentSingerImage.value = 'assets/images/three_singer.png';
