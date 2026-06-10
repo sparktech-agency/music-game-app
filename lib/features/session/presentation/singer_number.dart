@@ -5,7 +5,6 @@ import 'package:music_game_app/features/session/presentation/controllers/singer_
 class SingerNumber extends GetView<SingerNumberController> {
   const SingerNumber({super.key});
 
-
   @override
   Widget build(BuildContext context) {
     const Color brandBlue = Color(0xFF2254C9);
@@ -24,10 +23,16 @@ class SingerNumber extends GetView<SingerNumberController> {
             left: 0,
             right: 0,
             child: Obx(
-              () => Image.asset(
-                controller.currentSingerImage.value,
-                fit: BoxFit.contain,
-                height: MediaQuery.sizeOf(context).height * 0.60,
+              () => AnimatedSwitcher(
+                duration: const Duration(milliseconds: 400),
+                transitionBuilder: (child, animation) =>
+                    FadeTransition(opacity: animation, child: child),
+                child: Image.asset(
+                  controller.currentSingerImage.value,
+                  key: ValueKey(controller.currentSingerImage.value),
+                  fit: BoxFit.contain,
+                  height: MediaQuery.sizeOf(context).height * 0.60,
+                ),
               ),
             ),
           ),
@@ -168,7 +173,7 @@ class SingerNumber extends GetView<SingerNumberController> {
 
   Widget _buildRoundCircle(int singer) {
     return Obx(() {
-      bool isSelected = controller.singerNumber.value == singer;
+      bool isSelected = controller.numberOfSinger.value == singer;
       return GestureDetector(
         onTap: () => controller.selectSingerNumber(singer),
         child: Stack(

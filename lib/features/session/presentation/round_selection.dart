@@ -27,12 +27,19 @@ class RoundSelection extends GetView<RoundSelectionController> {
             top: 150,
             left: 0,
             right: 0,
-            child: Obx(() => Image.asset(
-              controller.currentRoundImage,
-              fit: BoxFit.contain,
-              height: MediaQuery.sizeOf(context).height * 0.60,
+            child: Obx(() => AnimatedSwitcher(
+              duration: const Duration(milliseconds: 300),
+              transitionBuilder: (child, animation) =>
+                  FadeTransition(opacity: animation, child: child),
+              child: Image.asset(
+                controller.currentRoundImage,
+                key: ValueKey(controller.currentRoundImage),
+                fit: BoxFit.contain,
+                height: MediaQuery.sizeOf(context).height * 0.60,
+              ),
             )),
           ),
+
 
           Positioned(
             bottom: 0,

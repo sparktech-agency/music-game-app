@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 class CentralSessionController extends GetxController {
 
 
-  var numberOfRounds = 0.obs;
-  var numberOfTeams = 0.obs;
+  var numberOfRounds = 2.obs;
+  var numberOfTeams = 2.obs;
   var numberOfSingers = 2.obs;
 
 

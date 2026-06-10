@@ -34,32 +34,17 @@ class TeamNumber extends GetView<TeamNumberController> {
                 {'top': 240, 'left': 130, 'height': 0.22},
                 {'top': 360, 'left': -30, 'height': 0.27},
               ];
-            } else if (count == 4) {
+            } else {
               positions = [
                 {'top': 240, 'left': -160, 'height': 0.14},
                 {'top': 240, 'left': 160, 'height': 0.14},
                 {'top': 360, 'left': -160, 'height': 0.16},
                 {'top': 360, 'left': 200, 'height': 0.16},
               ];
-            } else {
-              positions = [
-                {'top': 180, 'left': 30, 'height': 0.24},
-                {'top': 310, 'left': -30, 'height': 0.27},
-              ];
             }
 
             return Stack(
-              children: count == 0
-                  ? [
-                      Center(
-                        child: Image.asset(
-                          'assets/images/team_selection.png',
-                          fit: BoxFit.contain,
-                          height: MediaQuery.sizeOf(context).height * 0.25,
-                        ),
-                      ),
-                    ]
-                  : List.generate(count, (index) {
+              children: List.generate(count, (index) {
                       return AnimatedPositioned(
                         duration: const Duration(milliseconds: 400),
                         curve: Curves.easeInOut,
