@@ -19,7 +19,7 @@ class TeamNumber extends GetView<TeamNumberController> {
           ),
 
           Obx(() {
-            int count = controller.teamNumber.value;
+            int count = controller.numberOfTeam.value;
 
             final List<Map<String, double>> positions;
 
@@ -34,36 +34,51 @@ class TeamNumber extends GetView<TeamNumberController> {
                 {'top': 240, 'left': 130, 'height': 0.22},
                 {'top': 360, 'left': -30, 'height': 0.27},
               ];
-            } else {
+            } else if (count == 4) {
               positions = [
                 {'top': 240, 'left': -160, 'height': 0.14},
                 {'top': 240, 'left': 160, 'height': 0.14},
                 {'top': 360, 'left': -160, 'height': 0.16},
                 {'top': 360, 'left': 200, 'height': 0.16},
               ];
+            } else {
+              positions = [
+                {'top': 180, 'left': 30, 'height': 0.24},
+                {'top': 310, 'left': -30, 'height': 0.27},
+              ];
             }
 
             return Stack(
-              children: List.generate(count, (index) {
-                return AnimatedPositioned(
-                  duration: const Duration(milliseconds: 400),
-                  curve: Curves.easeInOut,
-                  top: positions[index]['top'],
-                  left: positions[index]['left'],
-                  right: 0,
-                  child: AnimatedScale(
-                    duration: const Duration(milliseconds: 300),
-                    scale: 1.0,
-                    child: Image.asset(
-                      'assets/images/team_selection.png',
-                      fit: BoxFit.contain,
-                      height:
-                          MediaQuery.sizeOf(context).height *
-                          positions[index]['height']!,
-                    ),
-                  ),
-                );
-              }),
+              children: count == 0
+                  ? [
+                      Center(
+                        child: Image.asset(
+                          'assets/images/team_selection.png',
+                          fit: BoxFit.contain,
+                          height: MediaQuery.sizeOf(context).height * 0.25,
+                        ),
+                      ),
+                    ]
+                  : List.generate(count, (index) {
+                      return AnimatedPositioned(
+                        duration: const Duration(milliseconds: 400),
+                        curve: Curves.easeInOut,
+                        top: positions[index]['top'],
+                        left: positions[index]['left'],
+                        right: 0,
+                        child: AnimatedScale(
+                          duration: const Duration(milliseconds: 300),
+                          scale: 1.0,
+                          child: Image.asset(
+                            'assets/images/team_selection.png',
+                            fit: BoxFit.contain,
+                            height:
+                                MediaQuery.sizeOf(context).height *
+                                positions[index]['height']!,
+                          ),
+                        ),
+                      );
+                    }),
             );
           }),
 
@@ -202,7 +217,7 @@ class TeamNumber extends GetView<TeamNumberController> {
 
   Widget _buildRoundCircle(int team) {
     return Obx(() {
-      bool isSelected = controller.teamNumber.value == team;
+      bool isSelected = controller.numberOfTeam.value == team;
       return GestureDetector(
         onTap: () => controller.selectTeamNumber(team),
         child: Stack(

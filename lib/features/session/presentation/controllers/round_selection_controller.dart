@@ -1,9 +1,12 @@
 import 'package:get/get.dart';
+import 'package:music_game_app/features/session/presentation/controllers/central_session_controller/central_session_controller.dart';
 import 'package:music_game_app/routes/app_routes.dart';
 
 class RoundSelectionController extends GetxController {
 
-  var numberOfRound = 2.obs;
+  final CentralSessionController sessionController = Get.find<CentralSessionController>();
+
+  RxInt get numberOfRound => sessionController.numberOfRounds;
 
 
   String get currentRoundImage {
@@ -20,7 +23,7 @@ class RoundSelectionController extends GetxController {
   }
 
   void selectNumberOfRound(int round) {
-    numberOfRound.value = round;
+    sessionController.numberOfRounds.value = round;
   }
 
   void proceedToNextPage() {
