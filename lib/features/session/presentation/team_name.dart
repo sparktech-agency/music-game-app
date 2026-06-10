@@ -19,29 +19,21 @@ class TeamName extends GetView<TeamNameController> {
           child: Column(
             children: [
               Expanded(
-                child: SingleChildScrollView(
+                child: ListView.builder(
                   physics: const BouncingScrollPhysics(),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(height: 30),
-                      _buildInputLabel("Team 1 Name"),
-                      const SizedBox(height: 10),
-                      _buildTeamTextField(
-                        controller.team1Controller,
-                        controller,
-                      ),
-
-                      const SizedBox(height: 25),
-
-                      _buildInputLabel("Team 2 Name"),
-                      const SizedBox(height: 10),
-                      _buildTeamTextField(
-                        controller.team2Controller,
-                        controller,
-                      ),
-                    ],
-                  ),
+                  itemCount: controller.teamNameControllers.length,
+                  itemBuilder: (context, index) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 20),
+                        _buildInputLabel("Team ${index + 1} Name"),
+                        const SizedBox(height: 10),
+                        _buildTeamTextField(controller.teamNameControllers[index], controller),
+                        const SizedBox(height: 10),
+                      ],
+                    );
+                  },
                 ),
               ),
               _buildNextButton(controller),
@@ -144,7 +136,7 @@ class TeamName extends GetView<TeamNameController> {
         ),
       ),
       child: ElevatedButton(
-        onPressed: () => controller.proceedToNextPage(),
+        onPressed: () => controller.saveTeamNames(),
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.transparent,
           shadowColor: Colors.transparent,
