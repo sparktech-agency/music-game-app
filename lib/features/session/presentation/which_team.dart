@@ -5,16 +5,15 @@ import 'package:music_game_app/features/session/presentation/controllers/which_t
 class WhichTeam extends GetView<WhichTeamController> {
   const WhichTeam({super.key});
 
+  static const Color brandBlue = Color(0xFF2254C9);
+  static const Color accentBlue = Color(0xFF42E8FF);
+
   @override
   Widget build(BuildContext context) {
-
-
-    const Color brandBlue = Color(0xFF2254C9);
-
     return Scaffold(
       body: Stack(
         children: [
-          // //==== 1. Background Gradient or Image ====
+          // Background
           Positioned.fill(
             child: Image.asset(
               'assets/images/all_game_setup.png',
@@ -22,59 +21,64 @@ class WhichTeam extends GetView<WhichTeamController> {
             ),
           ),
 
-          // //==== 2. Character Illustration (Use Image.asset here later) ====
+          // Characters
           Obx(() {
-            bool isTeam1 = controller.selectedTeam.value == 1;
-
-            final team1Character = _buildAnimatedCharacter(
-              key: const ValueKey('team1'),
-              context: context,
-              isSelected: isTeam1,
-              top: isTeam1 ? 280 : 120,
-              left: isTeam1 ? -60 : 60,
-              imagePath: 'assets/images/three_singer.png',
-            );
-
-            final team2Character = _buildAnimatedCharacter(
-              key: const ValueKey('team2'),
-              context: context,
-              isSelected: !isTeam1,
-              top: !isTeam1 ? 280 : 120,
-              left: !isTeam1 ? -60 : 60,
-              imagePath: 'assets/images/three_singer.png',
-            );
+            final isSwapped = controller.isSwapped.value;
 
             return Stack(
-              children: isTeam1
-                  ? [team2Character, team1Character]
-                  : [team1Character, team2Character],
+              children: isSwapped
+                  ? [
+                      _AnimatedCharacter(
+                        key: const ValueKey('team2'),
+                        isSelected: false,
+                        top: 120,
+                        left: 60,
+                      ),
+                      _AnimatedCharacter(
+                        key: const ValueKey('team1'),
+                        isSelected: true,
+                        top: 280,
+                        left: -60,
+                      ),
+                    ]
+                  : [
+                      _AnimatedCharacter(
+                        key: const ValueKey('team1'),
+                        isSelected: false,
+                        top: 120,
+                        left: 60,
+                      ),
+                      _AnimatedCharacter(
+                        key: const ValueKey('team2'),
+                        isSelected: true,
+                        top: 280,
+                        left: -60,
+                      ),
+                    ],
             );
           }),
 
+          // Gradient overlay
           Positioned(
             bottom: 0,
             left: 0,
             right: 0,
             height: MediaQuery.sizeOf(context).height * 0.6,
             child: Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                  colors: [
-                    brandBlue.withValues(alpha: 0.0),
-                    brandBlue.withValues(alpha: 1.0),
-                    brandBlue.withValues(alpha: 1.0),
-                  ],
+                  colors: [Color(0x002254C9), brandBlue, brandBlue],
                 ),
               ),
             ),
           ),
 
-          // //==== 3. Custom AppBar Over Stack ====
-          Positioned(top: 40, left: 10, right: 10, child: _buildHeader()),
+          // Header
+          const Positioned(top: 40, left: 10, right: 10, child: _Header()),
 
-          // //==== 4. Selection UI & Next Button ====
+          // Selection + Next Button
           Positioned(
             bottom: 40,
             left: 20,
@@ -92,19 +96,27 @@ class WhichTeam extends GetView<WhichTeamController> {
                 ),
                 const SizedBox(height: 25),
 
-                //==== Team Selectors Row ====
-                Row(
-                  children: [
-                    Expanded(child: _buildTeamCard(1, "Team 1", controller)),
-                    const SizedBox(width: 20),
-                    Expanded(child: _buildTeamCard(2, "Team 2", controller)),
-                  ],
+                SizedBox(
+                  height: 70,
+                  child: Obx(
+                    () => ListView.separated(
+                      clipBehavior: Clip.none,
+                      scrollDirection: Axis.horizontal,
+                      itemCount: controller.teamNames.length,
+                      separatorBuilder: (_, __) => const SizedBox(width: 10),
+                      itemBuilder: (_, index) {
+                        final teamName = controller.teamNames[index];
+                        return SizedBox(
+                          width: 150,
+                          child: _TeamCard(title: teamName),
+                        );
+                      },
+                    ),
+                  ),
                 ),
 
                 const SizedBox(height: 60),
-
-                // //==== Pixel Perfect Next Button ====
-                _buildNextButton(controller),
+                const _NextButton(),
               ],
             ),
           ),
@@ -112,8 +124,75 @@ class WhichTeam extends GetView<WhichTeamController> {
       ),
     );
   }
+}
 
-  Widget _buildHeader() {
+//================= Team Card =================//
+class _TeamCard extends GetView<WhichTeamController> {
+  final String title;
+
+  const _TeamCard({required this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    return Obx(() {
+      final isSelected = controller.isSelected(title);
+
+      return GestureDetector(
+        onTap: () => controller.selectTeam(title),
+        child: Stack(
+          clipBehavior: Clip.none,
+          children: [
+            Container(
+              height: 50,
+              decoration: BoxDecoration(
+                color: isSelected ? WhichTeam.accentBlue : Colors.transparent,
+                borderRadius: BorderRadius.circular(35),
+                border: Border.all(
+                  color: isSelected ? Colors.transparent : Colors.white,
+                  width: 2.5,
+                ),
+              ),
+              child: Center(
+                child: Text(
+                  title,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+            if (isSelected)
+              Positioned(
+                top: -5,
+                right: 8,
+                child: Container(
+                  padding: const EdgeInsets.all(2),
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Icon(
+                    Icons.check,
+                    size: 14,
+                    color: WhichTeam.accentBlue,
+                  ),
+                ),
+              ),
+          ],
+        ),
+      );
+    });
+  }
+}
+
+//================= Header =================//
+class _Header extends StatelessWidget {
+  const _Header();
+
+  @override
+  Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -137,110 +216,24 @@ class WhichTeam extends GetView<WhichTeamController> {
       ],
     );
   }
+}
 
-  Widget _buildTeamCard(
-    int teamNum,
-    String title,
-    WhichTeamController controller,
-  ) {
-    return Obx(() {
-      bool isSelected = controller.selectedTeam.value == teamNum;
-      return GestureDetector(
-        onTap: () => controller.selectTeam(teamNum),
-        child: Stack(
-          clipBehavior: Clip.none,
-          children: [
-            Container(
-              height: 65,
-              decoration: BoxDecoration(
-                color: isSelected
-                    ? const Color(0xFF42E8FF)
-                    : Colors.transparent,
-                borderRadius: BorderRadius.circular(35),
-                border: Border.all(
-                  color: isSelected ? Colors.transparent : Colors.white,
-                  width: 2.5,
-                ),
-              ),
-              child: Center(
-                child: Text(
-                  title,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-            // //==== Selection Indicator (Check Mark) ====
-            if (isSelected)
-              Positioned(
-                top: -8,
-                right: 5,
-                child: Container(
-                  padding: const EdgeInsets.all(4),
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    shape: BoxShape.circle,
-                  ),
-                  child: const Icon(
-                    Icons.check,
-                    size: 16,
-                    color: Color(0xFF42E8FF),
-                  ),
-                ),
-              ),
-          ],
-        ),
-      );
-    });
-  }
+//================= Animated Character =================//
+class _AnimatedCharacter extends StatelessWidget {
+  final bool isSelected;
+  final double top;
+  final double left;
 
-  Widget _buildNextButton(WhichTeamController controller) {
-    return Container(
-      width: double.infinity,
-      height: 60,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(35),
-        gradient: const LinearGradient(
-          colors: [Color(0xFF42E8FF), Color(0xFF3B5CFF)],
-        ),
-      ),
-      child: ElevatedButton(
-        onPressed: () => controller.proceedToNextPage(),
-        style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.transparent,
-          shadowColor: Colors.transparent,
-          elevation: 0,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(35),
-          ),
-        ),
-        child: const Text(
-          'Next',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
-    );
-  }
+  const _AnimatedCharacter({
+    super.key,
+    required this.isSelected,
+    required this.top,
+    required this.left,
+  });
 
-  //=======swap effect========//
-
-  Widget _buildAnimatedCharacter({
-    Key? key,
-    required BuildContext context,
-    required bool isSelected,
-    required double top,
-    required double left,
-    required String imagePath,
-  }) {
+  @override
+  Widget build(BuildContext context) {
     return AnimatedPositioned(
-      key: key,
       duration: const Duration(milliseconds: 600),
       curve: Curves.easeInOut,
       top: top,
@@ -249,38 +242,80 @@ class WhichTeam extends GetView<WhichTeamController> {
       child: AnimatedScale(
         duration: const Duration(milliseconds: 600),
         scale: isSelected ? 1.1 : 0.85,
-        child: AnimatedOpacity(
-          duration: const Duration(milliseconds: 400),
-          opacity: isSelected ? 1.0 : 1.0,
-          child: ColorFiltered(
-            colorFilter: isSelected
-                ? const ColorFilter.mode(Colors.transparent, BlendMode.multiply)
-                : const ColorFilter.matrix(<double>[
-                    0.2126,
-                    0.7152,
-                    0.0722,
-                    0,
-                    0,
-                    0.2126,
-                    0.7152,
-                    0.0722,
-                    0,
-                    0,
-                    0.2126,
-                    0.7152,
-                    0.0722,
-                    0,
-                    0,
-                    0,
-                    0,
-                    0,
-                    1,
-                    0,
-                  ]),
-            child: Image.asset(
-              imagePath,
-              fit: BoxFit.contain,
-              height: MediaQuery.sizeOf(context).height * 0.40,
+        child: ColorFiltered(
+          colorFilter: isSelected
+              ? const ColorFilter.mode(Colors.transparent, BlendMode.multiply)
+              : const ColorFilter.matrix([
+                  0.2126,
+                  0.7152,
+                  0.0722,
+                  0,
+                  0,
+                  0.2126,
+                  0.7152,
+                  0.0722,
+                  0,
+                  0,
+                  0.2126,
+                  0.7152,
+                  0.0722,
+                  0,
+                  0,
+                  0,
+                  0,
+                  0,
+                  1,
+                  0,
+                ]),
+          child: Image.asset(
+            'assets/images/three_singer.png',
+            fit: BoxFit.contain,
+            height: MediaQuery.sizeOf(context).height * 0.40,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+//================= Next Button =================//
+class _NextButton extends GetView<WhichTeamController> {
+  const _NextButton();
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: double.infinity,
+      height: 60,
+      child: ElevatedButton(
+        onPressed: controller.proceedToNextPage,
+        style:
+            ElevatedButton.styleFrom(
+              backgroundColor: Colors.transparent,
+              shadowColor: Colors.transparent,
+              elevation: 0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(35),
+              ),
+              padding: EdgeInsets.zero,
+            ).copyWith(
+              backgroundColor: MaterialStateProperty.resolveWith((_) => null),
+            ),
+        child: Ink(
+          decoration: BoxDecoration(
+            gradient: const LinearGradient(
+              colors: [WhichTeam.accentBlue, Color(0xFF3B5CFF)],
+            ),
+            borderRadius: BorderRadius.circular(35),
+          ),
+          child: const Center(
+            child: Text(
+              'Next',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
         ),

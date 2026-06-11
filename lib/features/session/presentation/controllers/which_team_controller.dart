@@ -1,19 +1,35 @@
 import 'package:get/get.dart';
+import 'package:music_game_app/features/session/presentation/controllers/central_session_controller/central_session_controller.dart';
 import 'package:music_game_app/routes/app_routes.dart';
 
 class WhichTeamController extends GetxController {
-  // Observable selected team (default 0 = none)
-  var selectedTeam = 0.obs;
+  final CentralSessionController sessionController = Get.find<CentralSessionController>();
 
-  // Select team
-  void selectTeam(int teamNum) {
-    selectedTeam.value = teamNum;
+  List<String> get teamNames => sessionController.teamNames;
+
+  var isSwapped = false.obs;
+
+  void selectTeam(String teamName) {
+    sessionController.whichTeam.value = teamName;
+
+    isSwapped.toggle();
   }
 
-  // Proceed to next page
-  void proceedToNextPage() {
+  bool isSelected(String teamName) {
+    return sessionController.whichTeam.value == teamName;
+  }
 
-   print("Which team completed");
-   Get.toNamed(AppRoutes.playerName);
+  void proceedToNextPage() {
+    if (sessionController.whichTeam.value.trim().isEmpty) {
+      Get.snackbar(
+        'Warning',
+        'Please select a team first',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+      return;
+    }
+
+    print("Selected Team: ${sessionController.whichTeam.value}");
+    Get.toNamed(AppRoutes.playerName);
   }
 }

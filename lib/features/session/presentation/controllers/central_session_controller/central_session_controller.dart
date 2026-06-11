@@ -6,9 +6,11 @@ class CentralSessionController extends GetxController {
   var numberOfRounds = 2.obs;
   var numberOfTeams = 2.obs;
   var numberOfSingers = 2.obs;
-
-
   var teamNames = <String>[].obs;
+  var whichTeam = " ".obs;
+
+
+
   var players = <String>[].obs;
 
 

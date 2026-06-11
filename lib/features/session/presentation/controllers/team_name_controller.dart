@@ -20,6 +20,21 @@ class TeamNameController extends GetxController {
 
   void saveTeamNames() {
 
+
+    bool hasEmptyField = teamNameControllers.any((controller) => controller.text.trim().isEmpty);
+
+    if (hasEmptyField) {
+      Get.snackbar(
+        "Error",
+        "Please enter names for all teams",
+        backgroundColor: Colors.redAccent,
+        colorText: Colors.white,
+        snackPosition: SnackPosition.BOTTOM,
+        margin: const EdgeInsets.all(20),
+      );
+      return;
+    }
+
     centralController.teamNames.value = teamNameControllers.map((c) => c.text).toList();
 
     print("Saved Teams: ${centralController.teamNames}");
