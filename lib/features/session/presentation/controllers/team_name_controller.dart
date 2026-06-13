@@ -19,8 +19,7 @@ class TeamNameController extends GetxController {
   }
 
   void saveTeamNames() {
-
-
+    // Empty field check
     bool hasEmptyField = teamNameControllers.any((controller) => controller.text.trim().isEmpty);
 
     if (hasEmptyField) {
@@ -35,12 +34,29 @@ class TeamNameController extends GetxController {
       return;
     }
 
-    centralController.teamNames.value = teamNameControllers.map((c) => c.text).toList();
+    // Duplicate check
+    List<String> names = teamNameControllers.map((c) => c.text.trim()).toList();
+    Set<String> uniqueNames = names.toSet();
+
+    if (uniqueNames.length != names.length) {
+      Get.snackbar(
+        "Error",
+        "Team names must be unique",
+        backgroundColor: Colors.redAccent,
+        colorText: Colors.white,
+        snackPosition: SnackPosition.BOTTOM,
+        margin: const EdgeInsets.all(20),
+      );
+      return;
+    }
+
+    // Save if all good
+    centralController.teamNames.value = names;
 
     print("Saved Teams: ${centralController.teamNames}");
     Get.toNamed(AppRoutes.whichTeam);
-
   }
+
 
 
   // Clear field method
