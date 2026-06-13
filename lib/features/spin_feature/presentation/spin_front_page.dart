@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:music_game_app/features/game_play/presentation/controllers/game_controller.dart';
+import 'package:music_game_app/features/session/presentation/controllers/central_session_controller/central_session_controller.dart';
 import 'package:music_game_app/features/spin_feature/presentation/controllers/spin_front_page_controller.dart';
 
 class SpinFrontPage extends StatelessWidget {
@@ -13,7 +13,7 @@ class SpinFrontPage extends StatelessWidget {
       SpinFrontPageController(),
       tag: DateTime.now().millisecondsSinceEpoch.toString(),
     );
-    final gameController = Get.find<GameController>();
+    final sessionController = Get.find<CentralSessionController>();
 
     return Scaffold(
       backgroundColor: const Color(0xFF0A0E21),
@@ -40,7 +40,7 @@ class SpinFrontPage extends StatelessWidget {
                 children: [
                   const SizedBox(height: 20),
                   Text(
-                    "Team ${gameController.currentTurn}, Your\nCategory Awaits!",
+                    "Team ${sessionController.teamNames[0]}, Your\nCategory Awaits!",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.white,

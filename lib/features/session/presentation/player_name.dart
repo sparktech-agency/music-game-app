@@ -7,9 +7,6 @@ class PlayerName extends GetView<PlayerNameController> {
 
   @override
   Widget build(BuildContext context) {
-
-    final PlayerNameController controller = Get.put(PlayerNameController());
-
     return Scaffold(
       backgroundColor: const Color(0xFF050A18),
       appBar: _buildAppBar(controller),
@@ -24,7 +21,8 @@ class PlayerName extends GetView<PlayerNameController> {
 
               Expanded(
                 child: Obx(
-                      () => ListView.separated(
+                  () => ListView.separated(
+                    key: ValueKey(controller.currentTeamIndex.value),
                     physics: const BouncingScrollPhysics(),
                     itemCount: controller.playerControllers.length,
                     separatorBuilder: (_, __) => const SizedBox(height: 20),
@@ -66,13 +64,15 @@ class PlayerName extends GetView<PlayerNameController> {
         onPressed: () => Get.back(),
       ),
       centerTitle: true,
-      title: Text(
-        'Please enter the player\nnicknames for [${controller.teamName}]',
-        textAlign: TextAlign.center,
-        style: const TextStyle(
-          color: Colors.white,
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
+      title: Obx(
+        () => Text(
+          'Please enter the player\nnicknames for [${controller.currentTeamName}]',
+          textAlign: TextAlign.center,
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
       actions: [
@@ -116,7 +116,8 @@ class PlayerName extends GetView<PlayerNameController> {
         hintStyle: const TextStyle(color: Colors.grey, fontSize: 14),
         suffixIcon: IconButton(
           icon: const Icon(Icons.close, color: Colors.grey, size: 18),
-          onPressed: () => controller.clearField(controller.playerControllers[index]),
+          onPressed: () =>
+              controller.clearField(controller.playerControllers[index]),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(30),
