@@ -9,8 +9,6 @@ class SessionRepositoryImpl implements SessionRepository {
   const SessionRepositoryImpl(this._remoteSource);
 
 
-
-
   @override
   Future<SessionCreateEntity> createSession({
     required int totalRounds,
@@ -33,20 +31,25 @@ class SessionRepositoryImpl implements SessionRepository {
         totalRounds: responseModel.totalRounds,
         currentRound: responseModel.currentRound,
         status: responseModel.status,
-        teams: responseModel.teams.map((t) => TeamEntity(
-          id: t.id,
-          name: t.name,
-          players: t.players.map((p) => PlayerEntity(nickname: p.nickname)).toList(),
-          score: t.score,
-        )).toList(),
+        teams: responseModel.teams.map((t) =>
+            TeamEntity(
+              id: t.id,
+              name: t.name,
+              players: t.players
+                  .map((p) => PlayerEntity(nickname: p.nickname))
+                  .toList(),
+              score: t.score,
+            )).toList(),
         currentTeamIndex: responseModel.currentTeamIndex,
         preferredMusicSource: responseModel.preferredMusicSource,
       );
     } catch (e) {
       rethrow;
     }
-
   }
+
+}
+
 
 // @override
 // Future<SessionEntity> startSession(String sessionId) async {
@@ -67,3 +70,5 @@ class SessionRepositoryImpl implements SessionRepository {
 // Future<SessionEntity> endSession(String sessionId) async {
 //   throw UnimplementedError();
 // }
+
+
