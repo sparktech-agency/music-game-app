@@ -17,9 +17,9 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: AppConstants.backgroundColor,
       ),
 
-      //initialRoute: AppRoutes.firstScreen,
+      initialRoute: AppRoutes.firstScreen,
       //initialRoute: AppRoutes.resultPage,
-      initialRoute: AppRoutes.roundSelection,
+      //initialRoute: AppRoutes.roundSelection,
       getPages: routes,
     );
   }

@@ -1,15 +1,18 @@
 class RegisterEntity {
-  final bool success;
-  final String message;
-  final String? email;
-  final String? role;
-  final String? isActive;
+  final String id;
+  final String email;
+  final String role;
+  final String isActive;
+  final bool isVerified;
+  final bool isDeleted;
+
 
   const RegisterEntity({
-    required this.success,
-    required this.message,
-    this.email,
-    this.role,
-    this.isActive,
+    required this.id,
+    required this.email,
+    required this.role,
+    required this.isActive,
+    required this.isVerified,
+    required this.isDeleted,
   });
 }

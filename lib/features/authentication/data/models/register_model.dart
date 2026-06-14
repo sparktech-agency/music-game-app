@@ -19,22 +19,24 @@ class RegisterRequestModel {
 
 class RegisterResponseModel extends RegisterEntity {
   const RegisterResponseModel({
-    required super.success,
-    required super.message,
-    super.email,
-    super.role,
-    super.isActive,
+    required super.id,
+    required super.email,
+    required super.role,
+    required super.isActive,
+    required super.isVerified,
+    required super.isDeleted,
   });
 
   factory RegisterResponseModel.fromJson(Map<String, dynamic> json) {
-    // Postman response map matching
-    final data = json['data'] as Map<String, dynamic>?;
+    final data = json['data'] as Map<String, dynamic>;
+
     return RegisterResponseModel(
-      success: json['success'] ?? false,
-      message: json['message'] ?? '',
-      email: data?['email'],
-      role: data?['role'],
-      isActive: data?['isActive'],
+      id: data['_id'] as String,
+      email: data['email'] as String,
+      role: data['role'] as String,
+      isActive: data['isActive'] as String,
+      isVerified: data['isVerified'] as bool,
+      isDeleted: data['isDeleted'] as bool,
     );
   }
 }

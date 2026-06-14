@@ -7,8 +7,32 @@ import 'package:music_game_app/features/authentication/presentation/widgets/cust
 import 'package:music_game_app/features/authentication/presentation/widgets/custom_password_field.dart';
 import 'package:music_game_app/routes/app_routes.dart';
 
-class LogInPage extends GetView<LoginController> {
+class LogInPage extends StatefulWidget {
   const LogInPage({super.key});
+
+  @override
+  State<LogInPage> createState() => _LogInPageState();
+}
+
+class _LogInPageState extends State<LogInPage> {
+  // TextEditingControllers live here — safe lifecycle
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+
+  late final LoginController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = Get.find<LoginController>();
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,24 +62,22 @@ class LogInPage extends GetView<LoginController> {
                       ),
                       const SizedBox(height: 20),
 
-                      CustomEmailField(controller: controller.emailController),
-
+                      CustomEmailField(controller: _emailController),
                       const SizedBox(height: 20),
 
                       Obx(() => CustomPasswordField(
-                          controller: controller.passwordController,
-                          isVisible: controller.isPasswordVisible.value,
-                          onToggle: controller.togglePasswordVisibility
+                        controller: _passwordController,
+                        isVisible: _controller.isPasswordVisible.value,
+                        onToggle: _controller.togglePasswordVisibility,
                       )),
 
                       const SizedBox(height: 10),
 
-
                       Align(
                         alignment: Alignment.centerRight,
                         child: GestureDetector(
-                          onTap: (){Get.toNamed(AppRoutes.enterEmailPage);},
-                          child: Text(
+                          onTap: () => Get.toNamed(AppRoutes.enterEmailPage),
+                          child: const Text(
                             'Forgot Password?',
                             style: TextStyle(
                               color: Colors.white,
@@ -65,9 +87,7 @@ class LogInPage extends GetView<LoginController> {
                           ),
                         ),
                       ),
-
                       const SizedBox(height: 30),
-
 
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -81,7 +101,8 @@ class LogInPage extends GetView<LoginController> {
                             ),
                           ),
                           GestureDetector(
-                            onTap: () {Get.toNamed(AppRoutes.registrationPage);},
+                            onTap: () =>
+                                Get.toNamed(AppRoutes.registrationPage),
                             child: const Text(
                               'Register',
                               style: TextStyle(
@@ -97,18 +118,23 @@ class LogInPage extends GetView<LoginController> {
                   ),
                 ),
               ),
-              CustomGradientButton(
-                  text: "Login",
-                  onPressed: ()=> controller.login()
-              ),
-              const SizedBox(height: 24)
+              Obx(() => _controller.isLoading.value
+                  ? const Padding(
+                padding: EdgeInsets.symmetric(vertical: 10),
+                child: CircularProgressIndicator(color: Colors.cyan),
+              )
+                  : CustomGradientButton(
+                text: "Login",
+                onPressed: () => _controller.login(
+                  _emailController.text.trim(),
+                  _passwordController.text.trim(),
+                ),
+              )),
+              const SizedBox(height: 24),
             ],
           ),
         ),
       ),
     );
   }
-
-
-
 }

@@ -7,12 +7,37 @@ import 'package:music_game_app/features/authentication/presentation/widgets/cust
 import 'package:music_game_app/features/authentication/presentation/widgets/custom_password_field.dart';
 import 'package:music_game_app/routes/app_routes.dart';
 
-class RegistrationPage extends GetView<RegistrationController> {
+class RegistrationPage extends StatefulWidget {
   const RegistrationPage({super.key});
 
   @override
+  State<RegistrationPage> createState() => _RegistrationPageState();
+}
+
+class _RegistrationPageState extends State<RegistrationPage> {
+  // TextEditingControllers live here — safe lifecycle
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
+
+  late final RegistrationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = Get.find<RegistrationController>();
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    // Standard configurations extracted into variables for readability
     const textStyleLink = TextStyle(
       color: Colors.cyan,
       fontSize: 14,
@@ -45,29 +70,26 @@ class RegistrationPage extends GetView<RegistrationController> {
                       ),
                       const SizedBox(height: 20),
 
-                      // Email Field
-                      CustomEmailField(controller: controller.emailController),
+                      CustomEmailField(controller: _emailController),
                       const SizedBox(height: 20),
 
-                      // Password Field
                       Obx(() => CustomPasswordField(
                         hint: "Set your password",
-                        controller: controller.passwordController,
-                        isVisible: controller.isPasswordVisible,
-                        onToggle: controller.togglePasswordVisibility,
+                        controller: _passwordController,
+                        isVisible: _controller.isPasswordVisible,
+                        onToggle: _controller.togglePasswordVisibility,
                       )),
                       const SizedBox(height: 20),
 
-                      // Confirm Password Field
                       Obx(() => CustomPasswordField(
                         hint: "Confirm your password",
-                        controller: controller.confirmPasswordController,
-                        isVisible: controller.isConfirmPasswordVisible,
-                        onToggle: controller.toggleConfirmPasswordVisibility,
+                        controller: _confirmPasswordController,
+                        isVisible: _controller.isConfirmPasswordVisible,
+                        onToggle:
+                        _controller.toggleConfirmPasswordVisibility,
                       )),
                       const SizedBox(height: 20),
 
-                      // Navigation Switcher Option Link
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -89,7 +111,6 @@ class RegistrationPage extends GetView<RegistrationController> {
                   ),
                 ),
               ),
-              // Bottom Section Area (Context reactive via controller injection)
               _buildBottomActionArea(),
             ],
           ),
@@ -98,31 +119,28 @@ class RegistrationPage extends GetView<RegistrationController> {
     );
   }
 
-  // Private sub-view widget matching industry standard patterns
   Widget _buildBottomActionArea() {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        // Obx added here to handle dynamic button loading transitions natively
-        Obx(() {
-          return controller.isLoading
-              ? const Padding(
-            padding: EdgeInsets.symmetric(vertical: 10),
-            child: CircularProgressIndicator(color: Colors.cyan),
-          )
-              : CustomGradientButton(
-            text: "Register",
-            onPressed: () => controller.register(),
-          );
-        }),
+        Obx(() => _controller.isLoading
+            ? const Padding(
+          padding: EdgeInsets.symmetric(vertical: 10),
+          child: CircularProgressIndicator(color: Colors.cyan),
+        )
+            : CustomGradientButton(
+          text: "Register",
+          onPressed: () => _controller.register(
+            _emailController.text.trim(),
+            _passwordController.text.trim(),
+            _confirmPasswordController.text.trim(),
+          ),
+        )),
         const SizedBox(height: 20),
         const Text(
           'We need to verify if the email has been registered with Lyricraze',
           textAlign: TextAlign.center,
-          style: TextStyle(
-            color: Colors.grey,
-            fontSize: 14,
-          ),
+          style: TextStyle(color: Colors.grey, fontSize: 14),
         ),
         const SizedBox(height: 20),
       ],

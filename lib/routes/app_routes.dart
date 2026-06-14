@@ -4,7 +4,7 @@ import 'package:music_game_app/features/app_landing/presentation/app_landing.dar
 import 'package:music_game_app/features/app_landing/presentation/lets_play_screen.dart';
 import 'package:music_game_app/features/app_landing/presentation/lets_sing_screen.dart';
 import 'package:music_game_app/features/app_landing/presentation/main_splash.dart';
-import 'package:music_game_app/features/authentication/presentation/bindings/auth_bindings.dart';
+import 'package:music_game_app/features/authentication/presentation/bindings/auth_binding.dart';
 import 'package:music_game_app/features/authentication/presentation/enter_email_page.dart';
 import 'package:music_game_app/features/authentication/presentation/login_page.dart';
 import 'package:music_game_app/features/authentication/presentation/first_screen.dart';
@@ -84,31 +84,32 @@ List<GetPage> routes = [
   GetPage(
       name: AppRoutes.loginPage,
       page: () => const LogInPage(),
-      binding: AuthBindings()
+      binding: AuthBinding(),
   ),
 
   GetPage(
       name: AppRoutes.registrationPage,
       page: () => const RegistrationPage(),
-      binding: AuthBindings()
+      binding: AuthBinding(),
+
   ),
 
   GetPage(
       name: AppRoutes.verifyEmailPage,
       page: () => const VerifyEmailPage(),
-      binding: AuthBindings()
+      binding: AuthBinding()
   ),
 
   GetPage(
       name: AppRoutes.verifyPhonePage,
       page: () => const VerifyPhonePage(),
-      binding: AuthBindings()
+      binding: AuthBinding()
   ),
 
   GetPage(
       name: AppRoutes.enterEmailPage,
       page: () => const EnterEmailPage(),
-      binding: AuthBindings()
+      binding: AuthBinding()
   ),
 
 

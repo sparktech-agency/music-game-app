@@ -2,11 +2,11 @@ import 'package:music_game_app/features/authentication/domain/entities/register_
 import 'package:music_game_app/features/authentication/domain/repositories/auth_repository.dart';
 
 class RegisterUseCase {
-  final AuthRepository repository;
+  final AuthRepository _repository;
 
-  RegisterUseCase(this.repository);
+  RegisterUseCase(this._repository);
 
   Future<RegisterEntity> call(String email, String password) {
-    return repository.register(email, password);
+    return _repository.register(email, password);
   }
 }

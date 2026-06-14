@@ -1,6 +1,5 @@
-
-
 import 'package:music_game_app/core/network/base_provider.dart';
+import 'package:music_game_app/features/authentication/data/models/login_model.dart';
 import 'package:music_game_app/features/authentication/data/models/register_model.dart';
 
 class AuthRemoteSource extends BaseProvider {
@@ -17,16 +16,29 @@ class AuthRemoteSource extends BaseProvider {
       if (response.isOk && response.body != null) {
         return RegisterResponseModel.fromJson(response.body);
       } else {
-        return RegisterResponseModel(
-          success: false,
-          message: response.body?['message'] ?? 'Registration failed',
-        );
+        final errorMessage = response.body?['message'] ?? 'Registration failed';
+        throw Exception(errorMessage);
       }
     } catch (e) {
-      return RegisterResponseModel(
-        success: false,
-        message: 'Network error: ${e.toString()}',
+      rethrow;
+    }
+  }
+
+  Future<LoginResponseModel> login(LoginRequestModel request) async {
+    try {
+      final response = await post(
+        '/auth/login',
+        request.toJson(),
       );
+
+      if (response.isOk && response.body != null) {
+        return LoginResponseModel.fromJson(response.body);
+      } else {
+        final errorMessage = response.body?['message'] ?? 'Login failed';
+        throw Exception(errorMessage);
+      }
+    } catch (e) {
+      rethrow;
     }
   }
 }
