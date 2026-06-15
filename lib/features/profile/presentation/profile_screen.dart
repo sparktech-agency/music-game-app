@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:music_game_app/features/profile/presentation/controllers/profile_controller.dart';
+import 'package:music_game_app/features/profile/presentation/controllers/profile_screen_controller.dart';
 import 'package:music_game_app/routes/app_routes.dart';
 
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends GetView<ProfileScreenController> {
   const ProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-
-    final ProfileController controller = Get.put(ProfileController());
-
 
 
     return Scaffold(

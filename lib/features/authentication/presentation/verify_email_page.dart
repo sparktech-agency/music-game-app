@@ -39,7 +39,7 @@ class VerifyEmailPage extends GetView<VerifyEmailController> {
 
               // Circle OTP Input
               Pinput(
-                length: 4,
+                length: 6,
                 defaultPinTheme: defaultPinTheme,
                   keyboardType: TextInputType.number, // only number keyboard
                   inputFormatters: [
@@ -74,8 +74,8 @@ class VerifyEmailPage extends GetView<VerifyEmailController> {
 
 // Circle Pin Theme
 final defaultPinTheme = PinTheme(
-  width: 56,
-  height: 56,
+  width: 50,
+  height: 50,
   textStyle: const TextStyle(
     fontSize: 24,
     color: Colors.white,

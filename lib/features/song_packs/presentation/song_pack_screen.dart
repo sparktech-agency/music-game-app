@@ -1,19 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:music_game_app/core/widgets/app_bar_with_logo.dart';
+import 'package:music_game_app/features/authentication/data/sources/auth_local_source.dart';
 import 'package:music_game_app/features/song_packs/presentation/controllers/song_pack_controller.dart';
 import 'package:music_game_app/features/song_packs/presentation/widgets/song_pack_card.dart';
+import 'package:music_game_app/routes/app_routes.dart';
 
 class SongPackScreen extends StatelessWidget {
   const SongPackScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+
+    final AuthLocalSource localSource = Get.find<AuthLocalSource>();
+    final String userName = localSource.getName() ?? 'User';
+
+
+
     final controller = Get.put(SongPackController());
 
     return Scaffold(
 
-      appBar: AppBarWithLogo(userName: "doe john"),
+      appBar: AppBarWithLogo(userName: userName, onTap: (){Get.toNamed(AppRoutes.profileScreen);}),
 
       body: Stack(
         children: [

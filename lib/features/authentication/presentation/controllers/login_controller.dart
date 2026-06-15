@@ -42,7 +42,10 @@ class LoginController extends GetxController {
           backgroundColor: Colors.green,
           colorText: Colors.white);
       Get.offAllNamed(AppRoutes.appLanding);
-    } catch (e) {
+    } catch (e, stackTrace) {
+      print("Login Error: $e");
+      print("StackTrace: $stackTrace");
+
       Get.snackbar('Error', e.toString().replaceAll('Exception: ', ''),
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.redAccent,

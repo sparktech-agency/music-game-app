@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:music_game_app/core/widgets/app_bar_with_logo.dart';
+import 'package:music_game_app/features/authentication/data/sources/auth_local_source.dart';
 import 'package:music_game_app/routes/app_routes.dart';
 
 class LetsSingScreen extends StatelessWidget {
@@ -8,9 +9,21 @@ class LetsSingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final AuthLocalSource localSource = Get.find<AuthLocalSource>();
+    final String userName = localSource.getName() ?? 'User';
+
+
+
+
+
+
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: const AppBarWithLogo(userName: "doe john"),
+
+      appBar: AppBarWithLogo(userName: userName, onTap: (){Get.toNamed(AppRoutes.profileScreen);}),
+
+
       body: Stack(
         children: [
           Container(

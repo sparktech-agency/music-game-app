@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:music_game_app/features/authentication/domain/usecases/register_usecase.dart';
+import 'package:music_game_app/features/authentication/domain/usecases/send_otp_usecase.dart';
 import 'package:music_game_app/routes/app_routes.dart';
 
 class RegistrationController extends GetxController {
   final RegisterUseCase _registerUseCase;
-  RegistrationController({required RegisterUseCase registerUseCase})
-      : _registerUseCase = registerUseCase;
+  final SendOtpUseCase _sendOtpUseCase;
+  RegistrationController({
+    required RegisterUseCase registerUseCase,
+    required SendOtpUseCase sendOtpUseCase,
+  })  : _registerUseCase = registerUseCase,
+        _sendOtpUseCase = sendOtpUseCase;
 
   // Reactive States only — no TextEditingControllers here
   final _isLoading = false.obs;
@@ -45,9 +50,15 @@ class RegistrationController extends GetxController {
 
     try {
       _isLoading.value = true;
+
       await _registerUseCase.call(email, password);
+      await _sendOtpUseCase.call(email);
+
       _showSuccessSnackbar('Registration successful!');
-      Get.offAllNamed(AppRoutes.loginPage);
+
+      Get.toNamed(AppRoutes.verifyEmailPage, arguments: email,);
+
+
     } catch (e) {
       _showErrorSnackbar(e.toString().replaceAll('Exception: ', ''));
     } finally {

@@ -16,6 +16,7 @@ import 'package:music_game_app/features/authentication/presentation/verify_phone
 import 'package:music_game_app/features/game_play/presentation/gameplay_page.dart';
 import 'package:music_game_app/features/game_play/presentation/widgets/result_screen.dart';
 import 'package:music_game_app/features/profile/presentation/account_settings_screen.dart';
+import 'package:music_game_app/features/profile/presentation/bindings/profile_binding.dart';
 import 'package:music_game_app/features/profile/presentation/profile_screen.dart';
 import 'package:music_game_app/features/profile/presentation/profile_settings_screen.dart';
 import 'package:music_game_app/features/profile/presentation/settings_screen.dart';
@@ -119,7 +120,19 @@ List<GetPage> routes = [
   GetPage(name: AppRoutes.welcomeSplash, page: () =>  WelcomeSplash()),
   GetPage(name: AppRoutes.twoButtonPage, page: () =>  TwoButtonPage()),
   GetPage(name: AppRoutes.appLanding, page: () =>  AppLanding()),
-  GetPage(name: AppRoutes.profileScreen, page: () =>  ProfileScreen()),
+
+
+
+  GetPage(
+      name: AppRoutes.profileScreen,
+      page: () =>  ProfileScreen(),
+      binding: ProfileBinding()
+  ),
+
+
+
+
+
   GetPage(name: AppRoutes.settingsScreen, page: () =>  SettingsScreen()),
   GetPage(name: AppRoutes.profileSettings, page: () =>  ProfileSettingsScreen()),
   GetPage(name: AppRoutes.accountSettings, page: () =>  AccountSettingsScreen()),
