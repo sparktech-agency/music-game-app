@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:music_game_app/features/app_landing/presentation/after_splash.dart';
 import 'package:music_game_app/features/app_landing/presentation/app_landing.dart';
+import 'package:music_game_app/features/app_landing/presentation/bindings/app_landing_binding.dart';
 import 'package:music_game_app/features/app_landing/presentation/lets_play_screen.dart';
 import 'package:music_game_app/features/app_landing/presentation/lets_sing_screen.dart';
 import 'package:music_game_app/features/app_landing/presentation/main_splash.dart';
@@ -119,7 +120,17 @@ List<GetPage> routes = [
   GetPage(name: AppRoutes.setPassScreen, page: () => const SetPasswordPage()),
   GetPage(name: AppRoutes.welcomeSplash, page: () =>  WelcomeSplash()),
   GetPage(name: AppRoutes.twoButtonPage, page: () =>  TwoButtonPage()),
-  GetPage(name: AppRoutes.appLanding, page: () =>  AppLanding()),
+
+  GetPage(
+      name: AppRoutes.appLanding,
+      page: () =>  AppLanding(),
+      bindings: [
+        AppLandingBinding(),
+        ProfileBinding()
+
+
+      ]
+      ),
 
 
 
