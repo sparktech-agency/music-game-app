@@ -15,9 +15,8 @@ class PlayerName extends GetView<PlayerNameController> {
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             children: [
-              const SizedBox(height: 10),
-              _buildTeamStatus(),
-              const SizedBox(height: 20),
+              const SizedBox(height: 30),
+
 
               Expanded(
                 child: Obx(
@@ -84,26 +83,7 @@ class PlayerName extends GetView<PlayerNameController> {
     );
   }
 
-  Widget _buildTeamStatus() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Container(
-          padding: const EdgeInsets.all(4),
-          decoration: const BoxDecoration(
-            color: Colors.green,
-            shape: BoxShape.circle,
-          ),
-          child: const Icon(Icons.check, size: 12, color: Colors.white),
-        ),
-        const SizedBox(width: 8),
-        const Text(
-          'You belong on this team',
-          style: TextStyle(color: Colors.grey, fontSize: 14),
-        ),
-      ],
-    );
-  }
+
 
   Widget _buildNicknameTextField(int index, PlayerNameController controller) {
     return TextField(
