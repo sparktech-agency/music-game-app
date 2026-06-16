@@ -50,7 +50,10 @@ class SessionBindings extends Bindings{
 
 
     //================= Controllers =================
-    Get.lazyPut<CentralSessionController>(() => CentralSessionController(), fenix: true);
+    Get.lazyPut<CentralSessionController>(() => CentralSessionController(Get.find<CreateSessionUseCase>()), fenix: true);
+
+
+
     Get.lazyPut<GameController>(() => GameController(), fenix: true);
 
     Get.lazyPut<RoundSelectionController>(()=>RoundSelectionController());

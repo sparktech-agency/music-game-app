@@ -1,87 +1,30 @@
 import 'package:music_game_app/core/network/base_provider.dart';
-import 'package:music_game_app/features/session/data/models/session_create_model.dart';
-import 'package:music_game_app/features/session/domain/usecases/create_session_usecase.dart';
+import 'package:music_game_app/features/authentication/data/sources/auth_local_source.dart';
+import 'package:music_game_app/features/session/data/models/create_session_model.dart';
 
 class SessionRemoteSource extends BaseProvider {
 
-  Future<SessionCreateResponseModel> createSession(CreateSessionParams params) async {
-    try {
-      final requestBody = SessionCreateRequestModel.fromParams(params).toJson();
 
-      final response = await post('/session/create', requestBody);
+
+  Future<CreateSessionResponseModel> createSession(CreateSessionRequestModel request) async {
+    try {
+      final accessToken = AuthLocalSourceImpl().getAccessToken();
+      final response = await post(
+        '/session/create',
+        request.toJson(),
+        headers: {
+          'Authorization': '$accessToken',
+        },
+      );
 
       if (response.isOk && response.body != null) {
-        return SessionCreateResponseModel.fromJson(response.body);
+        return CreateSessionResponseModel.fromJson(response.body);
       } else {
-        throw Exception(response.body?['message'] ?? 'Failed to create session');
+        final errorMessage = response.body?['message'] ?? 'Failed to create session';
+        throw Exception(errorMessage);
       }
     } catch (e) {
-      throw Exception('Network error: ${e.toString()}');
+      rethrow;
     }
   }
-
-
-
-
-
-  // Future<SessionResponseModel> startSession(String sessionId) async {
-  //   try {
-  //     final response = await post('/session/start/$sessionId', {});
-  //
-  //     if (response.isOk && response.body != null) {
-  //       return SessionResponseModel.fromJson(response.body);
-  //     } else {
-  //       throw Exception(response.body?['message'] ?? 'Failed to start session');
-  //     }
-  //   } catch (e) {
-  //     throw Exception('Network error: ${e.toString()}');
-  //   }
-  // }
-  //
-  // Future<SessionResponseModel> getSessionById(String sessionId) async {
-  //   try {
-  //     final response = await get('/session/$sessionId');
-  //
-  //     if (response.isOk && response.body != null) {
-  //       return SessionResponseModel.fromJson(response.body);
-  //     } else {
-  //       throw Exception(response.body?['message'] ?? 'Failed to fetch session');
-  //     }
-  //   } catch (e) {
-  //     throw Exception('Network error: ${e.toString()}');
-  //   }
-  // }
-  //
-  // Future<List<SessionResponseModel>> getMySessions() async {
-  //   try {
-  //     final response = await get('/session/my-sessions');
-  //
-  //     if (response.isOk && response.body != null) {
-  //       final sessions = (response.body as List)
-  //           .map((json) => SessionResponseModel.fromJson(json))
-  //           .toList();
-  //       return sessions;
-  //     } else {
-  //       throw Exception(response.body?['message'] ?? 'Failed to fetch sessions');
-  //     }
-  //   } catch (e) {
-  //     throw Exception('Network error: ${e.toString()}');
-  //   }
-  // }
-  //
-  // Future<SessionResponseModel> endSession(String sessionId) async {
-  //   try {
-  //     final response = await post('/session/end/$sessionId', {});
-  //
-  //     if (response.isOk && response.body != null) {
-  //       return SessionResponseModel.fromJson(response.body);
-  //     } else {
-  //       throw Exception(response.body?['message'] ?? 'Failed to end session');
-  //     }
-  //   } catch (e) {
-  //     throw Exception('Network error: ${e.toString()}');
-  //   }
-  // }
 }
-
-

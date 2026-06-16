@@ -31,7 +31,7 @@ class PlayerNameController extends GetxController {
     }
   }
 
-  void proceedToNextPage() {
+  Future<void> proceedToNextPage() async {
     if (playerControllers.any((c) => c.text.trim().isEmpty)) {
       Get.snackbar('Error', 'Please enter all nicknames');
       return;
@@ -41,20 +41,26 @@ class PlayerNameController extends GetxController {
 
     sessionController.savePlayersForTeam(currentTeamName, currentTeamPlayers);
 
-
-    //debug print--
+    // debug print--
     debugPrint("Full Team-Player Map: ${sessionController.teamPlayersMap.toJson()}");
-
-
-
 
     if (currentTeamIndex.value < sessionController.teamNames.length - 1) {
       currentTeamIndex.value++;
       _initializeControllers();
     } else {
-      Get.toNamed(AppRoutes.spinFrontPage);
+
+      final bool isCreated = await sessionController.createSession();
+
+      if (isCreated) {
+
+        Get.toNamed(AppRoutes.spinFrontPage);
+      }
     }
   }
+
+
+
+
 
   void clearField(TextEditingController controller) {
     controller.clear();
