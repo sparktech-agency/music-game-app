@@ -32,11 +32,6 @@ class SpinFrontPageController extends GetxController {
     });
   }
 
-
-
-
-
-
   void onSpinTap() {
     if (isButtonEnabled.value) {
       Get.offNamed(AppRoutes.spinWheelPage);

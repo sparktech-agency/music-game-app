@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:music_game_app/features/session/presentation/controllers/central_session_controller/central_session_controller.dart';
 import 'package:music_game_app/features/spin_feature/presentation/controllers/spin_front_page_controller.dart';
+import 'package:music_game_app/features/spin_feature/presentation/controllers/turn_management/turn_management_controller.dart';
 
 class SpinFrontPage extends StatelessWidget {
   const SpinFrontPage({super.key});
@@ -9,20 +10,24 @@ class SpinFrontPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+
+
     final SpinFrontPageController controller = Get.put(
       SpinFrontPageController(),
       tag: DateTime.now().millisecondsSinceEpoch.toString(),
     );
-    final sessionController = Get.find<CentralSessionController>();
+
+
+    final turnController = Get.find<TurnManagementController>();
 
     return Scaffold(
       backgroundColor: const Color(0xFF0A0E21),
       body: Stack(
         children: [
-          // 1. Top Image Section with Custom Curve
+
           _buildTopHeroSection(context),
 
-          // 2. Timer / Cross Sign in Top Right
+
           Positioned(
             top: 60,
             right: 25,
@@ -39,22 +44,36 @@ class SpinFrontPage extends StatelessWidget {
               child: Column(
                 children: [
                   const SizedBox(height: 20),
-                  Text(
-                    "Team ${sessionController.teamNames[0]}, Your\nCategory Awaits!",
+
+
+
+                  Obx(() => Text(
+                    "Team ${turnController.currentGuessingTeamName}, Your\nCategory Awaits!",
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
                     ),
-                  ),
+                  )),
+
+
+
                   const SizedBox(height: 10),
-                  const Text(
-                    "It's your turn to sing!",
-                    style: TextStyle(color: Color(0xFF9EADDC), fontSize: 16),
-                  ),
+
+                  Obx(() => Text(
+                    "It's ${turnController.activeSingerTeam.value} — ${turnController.activeSingerName.value}'s turn to sing!",
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(color: Color(0xFF9EADDC), fontSize: 16),
+                  )),
+
+
                   const SizedBox(height: 20),
-                  _buildUserProfile(),
+
+
+                  Obx(() => _buildUserProfile(turnController.activeSingerName.value)),
+
+
                   const Spacer(),
                   _buildSpinButton(controller),
                   const SizedBox(height: 40),
@@ -123,24 +142,38 @@ class SpinFrontPage extends StatelessWidget {
     });
   }
 
-  Widget _buildUserProfile() {
+  Widget _buildUserProfile(String singerName) {
     return Column(
       children: [
         Container(
-          padding: const EdgeInsets.all(3),
+          width: 50,
+          height: 50,
           decoration: const BoxDecoration(
             shape: BoxShape.circle,
-            gradient: LinearGradient(colors: [Color(0xFF42E8FF), Color(0xFF3B5CFF)]),
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                Color(0xFF42E8FF),
+                Color(0xFF3B82F6),
+              ],
+            ),
           ),
-          child: const CircleAvatar(
-            radius: 25,
-            backgroundColor: Color(0xFF161B2E),
-            child: Icon(Icons.person, color: Colors.white),
+          child: Center(
+            child: SvgPicture.asset(
+              'assets/images/logo_only.svg',
+              width: 22,
+              height: 22,
+              colorFilter: const ColorFilter.mode(
+                Colors.white,
+                BlendMode.srcIn,
+              ),
+            ),
           ),
         ),
         const SizedBox(height: 10),
-        const Text(
-          "doe john",
+        Text(
+          singerName,
           style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w500),
         ),
       ],

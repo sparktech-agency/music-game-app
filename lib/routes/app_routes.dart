@@ -28,6 +28,7 @@ import 'package:music_game_app/features/session/presentation/singer_number.dart'
 import 'package:music_game_app/features/session/presentation/team_name.dart';
 import 'package:music_game_app/features/session/presentation/team_number.dart';
 import 'package:music_game_app/features/session/presentation/which_team.dart';
+import 'package:music_game_app/features/spin_feature/presentation/bindings/spin_feature_bindings.dart';
 import 'package:music_game_app/features/spin_feature/presentation/lyrics_page.dart';
 import 'package:music_game_app/features/spin_feature/presentation/selected_song.dart';
 import 'package:music_game_app/features/spin_feature/presentation/song_pick_loading_page.dart';
@@ -205,7 +206,21 @@ List<GetPage> routes = [
 
 
 
-  GetPage(name: AppRoutes.spinFrontPage, page: () => SpinFrontPage()),
+  GetPage(
+      name: AppRoutes.spinFrontPage,
+      page: () => SpinFrontPage(),
+      binding: SpinFeatureBindings()
+  ),
+
+
+
+
+
+
+
+
+
+
   GetPage(name: AppRoutes.spinWheelPage, page: () => SpinWheelPage()),
   GetPage(name: AppRoutes.songPickLoading, page: () => SongPickLoadingPage()),
   GetPage(name: AppRoutes.selectedSong, page: () => SelectedSong()),

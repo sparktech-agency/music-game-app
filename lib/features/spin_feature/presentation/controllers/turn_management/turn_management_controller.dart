@@ -1,0 +1,144 @@
+import 'dart:math';
+import 'package:get/get.dart';
+import 'package:music_game_app/features/session/presentation/controllers/central_session_controller/central_session_controller.dart';
+import 'package:music_game_app/features/spin_feature/data/song_model/song_model.dart';
+
+class TurnManagementController extends GetxController {
+  late final CentralSessionController _sessionController;
+
+
+  var currentRound = 1.obs;
+  var currentTeamIndex = 0.obs;
+  var teamScores = <String, int>{}.obs;
+
+
+  var remainingSingers = <Map<String, String>>[].obs;
+  var activeSingerName = "doe john".obs;
+  var activeSingerTeam = "".obs;
+
+
+  var selectedCategory = "".obs;
+  var selectedSong = Rxn<Song>();
+
+  @override
+  void onInit() {
+    super.onInit();
+
+    _sessionController = Get.find<CentralSessionController>();
+
+    initializeGameSession();
+  }
+
+
+  void initializeGameSession() {
+    teamScores.clear();
+    for (var name in _sessionController.teamNames) {
+      teamScores[name] = 0;
+    }
+    currentRound.value = 1;
+    currentTeamIndex.value = 0;
+    prepareOpponentSingersForTurn();
+  }
+
+
+  String get currentGuessingTeamName {
+    if (_sessionController.teamNames.isNotEmpty &&
+        currentTeamIndex.value < _sessionController.teamNames.length) {
+      return _sessionController.teamNames[currentTeamIndex.value];
+    }
+    return "";
+  }
+
+
+  void prepareOpponentSingersForTurn() {
+    remainingSingers.clear();
+    String guessingTeam = currentGuessingTeamName;
+
+    _sessionController.teamPlayersMap.forEach((teamName, players) {
+      if (teamName != guessingTeam) {
+        for (var player in players) {
+          remainingSingers.add({
+            "name": player,
+            "team": teamName,
+          });
+        }
+      }
+    });
+
+    _setupNextSinger();
+  }
+
+
+  bool _setupNextSinger() {
+    if (remainingSingers.isNotEmpty) {
+      final nextSinger = remainingSingers.first;
+      activeSingerName.value = nextSinger["name"] ?? "";
+      activeSingerTeam.value = nextSinger["team"] ?? "";
+      return true;
+    }
+    return false;
+  }
+
+
+  void addPointToGuessingTeam() {
+    String guessingTeamName = currentGuessingTeamName;
+    if (teamScores.containsKey(guessingTeamName)) {
+      teamScores[guessingTeamName] = (teamScores[guessingTeamName] ?? 0) + 1;
+    }
+  }
+
+
+  void completeCurrentSingerPerformance() {
+    if (remainingSingers.isNotEmpty) {
+      remainingSingers.removeAt(0);
+    }
+
+    if (_setupNextSinger()) {
+
+      selectedSong.value = null;
+      Get.offAllNamed('/spinFrontPage');
+    } else {
+
+      _advanceToNextGuessingTeam();
+    }
+  }
+
+
+  void _advanceToNextGuessingTeam() {
+    if (currentTeamIndex.value < _sessionController.teamNames.length - 1) {
+      currentTeamIndex.value++;
+      _resetForNextTurn();
+    } else {
+
+      if (currentRound.value < _sessionController.numberOfRounds.value) {
+        currentRound.value++;
+        currentTeamIndex.value = 0;
+        _resetForNextTurn();
+      } else {
+
+        Get.offAllNamed('/gameResultPage');
+      }
+    }
+  }
+
+  void _resetForNextTurn() {
+    selectedSong.value = null;
+    remainingSingers.clear();
+    prepareOpponentSingersForTurn();
+    Get.offAllNamed('/spinFrontPage');
+  }
+
+
+  void pickSongFromDatabase(String category) {
+    selectedCategory.value = category;
+    final matchedSongs = songDatabase
+        .where((s) => s.category.toLowerCase() == category.toLowerCase())
+        .toList();
+
+    if (matchedSongs.isNotEmpty) {
+      selectedSong.value = matchedSongs[Random().nextInt(matchedSongs.length)];
+    } else {
+      selectedSong.value = songDatabase.first;
+    }
+  }
+}

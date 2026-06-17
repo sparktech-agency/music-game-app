@@ -5,6 +5,7 @@ import 'package:music_game_app/features/session/domain/usecases/create_session_u
 class CentralSessionController extends GetxController {
   // UseCase
   final CreateSessionUseCase _createSessionUseCase;
+
   CentralSessionController(this._createSessionUseCase);
 
   var numberOfRounds = 2.obs;
@@ -29,14 +30,16 @@ class CentralSessionController extends GetxController {
     try {
       isLoading.value = true;
 
-
-      final List<Map<String, dynamic>> formattedTeams = teamPlayersMap.entries.map((entry) {
-        return {
-          "name": entry.key,
-          "players": entry.value.map((nickname) => {"nickname": nickname}).toList(),
-        };
-      }).toList();
-
+      final List<Map<String, dynamic>> formattedTeams = teamPlayersMap.entries
+          .map((entry) {
+            return {
+              "name": entry.key,
+              "players": entry.value
+                  .map((nickname) => {"nickname": nickname})
+                  .toList(),
+            };
+          })
+          .toList();
 
       final result = await _createSessionUseCase.call(
         totalRounds: numberOfRounds.value,
@@ -46,7 +49,6 @@ class CentralSessionController extends GetxController {
 
       createdSession.value = result;
       return true;
-
     } catch (e) {
       Get.snackbar(
         'Error',
@@ -58,9 +60,4 @@ class CentralSessionController extends GetxController {
       isLoading.value = false;
     }
   }
-
-
-
-
-
 }
