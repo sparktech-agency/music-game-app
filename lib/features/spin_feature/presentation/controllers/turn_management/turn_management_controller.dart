@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:get/get.dart';
 import 'package:music_game_app/features/session/presentation/controllers/central_session_controller/central_session_controller.dart';
 import 'package:music_game_app/features/spin_feature/data/song_model/song_model.dart';
+import 'package:music_game_app/routes/app_routes.dart';
 
 class TurnManagementController extends GetxController {
   late final CentralSessionController _sessionController;
@@ -96,7 +97,7 @@ class TurnManagementController extends GetxController {
     if (_setupNextSinger()) {
 
       selectedSong.value = null;
-      Get.offAllNamed('/spinFrontPage');
+      Get.offAllNamed(AppRoutes.spinFrontPage);
     } else {
 
       _advanceToNextGuessingTeam();
@@ -116,7 +117,7 @@ class TurnManagementController extends GetxController {
         _resetForNextTurn();
       } else {
 
-        Get.offAllNamed('/gameResultPage');
+        Get.offAllNamed(AppRoutes.resultPage);
       }
     }
   }
@@ -125,7 +126,7 @@ class TurnManagementController extends GetxController {
     selectedSong.value = null;
     remainingSingers.clear();
     prepareOpponentSingersForTurn();
-    Get.offAllNamed('/spinFrontPage');
+    Get.offAllNamed(AppRoutes.spinFrontPage);
   }
 
 

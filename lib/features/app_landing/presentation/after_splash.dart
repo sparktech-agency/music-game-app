@@ -35,17 +35,8 @@ class AfterSplash extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 30),
               child: Column(
                 children: [
-                  const SizedBox(height: 40),
+                  const SizedBox(height: 50),
 
-                  const Text(
-                    'Hi John!',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
                   const Text(
                     'Welcome to',
                     style: TextStyle(

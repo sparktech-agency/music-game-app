@@ -16,34 +16,26 @@ class _SongPickLoadingPageState extends State<SongPickLoadingPage> {
     super.initState();
 
     Timer(const Duration(seconds: 2), () {
-
       Get.offNamed(AppRoutes.selectedSong);
-
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       backgroundColor: const Color(0xFF050A24),
       body: SafeArea(
         child: Stack(
           children: [
-
             Container(
               decoration: const BoxDecoration(
                 gradient: RadialGradient(
                   center: Alignment(0, -0.3),
                   radius: 1.2,
-                  colors: [
-                    Color(0xFF0A1435),
-                    Color(0xFF050A24),
-                  ],
+                  colors: [Color(0xFF0A1435), Color(0xFF050A24)],
                 ),
               ),
             ),
-
 
             Center(
               child: Padding(
@@ -51,11 +43,9 @@ class _SongPickLoadingPageState extends State<SongPickLoadingPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-
                     const PixelPerfect4DotLoader(),
 
                     const SizedBox(height: 50),
-
 
                     const Text(
                       "Your song is about to be selected",
@@ -68,7 +58,6 @@ class _SongPickLoadingPageState extends State<SongPickLoadingPage> {
                     ),
 
                     const SizedBox(height: 25),
-
 
                     const Text(
                       "We’ll randomly select a song based on the\nselected category. Get ready to sing! 🎶",
@@ -92,7 +81,6 @@ class _SongPickLoadingPageState extends State<SongPickLoadingPage> {
   }
 }
 
-
 class PixelPerfect4DotLoader extends StatefulWidget {
   const PixelPerfect4DotLoader({super.key});
 
@@ -100,7 +88,8 @@ class PixelPerfect4DotLoader extends StatefulWidget {
   State<PixelPerfect4DotLoader> createState() => _PixelPerfect4DotLoaderState();
 }
 
-class _PixelPerfect4DotLoaderState extends State<PixelPerfect4DotLoader> with SingleTickerProviderStateMixin {
+class _PixelPerfect4DotLoaderState extends State<PixelPerfect4DotLoader>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
 
   @override
@@ -147,12 +136,15 @@ class _PixelPerfect4DotLoaderState extends State<PixelPerfect4DotLoader> with Si
   }
 
   Widget _buildDot(int index) {
-
     final delays = [0.0, 0.2, 0.4, 0.6];
     final animation = Tween<double>(begin: 0.2, end: 1.0).animate(
       CurvedAnimation(
         parent: _controller,
-        curve: Interval(delays[index], (delays[index] + 0.4).clamp(0.0, 1.0), curve: Curves.easeInOut),
+        curve: Interval(
+          delays[index],
+          (delays[index] + 0.4).clamp(0.0, 1.0),
+          curve: Curves.easeInOut,
+        ),
       ),
     );
 

@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:music_game_app/features/session/domain/entities/create_session_entity.dart';
 import 'package:music_game_app/features/session/domain/usecases/create_session_usecase.dart';
+import 'package:music_game_app/features/spin_feature/presentation/controllers/turn_management/turn_management_controller.dart';
 
 class CentralSessionController extends GetxController {
   // UseCase
@@ -8,7 +9,7 @@ class CentralSessionController extends GetxController {
 
   CentralSessionController(this._createSessionUseCase);
 
-  var numberOfRounds = 2.obs;
+  var numberOfRounds = 1.obs;
   var numberOfTeams = 2.obs;
   var numberOfSingers = 2.obs;
   var teamNames = <String>[].obs;
@@ -48,6 +49,7 @@ class CentralSessionController extends GetxController {
       );
 
       createdSession.value = result;
+      Get.put(TurnManagementController(), permanent: true);
       return true;
     } catch (e) {
       Get.snackbar(

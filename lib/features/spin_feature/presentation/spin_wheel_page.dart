@@ -9,6 +9,7 @@ class CategoryItem {
   final IconData icon;
   final Color color;
   final bool isBlank;
+
   CategoryItem(this.label, this.icon, this.color, {this.isBlank = false});
 }
 
@@ -24,11 +25,9 @@ class _SpinWheelPageState extends State<SpinWheelPage>
   late AnimationController _controller;
   late Animation<double> _animation;
 
-  // Default cyan color — same as top button default & blank slice
   static const Color _defaultCyan = Color(0xFF2DD4E8);
   static const Color _defaultCyanDark = Color(0xFF18AABF);
 
-  // Result color tracks selected slice — starts as cyan (blank slice)
   Color _resultColor = _defaultCyan;
   Color _resultColorDark = _defaultCyanDark;
 
@@ -37,8 +36,9 @@ class _SpinWheelPageState extends State<SpinWheelPage>
 
   final SpinWheelController controller = Get.put(SpinWheelController());
 
-  // Blank slice is index 0 — cyan color, no label/icon
-  // We'll set initial rotation so index 0 is under the pointer at start
+
+
+
   final List<CategoryItem> _items = [
     CategoryItem("spin", Icons.music_note, _defaultCyan, isBlank: true),
     CategoryItem("Pop", Icons.music_note, Color(0xFFFFB300)),
@@ -64,11 +64,6 @@ class _SpinWheelPageState extends State<SpinWheelPage>
       curve: Curves.fastLinearToSlowEaseIn,
     );
 
-    // Set initial rotation so blank slice (index 0) is under the top pointer.
-    // Pointer is at top = angle -π/2 in Flutter canvas co ords (canvas starts at right=0, goes clockwise).
-    // Segment i center = i * itemAngle + itemAngle/2
-    // We want: segmentCenter(0) + _currentRotation ≡ -π/2  (mod 2π)
-    // => _currentRotation = -π/2 - itemAngle/2
     final double itemAngle = (math.pi * 2) / _items.length;
     _currentRotation = -math.pi / 2 - itemAngle / 2;
     _targetRotation = _currentRotation;
@@ -80,7 +75,7 @@ class _SpinWheelPageState extends State<SpinWheelPage>
     controller.isSpinning.value = true;
 
     final random = math.Random();
-    // Pick from index 1 onward — never land on blank slice when spinning
+
     int randomIndex = 1 + random.nextInt(_items.length - 1);
 
     final double itemAngle = (math.pi * 2) / _items.length;
@@ -93,7 +88,10 @@ class _SpinWheelPageState extends State<SpinWheelPage>
     if (finalAngle < 0) finalAngle += math.pi * 2;
 
     _targetRotation =
-        _currentRotation + spinOffset + finalAngle - (_currentRotation % (math.pi * 2));
+        _currentRotation +
+        spinOffset +
+        finalAngle -
+        (_currentRotation % (math.pi * 2));
 
     _controller.forward(from: 0).then((_) {
       setState(() {
@@ -107,7 +105,9 @@ class _SpinWheelPageState extends State<SpinWheelPage>
 
   Color _darken(Color color, double amount) {
     final hsl = HSLColor.fromColor(color);
-    return hsl.withLightness((hsl.lightness - amount).clamp(0.0, 1.0)).toColor();
+    return hsl
+        .withLightness((hsl.lightness - amount).clamp(0.0, 1.0))
+        .toColor();
   }
 
   @override
@@ -119,15 +119,12 @@ class _SpinWheelPageState extends State<SpinWheelPage>
 
         child: Stack(
           children: [
-
-
             Positioned.fill(
               child: Image.asset(
                 'assets/images/music_notes.gif',
                 fit: BoxFit.cover,
               ),
             ),
-
 
             Positioned.fill(
               child: Container(
@@ -156,20 +153,27 @@ class _SpinWheelPageState extends State<SpinWheelPage>
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         IconButton(
-                          icon: const Icon(Icons.arrow_back_ios_new_rounded,
-                              color: Colors.white, size: 20),
+                          icon: const Icon(
+                            Icons.arrow_back_ios_new_rounded,
+                            color: Colors.white,
+                            size: 20,
+                          ),
                           onPressed: () => Get.back(),
                         ),
                         const Text(
                           "Spin to select song category",
                           style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700),
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                          ),
                         ),
                         IconButton(
-                          icon: const Icon(Icons.close_rounded,
-                              color: Colors.white, size: 24),
+                          icon: const Icon(
+                            Icons.close_rounded,
+                            color: Colors.white,
+                            size: 24,
+                          ),
                           onPressed: () => Get.back(),
                         ),
                       ],
@@ -196,43 +200,48 @@ class _SpinWheelPageState extends State<SpinWheelPage>
                   const SizedBox(height: 20),
 
                   // ===== Top Result Button — changes color with selected slice =====
-                  Obx(() => AnimatedContainer(
-                    duration: const Duration(milliseconds: 500),
-                    curve: Curves.easeInOut,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 52, vertical: 13),
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [_resultColor, _resultColorDark],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
+                  Obx(
+                    () => AnimatedContainer(
+                      duration: const Duration(milliseconds: 500),
+                      curve: Curves.easeInOut,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 52,
+                        vertical: 13,
                       ),
-                      borderRadius: BorderRadius.circular(12),
-                      boxShadow: [
-                        BoxShadow(
-                          color: _resultColor.withValues(alpha: 0.5),
-                          blurRadius: 22,
-                          spreadRadius: 2,
-                          offset: const Offset(0, 4),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [_resultColor, _resultColorDark],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
                         ),
-                      ],
-                    ),
-                    child: Text(
-                      controller.resultText.value,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 32,
-                        fontWeight: FontWeight.w900,
-                        letterSpacing: 1,
-                        shadows: [
-                          Shadow(
-                              color: Colors.black26,
-                              blurRadius: 6,
-                              offset: Offset(0, 2))
+                        borderRadius: BorderRadius.circular(12),
+                        boxShadow: [
+                          BoxShadow(
+                            color: _resultColor.withValues(alpha: 0.5),
+                            blurRadius: 22,
+                            spreadRadius: 2,
+                            offset: const Offset(0, 4),
+                          ),
                         ],
                       ),
+                      child: Text(
+                        controller.resultText.value,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 32,
+                          fontWeight: FontWeight.w900,
+                          letterSpacing: 1,
+                          shadows: [
+                            Shadow(
+                              color: Colors.black26,
+                              blurRadius: 6,
+                              offset: Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
-                  )),
+                  ),
 
                   const Spacer(),
 
@@ -249,13 +258,17 @@ class _SpinWheelPageState extends State<SpinWheelPage>
                           shape: BoxShape.circle,
                           boxShadow: [
                             BoxShadow(
-                              color: const Color(0xFF3B5CFF).withValues(alpha: 0.4),
+                              color: const Color(
+                                0xFF3B5CFF,
+                              ).withValues(alpha: 0.4),
                               blurRadius: 32,
                               spreadRadius: 8,
                             ),
                           ],
                           border: Border.all(
-                            color: const Color(0xFF4A6FFF).withValues(alpha: 0.75),
+                            color: const Color(
+                              0xFF4A6FFF,
+                            ).withValues(alpha: 0.75),
                             width: 10,
                           ),
                         ),
@@ -265,7 +278,8 @@ class _SpinWheelPageState extends State<SpinWheelPage>
                       AnimatedBuilder(
                         animation: _animation,
                         builder: (context, child) {
-                          double angle = _currentRotation +
+                          double angle =
+                              _currentRotation +
                               (_animation.value *
                                   (_targetRotation - _currentRotation));
                           return Transform.rotate(
@@ -297,10 +311,7 @@ class _SpinWheelPageState extends State<SpinWheelPage>
                           decoration: BoxDecoration(
                             color: Colors.white,
                             shape: BoxShape.circle,
-                            border: Border.all(
-                              color: _resultColor,
-                              width: 5,
-                            ),
+                            border: Border.all(color: _resultColor, width: 5),
                             boxShadow: [
                               BoxShadow(
                                 color: _resultColor.withValues(alpha: 0.55),
@@ -308,16 +319,20 @@ class _SpinWheelPageState extends State<SpinWheelPage>
                                 spreadRadius: 2,
                               ),
                               const BoxShadow(
-                                  color: Colors.black38, blurRadius: 10),
+                                color: Colors.black38,
+                                blurRadius: 10,
+                              ),
                             ],
                           ),
-                          child: Obx(() => Icon(
-                            controller.hasSpun.value
-                                ? Icons.check_rounded
-                                : Icons.play_arrow_rounded,
-                            color: _resultColor,
-                            size: 46,
-                          )),
+                          child: Obx(
+                            () => Icon(
+                              controller.hasSpun.value
+                                  ? Icons.check_rounded
+                                  : Icons.play_arrow_rounded,
+                              color: _resultColor,
+                              size: 46,
+                            ),
+                          ),
                         ),
                       ),
                     ],
@@ -326,38 +341,39 @@ class _SpinWheelPageState extends State<SpinWheelPage>
                   const Spacer(),
 
                   // ===== Get Song Button — CONSTANT, never changes =====
-                  Obx(() => GestureDetector(
-                    onTap: controller.hasSpun.value
-                        ? () {
-
-                      Get.offNamed(AppRoutes.songPickLoading);
-                    }
-                        : null,
-                    child: Container(
-                      width: 300,
-                      height: 58,
-                      margin: const EdgeInsets.only(bottom: 34),
-                      decoration: BoxDecoration(
-                        color: controller.hasSpun.value
-                            ? const Color(0xFF3B5CFF)
-                            : const Color(0xFF161B2E),
-                        borderRadius: BorderRadius.circular(32),
-                      ),
-                      child: Center(
-                        child: Text(
-                          "Get Song",
-                          style: TextStyle(
-                            color: controller.hasSpun.value
-                                ? Colors.white
-                                : Colors.white24,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w800,
-                            letterSpacing: 0.5,
+                  Obx(
+                    () => GestureDetector(
+                      onTap: controller.hasSpun.value
+                          ? () {
+                              Get.offNamed(AppRoutes.songPickLoading);
+                            }
+                          : null,
+                      child: Container(
+                        width: 300,
+                        height: 58,
+                        margin: const EdgeInsets.only(bottom: 34),
+                        decoration: BoxDecoration(
+                          color: controller.hasSpun.value
+                              ? const Color(0xFF3B5CFF)
+                              : const Color(0xFF161B2E),
+                          borderRadius: BorderRadius.circular(32),
+                        ),
+                        child: Center(
+                          child: Text(
+                            "Get Song",
+                            style: TextStyle(
+                              color: controller.hasSpun.value
+                                  ? Colors.white
+                                  : Colors.white24,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w800,
+                              letterSpacing: 0.5,
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  )),
+                  ),
                 ],
               ),
             ),
@@ -377,6 +393,7 @@ class _SpinWheelPageState extends State<SpinWheelPage>
 // ===== Wheel Painter =====
 class WheelPainter extends CustomPainter {
   final List<CategoryItem> items;
+
   WheelPainter(this.items);
 
   @override
@@ -450,11 +467,7 @@ class WheelPainter extends CustomPainter {
     }
 
     // Center white circle — covered by center button widget
-    canvas.drawCircle(
-      center,
-      radius * 0.148,
-      Paint()..color = Colors.white,
-    );
+    canvas.drawCircle(center, radius * 0.148, Paint()..color = Colors.white);
   }
 
   @override

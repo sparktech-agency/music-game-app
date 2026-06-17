@@ -2,23 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:music_game_app/features/game_play/presentation/controllers/gameplay_controller.dart';
 
-
-
 class GameplayPage extends StatelessWidget {
   const GameplayPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-
     final controller = Get.put(GameplayController());
-
 
     return Scaffold(
       backgroundColor: const Color(0xFF0A0E21),
       body: SafeArea(
         child: Column(
           children: [
-
             _buildHeader(controller),
             _buildSongStrip(controller),
             _buildScoreAndSmallTimer(controller),
@@ -26,13 +21,11 @@ class GameplayPage extends StatelessWidget {
             const SizedBox(height: 20),
             _buildLyricsSection(controller),
             _buildBottomControls(controller),
-
           ],
         ),
       ),
     );
   }
-
 
   Widget _buildHeader(GameplayController controller) {
     return Padding(
@@ -40,45 +33,47 @@ class GameplayPage extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-
-          const Icon(Icons.arrow_back_ios, color: Colors.white, size: 20),
+          IconButton(
+            icon: const Icon(Icons.arrow_back_ios, color: Colors.white, size: 20),
+            onPressed: () => Get.back(),
+          ),
           const SizedBox(width: 10),
-
-
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
                 Obx(() => Text(
-                    controller.teamInfo.value,
-                    style: const TextStyle(color: Colors.white70, fontSize: 12, fontWeight: FontWeight.bold)
+                  controller.teamInfo.value,
+                  style: const TextStyle(color: Colors.white70, fontSize: 12, fontWeight: FontWeight.bold),
                 )),
                 Row(
                   children: [
                     const Icon(Icons.mic, color: Colors.blueAccent, size: 14),
                     const SizedBox(width: 4),
                     Obx(() => Text(
-                        controller.singerStatus.value,
-                        style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)
+                      controller.singerStatus.value,
+                      style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                     )),
                   ],
                 ),
               ],
             ),
           ),
-
-          const Icon(Icons.close, color: Colors.white, size: 28),
+          IconButton(
+            icon: const Icon(Icons.close, color: Colors.white, size: 28),
+            onPressed: () => controller.showPauseDialogue(),
+          ),
         ],
       ),
     );
   }
+
   Widget _buildSongStrip(GameplayController controller) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
       decoration: const BoxDecoration(
         gradient: LinearGradient(colors: [Color(0xFF1E40AF), Color(0xFF1D4ED8)]),
-
         border: Border(
           top: BorderSide(color: Colors.white, width: 2),
           bottom: BorderSide(color: Colors.white, width: 2),
@@ -86,15 +81,24 @@ class GameplayPage extends StatelessWidget {
       ),
       child: Row(
         children: [
-          ClipRRect(
+
+          Obx(() => ClipRRect(
             borderRadius: BorderRadius.circular(8),
             child: Image.asset(
-              'assets/images/one_direction.jpg',
+              controller.albumArt.value,
               width: 45,
               height: 45,
               fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) {
+                return Container(
+                  width: 45,
+                  height: 45,
+                  color: Colors.black26,
+                  child: const Icon(Icons.music_note, color: Colors.white, size: 20),
+                );
+              },
             ),
-          ),
+          )),
           const SizedBox(width: 12),
           Expanded(
             child: Column(
@@ -137,8 +141,8 @@ class GameplayPage extends StatelessWidget {
       ),
     );
   }
-  Widget _buildScoreAndSmallTimer(GameplayController controller) {
 
+  Widget _buildScoreAndSmallTimer(GameplayController controller) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
       child: Row(
@@ -152,7 +156,10 @@ class GameplayPage extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
                 decoration: BoxDecoration(color: Colors.white24, borderRadius: BorderRadius.circular(10)),
-                child: Obx(() => Text("${controller.songsGuessed}/${controller.totalSongs}", style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold))),
+                child: Obx(() => Text(
+                  "${controller.songsGuessed.value}/${controller.totalSongs.value}",
+                  style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                )),
               ),
             ],
           ),
@@ -167,22 +174,29 @@ class GameplayPage extends StatelessWidget {
       ),
     );
   }
+
+
   Widget _buildMainAnimatedTimer(GameplayController controller) {
-    return Container(
+    return Obx(() => Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
-        border: Border.all(color: const Color(0xFF42E8FF), width: 2),
+        border: Border.all(color: controller.timerColor.value, width: 2),
         boxShadow: [
-          BoxShadow(color: const Color(0xFF42E8FF).withValues(alpha: 0.3), blurRadius: 15, spreadRadius: 2),
+          BoxShadow(
+            color: controller.timerColor.value.withValues(alpha: 0.3),
+            blurRadius: 15,
+            spreadRadius: 2,
+          ),
         ],
       ),
-      child: Obx(() => Text(
+      child: Text(
         controller.mainTimer.value,
         style: const TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.w500, letterSpacing: 2),
-      )),
-    );
+      ),
+    ));
   }
+
   Widget _buildLyricsSection(GameplayController controller) {
     return Expanded(
       child: Obx(() => ListView.builder(
@@ -206,12 +220,13 @@ class GameplayPage extends StatelessWidget {
       )),
     );
   }
+
   Widget _buildBottomControls(GameplayController controller) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       child: Row(
         children: [
-          // //==== 1. Correct Guess Button ====
+          // ==== ১. Correct Guess Button ====
           Expanded(
             child: GestureDetector(
               onTap: () => controller.onCorrectGuess(),
@@ -236,10 +251,10 @@ class GameplayPage extends StatelessWidget {
 
           const SizedBox(width: 10),
 
-          // //==== ২. I Give Up Button ====
+          // ==== ২. I Give Up Button ====
           Expanded(
             child: GestureDetector(
-              onTap: controller.showPauseDialogue,
+              onTap: () => controller.showPauseDialogue(),
               child: Container(
                 height: 60,
                 decoration: BoxDecoration(

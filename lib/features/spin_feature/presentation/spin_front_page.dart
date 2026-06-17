@@ -9,14 +9,10 @@ class SpinFrontPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-
-
     final SpinFrontPageController controller = Get.put(
       SpinFrontPageController(),
       tag: DateTime.now().millisecondsSinceEpoch.toString(),
     );
-
 
     final turnController = Get.find<TurnManagementController>();
 
@@ -24,9 +20,7 @@ class SpinFrontPage extends StatelessWidget {
       backgroundColor: const Color(0xFF0A0E21),
       body: Stack(
         children: [
-
           _buildTopHeroSection(context),
-
 
           Positioned(
             top: 60,
@@ -47,32 +41,39 @@ class SpinFrontPage extends StatelessWidget {
 
 
 
-                  Obx(() => Text(
-                    "Team ${turnController.currentGuessingTeamName}, Your\nCategory Awaits!",
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
+                  Obx(
+                    () => Text(
+                      "Team ${turnController.currentGuessingTeamName}, Your\nCategory Awaits!",
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  )),
-
+                  ),
 
 
                   const SizedBox(height: 10),
 
-                  Obx(() => Text(
-                    "It's ${turnController.activeSingerTeam.value} — ${turnController.activeSingerName.value}'s turn to sing!",
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(color: Color(0xFF9EADDC), fontSize: 16),
-                  )),
-
+                  Obx(
+                    () => Text(
+                      "It's ${turnController.activeSingerTeam.value} — ${turnController.activeSingerName.value}'s turn to sing!",
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        color: Color(0xFF9EADDC),
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
 
                   const SizedBox(height: 20),
 
-
-                  Obx(() => _buildUserProfile(turnController.activeSingerName.value)),
-
+                  Obx(
+                    () => _buildUserProfile(
+                      turnController.activeSingerName.value,
+                    ),
+                  ),
 
                   const Spacer(),
                   _buildSpinButton(controller),
@@ -120,11 +121,7 @@ class SpinFrontPage extends StatelessWidget {
               color: Colors.white.withValues(alpha: 0.2),
               shape: BoxShape.circle,
             ),
-            child: const Icon(
-              Icons.close,
-              color: Colors.white,
-              size: 30,
-            ),
+            child: const Icon(Icons.close, color: Colors.white, size: 30),
           ),
         );
       }
@@ -133,11 +130,7 @@ class SpinFrontPage extends StatelessWidget {
       return SizedBox(
         height: 80,
         width: 80,
-        child: Image.asset(
-          assetPath,
-          key: UniqueKey(),
-          fit: BoxFit.contain,
-        ),
+        child: Image.asset(assetPath, key: UniqueKey(), fit: BoxFit.contain),
       );
     });
   }
@@ -153,10 +146,7 @@ class SpinFrontPage extends StatelessWidget {
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              colors: [
-                Color(0xFF42E8FF),
-                Color(0xFF3B82F6),
-              ],
+              colors: [Color(0xFF42E8FF), Color(0xFF3B82F6)],
             ),
           ),
           child: Center(
@@ -174,7 +164,11 @@ class SpinFrontPage extends StatelessWidget {
         const SizedBox(height: 10),
         Text(
           singerName,
-          style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w500),
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 18,
+            fontWeight: FontWeight.w500,
+          ),
         ),
       ],
     );
@@ -204,7 +198,9 @@ class SpinFrontPage extends StatelessWidget {
             child: AnimatedDefaultTextStyle(
               duration: const Duration(milliseconds: 300),
               style: TextStyle(
-                color: isEnabled ? Colors.white : Colors.white.withValues(alpha: 0.3),
+                color: isEnabled
+                    ? Colors.white
+                    : Colors.white.withValues(alpha: 0.3),
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
@@ -217,17 +213,22 @@ class SpinFrontPage extends StatelessWidget {
   }
 }
 
-
 class CustomBottomCurveClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     Path path = Path();
     path.lineTo(0, size.height - 100);
-    path.quadraticBezierTo(size.width / 2, size.height + 20, size.width, size.height - 100);
+    path.quadraticBezierTo(
+      size.width / 2,
+      size.height + 20,
+      size.width,
+      size.height - 100,
+    );
     path.lineTo(size.width, 0);
     path.close();
     return path;
   }
+
   @override
   bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }

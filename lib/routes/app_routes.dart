@@ -15,7 +15,7 @@ import 'package:music_game_app/features/authentication/presentation/set_password
 import 'package:music_game_app/features/authentication/presentation/verify_email_page.dart';
 import 'package:music_game_app/features/authentication/presentation/verify_phone_page.dart';
 import 'package:music_game_app/features/game_play/presentation/gameplay_page.dart';
-import 'package:music_game_app/features/game_play/presentation/widgets/result_screen.dart';
+import 'package:music_game_app/features/game_play/presentation/result_page.dart';
 import 'package:music_game_app/features/profile/presentation/account_settings_screen.dart';
 import 'package:music_game_app/features/profile/presentation/bindings/profile_binding.dart';
 import 'package:music_game_app/features/profile/presentation/profile_screen.dart';
@@ -226,6 +226,6 @@ List<GetPage> routes = [
   GetPage(name: AppRoutes.selectedSong, page: () => SelectedSong()),
   GetPage(name: AppRoutes.lyricsPage, page: () => LyricsPage()),
   GetPage(name: AppRoutes.gameplayPage, page: () => GameplayPage()),
-  GetPage(name: AppRoutes.resultPage, page: () => ResultScreen()),
+  GetPage(name: AppRoutes.resultPage, page: () => ResultPage()),
 
 ];

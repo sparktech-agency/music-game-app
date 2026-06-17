@@ -1,35 +1,31 @@
+// features/spin_feature/presentation/views/lyrics_page.dart
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:music_game_app/features/spin_feature/presentation/controllers/lyrics_controller.dart';
 
 class LyricsPage extends StatelessWidget {
-
   const LyricsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-
     final controller = Get.put(LyricsController());
 
     return Scaffold(
       backgroundColor: const Color(0xFF0A0E21),
       body: Obx(() => Stack(
         children: [
-
           SafeArea(
             child: Column(
               children: [
-
                 _buildAppBar(controller),
                 _buildSongHeader(controller),
                 _buildLyricsList(controller),
                 _buildStartButton(controller),
                 const SizedBox(height: 30),
-
               ],
             ),
           ),
-
 
           if (controller.isCountingDown.value) _buildTimerOverlay(controller),
         ],
@@ -37,36 +33,37 @@ class LyricsPage extends StatelessWidget {
     );
   }
 
-
   PreferredSizeWidget _buildAppBar(LyricsController controller) {
-
     return AppBar(
       backgroundColor: const Color(0xFF0A0E21),
       elevation: 0,
-      leading: const Icon(Icons.arrow_back_ios, color: Colors.white),
+      leading: IconButton(
+        icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
+        onPressed: () => Get.back(),
+      ),
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
+          Obx(() => Text(
             "${controller.teamName.value} | ${controller.roundNumber.value}",
             style: const TextStyle(color: Colors.white70, fontSize: 12),
-          ),
+          )),
           Row(
             children: [
               const Icon(Icons.mic, color: Colors.blueAccent, size: 14),
               const SizedBox(width: 4),
-              Text(
+              Obx(() => Text(
                 "${controller.singerName.value} will sing",
                 style: const TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.bold),
-              ),
+              )),
             ],
           ),
         ],
       ),
-      actions: const [
-        Padding(
-          padding: EdgeInsets.only(right: 15),
-          child: Icon(Icons.close, color: Colors.white, size: 30),
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.close, color: Colors.white, size: 30),
+          onPressed: () => Get.back(),
         ),
       ],
     );
@@ -77,7 +74,6 @@ class LyricsPage extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
       decoration: const BoxDecoration(
         gradient: LinearGradient(colors: [Color(0xFF1E40AF), Color(0xFF1D4ED8)]),
-
         border: Border(
           top: BorderSide(color: Colors.white, width: 2),
           bottom: BorderSide(color: Colors.white, width: 2),
@@ -85,15 +81,24 @@ class LyricsPage extends StatelessWidget {
       ),
       child: Row(
         children: [
-          ClipRRect(
+
+          Obx(() => ClipRRect(
             borderRadius: BorderRadius.circular(8),
             child: Image.asset(
-              'assets/images/one_direction.jpg',
+              controller.albumArt.value,
               width: 45,
               height: 45,
               fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) {
+                return Container(
+                  width: 45,
+                  height: 45,
+                  color: Colors.black26,
+                  child: const Icon(Icons.music_note, color: Colors.white, size: 20),
+                );
+              },
             ),
-          ),
+          )),
           const SizedBox(width: 12),
           Expanded(
             child: Column(
@@ -117,7 +122,7 @@ class LyricsPage extends StatelessWidget {
 
   Widget _buildLyricsList(LyricsController controller) {
     return Expanded(
-      child: ListView.builder(
+      child: Obx(() => ListView.builder(
         padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
         itemCount: controller.lyrics.length,
         itemBuilder: (context, index) {
@@ -137,7 +142,7 @@ class LyricsPage extends StatelessWidget {
             ),
           );
         },
-      ),
+      )),
     );
   }
 
@@ -174,7 +179,6 @@ class LyricsPage extends StatelessWidget {
   }
 
   Widget _buildTimerOverlay(LyricsController controller) {
-
     return Container(
       color: Colors.black.withValues(alpha: 0.85),
       width: double.infinity,
@@ -188,7 +192,6 @@ class LyricsPage extends StatelessWidget {
             style: TextStyle(color: Colors.white, fontSize: 32, fontWeight: FontWeight.w700),
           ),
           const SizedBox(height: 20),
-
           SizedBox(
             height: 80,
             child: IgnorePointer(
