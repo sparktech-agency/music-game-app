@@ -15,7 +15,7 @@ class LogInPage extends StatefulWidget {
 }
 
 class _LogInPageState extends State<LogInPage> {
-  // TextEditingControllers live here — safe lifecycle
+
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 

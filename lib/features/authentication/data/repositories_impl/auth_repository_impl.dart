@@ -1,9 +1,11 @@
+import 'package:music_game_app/features/authentication/data/models/forgot_password_model.dart';
 import 'package:music_game_app/features/authentication/data/models/login_model.dart';
 import 'package:music_game_app/features/authentication/data/models/register_model.dart';
 import 'package:music_game_app/features/authentication/data/models/send_otp_model.dart';
 import 'package:music_game_app/features/authentication/data/models/verify_otp_model.dart';
 import 'package:music_game_app/features/authentication/data/sources/auth_local_source.dart';
 import 'package:music_game_app/features/authentication/data/sources/auth_remote_source.dart';
+import 'package:music_game_app/features/authentication/domain/entities/forgot_password_entity.dart';
 import 'package:music_game_app/features/authentication/domain/entities/login_entity.dart';
 import 'package:music_game_app/features/authentication/domain/entities/register_entity.dart';
 import 'package:music_game_app/features/authentication/domain/entities/send_otp_entity.dart';
@@ -38,7 +40,6 @@ class AuthRepositoryImpl implements AuthRepository {
     return response;
   }
 
-
   @override
   Future<VerifyOtpEntity> verifyOtp(String email, String otp) async {
     final request = VerifyOtpRequestModel(
@@ -67,6 +68,15 @@ class AuthRepositoryImpl implements AuthRepository {
       name: response.name,
       joinDate: response.createdAt.toIso8601String(),
     );
+
+    return response;
+  }
+
+  @override
+  Future<ForgotPasswordEntity> forgotPassword(String email) async {
+    final request = ForgotPasswordRequestModel(email: email);
+
+    final response = await _remoteSource.forgotPassword(request);
 
     return response;
   }

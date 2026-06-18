@@ -1,4 +1,5 @@
 import 'package:music_game_app/core/network/base_provider.dart';
+import 'package:music_game_app/features/authentication/data/models/forgot_password_model.dart';
 import 'package:music_game_app/features/authentication/data/models/login_model.dart';
 import 'package:music_game_app/features/authentication/data/models/register_model.dart';
 import 'package:music_game_app/features/authentication/data/models/send_otp_model.dart';
@@ -71,6 +72,24 @@ class AuthRemoteSource extends BaseProvider {
         return VerifyOtpResponseModel.fromJson(response.body);
       } else {
         final errorMessage = response.body?['message'] ?? 'Failed to verify OTP';
+        throw Exception(errorMessage);
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<ForgotPasswordResponseModel> forgotPassword(ForgotPasswordRequestModel request) async {
+    try {
+      final response = await post(
+        '/auth/forgot-password',
+        request.toJson(),
+      );
+
+      if (response.isOk && response.body != null) {
+        return ForgotPasswordResponseModel.fromJson(response.body);
+      } else {
+        final errorMessage = response.body?['message'] ?? 'Failed to send reset email';
         throw Exception(errorMessage);
       }
     } catch (e) {

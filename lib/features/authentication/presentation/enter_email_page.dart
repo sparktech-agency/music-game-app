@@ -42,10 +42,15 @@ class EnterEmailPage extends GetView<EnterEmailController> {
                   ),
                 ),
               ),
-              CustomGradientButton(
-                  text: "Get Code",
-                  onPressed: ()=> controller.getCode()
-              ),
+              Obx(() => CustomGradientButton(
+                text: controller.isLoading.value ? "Sending..." : "Get Code",
+                onPressed: () {
+                  if (!controller.isLoading.value) {
+                    controller.getCode();
+                  }
+                },
+              )),
+
               const SizedBox(height: 24)
             ],
           ),

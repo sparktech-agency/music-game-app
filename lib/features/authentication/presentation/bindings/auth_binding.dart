@@ -3,10 +3,12 @@ import 'package:music_game_app/features/authentication/data/repositories_impl/au
 import 'package:music_game_app/features/authentication/data/sources/auth_local_source.dart';
 import 'package:music_game_app/features/authentication/data/sources/auth_remote_source.dart';
 import 'package:music_game_app/features/authentication/domain/repositories/auth_repository.dart';
+import 'package:music_game_app/features/authentication/domain/usecases/forgot_password_usecase.dart';
 import 'package:music_game_app/features/authentication/domain/usecases/login_usecase.dart';
 import 'package:music_game_app/features/authentication/domain/usecases/register_usecase.dart';
 import 'package:music_game_app/features/authentication/domain/usecases/send_otp_usecase.dart';
 import 'package:music_game_app/features/authentication/domain/usecases/verify_otp_usecase.dart';
+import 'package:music_game_app/features/authentication/presentation/controllers/enter_email_controller.dart';
 import 'package:music_game_app/features/authentication/presentation/controllers/login_controller.dart';
 import 'package:music_game_app/features/authentication/presentation/controllers/registration_controller.dart';
 import 'package:music_game_app/features/authentication/presentation/controllers/verify_email_controller.dart';
@@ -33,6 +35,8 @@ class AuthBinding extends Bindings {
 
     Get.lazyPut(() => VerifyOtpUseCase(Get.find<AuthRepository>()), fenix: true);
 
+    Get.lazyPut(() => ForgotPasswordUseCase(Get.find<AuthRepository>()), fenix: true);
+
 
 
 
@@ -54,6 +58,13 @@ class AuthBinding extends Bindings {
     Get.lazyPut<VerifyEmailController>(
           () =>
           VerifyEmailController(verifyOtpUseCase: Get.find<VerifyOtpUseCase>(), sendOtpUseCase: Get.find<SendOtpUseCase>(),),
+      fenix: true,
+    );
+
+    Get.lazyPut<EnterEmailController>(
+          () => EnterEmailController(
+        forgotPasswordUseCase: Get.find<ForgotPasswordUseCase>(),
+      ),
       fenix: true,
     );
   }
