@@ -6,18 +6,44 @@ import 'package:music_game_app/features/song_packs/presentation/song_pack_screen
 
 class NavController extends GetxController {
 
-  var selectedIndex = 0.obs;
+  final selectedIndex = 0.obs;
 
+  late final PageController pageController;
 
-  final List<Widget> screens = [
+  @override
+  void onInit() {
+    super.onInit();
+
+    pageController = PageController(
+      initialPage: selectedIndex.value,
+    );
+  }
+
+  final List<Widget> screens = const [
     LetsSingScreen(),
-    //const Center(child: Text('Guide Screen Demo', style: TextStyle(color: Colors.white, fontSize: 20))),
     SongPackScreen(),
-    ProfileScreen()
+    ProfileScreen(),
   ];
 
-
   void changeTab(int index) {
+    if (selectedIndex.value == index) return;
+
     selectedIndex.value = index;
+
+    pageController.animateToPage(
+      index,
+      duration: const Duration(milliseconds: 350),
+      curve: Curves.easeOutCubic,
+    );
+  }
+
+  void onPageChanged(int index) {
+    selectedIndex.value = index;
+  }
+
+  @override
+  void onClose() {
+    pageController.dispose();
+    super.onClose();
   }
 }

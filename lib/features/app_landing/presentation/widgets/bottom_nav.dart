@@ -31,7 +31,7 @@ class BottomNav extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               _buildNavItem(0, Icons.mic_rounded, "Let's Sing", controller),
-             // _buildNavItem(1, Icons.lightbulb_outline_rounded, "Guide", controller),
+              //_buildNavItem(1, Icons.lightbulb_outline_rounded, "Guide", controller),
               _buildNavItem(1, Icons.music_note_rounded, "Song Packs", controller),
               _buildNavItem(2, Icons.person_outline_rounded, "Profile", controller),
             ],

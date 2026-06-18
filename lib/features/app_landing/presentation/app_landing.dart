@@ -7,12 +7,11 @@ import 'package:music_game_app/features/profile/presentation/controllers/profile
 class AppLanding extends StatelessWidget {
   AppLanding({super.key});
 
+  final NavController controller =
+  Get.find<NavController>();
 
-  final NavController controller = Get.find<NavController>();
-
-  final ProfileScreenController _profileScreenController = Get.find<ProfileScreenController>();
-
-
+  final ProfileScreenController profileController =
+  Get.find<ProfileScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +21,15 @@ class AppLanding extends StatelessWidget {
       body: Stack(
         children: [
 
-          Obx(() => controller.screens[controller.selectedIndex.value]),
+          PageView(
+            controller: controller.pageController,
 
+            onPageChanged:
+            controller.onPageChanged,
+
+            children:
+            controller.screens,
+          ),
 
           Positioned(
             bottom: 0,
@@ -33,7 +39,6 @@ class AppLanding extends StatelessWidget {
           ),
         ],
       ),
-      //bottomNavigationBar: const BottomNav(),
     );
   }
 }
