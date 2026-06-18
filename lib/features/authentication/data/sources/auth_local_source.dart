@@ -34,7 +34,7 @@ class AuthLocalSourceImpl implements AuthLocalSource {
     await _authStorage.write('access_token', accessToken);
     await _authStorage.write('refresh_token', refreshToken);
     await _authStorage.write('role', role);
-    await _authStorage.write('name', name ?? email);
+    await _authStorage.write('name', name ?? 'user');
     await _authStorage.write('email', email);
     await _authStorage.write('join_date', joinDate);
   }

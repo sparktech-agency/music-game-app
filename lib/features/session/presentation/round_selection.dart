@@ -78,7 +78,7 @@ class RoundSelection extends GetView<RoundSelectionController> {
                           style: TextStyle(color: Colors.white, fontSize: 26, fontWeight: FontWeight.bold, height: 1.2),
                         ),
                       ),
-                      IconButton(onPressed: () {}, icon: const Icon(Icons.close, color: Colors.white, size: 30)),
+                      SizedBox(width: 20,)
                     ],
                   ),
                 ),

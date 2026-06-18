@@ -87,14 +87,7 @@ class SingerNumber extends GetView<SingerNumberController> {
                           ),
                         ),
                       ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.close,
-                          color: Colors.white,
-                          size: 30,
-                        ),
-                      ),
+                      SizedBox(width: 20,)
                     ],
                   ),
                 ),

@@ -9,7 +9,7 @@ class CentralSessionController extends GetxController {
 
   CentralSessionController(this._createSessionUseCase);
 
-  var numberOfRounds = 1.obs;
+  var numberOfRounds = 2.obs;
   var numberOfTeams = 2.obs;
   var numberOfSingers = 2.obs;
   var teamNames = <String>[].obs;

@@ -2,7 +2,7 @@ class LoginEntity {
   final String accessToken;
   final String refreshToken;
   final String id;
-  final String name;
+  final String? name;
   final String email;
   final String role;
   final String isActive;
@@ -14,7 +14,7 @@ class LoginEntity {
     required this.accessToken,
     required this.refreshToken,
     required this.id,
-    required this.name,
+    this.name,
     required this.email,
     required this.role,
     required this.isActive,

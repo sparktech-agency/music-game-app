@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:music_game_app/features/session/presentation/controllers/central_session_controller/central_session_controller.dart';
 import 'package:music_game_app/routes/app_routes.dart';
@@ -24,7 +25,9 @@ class WhichTeamController extends GetxController {
       Get.snackbar(
         'Warning',
         'Please select a team first',
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.TOP,
+        colorText: Colors.black,
+        backgroundColor: Color(0xFF42E8FF),
       );
       return;
     }

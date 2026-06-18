@@ -209,10 +209,7 @@ class _Header extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-        IconButton(
-          icon: const Icon(Icons.close, color: Colors.white, size: 30),
-          onPressed: () => Get.back(),
-        ),
+        SizedBox(width: 20,)
       ],
     );
   }

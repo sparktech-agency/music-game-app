@@ -11,7 +11,7 @@ class NavController extends GetxController {
 
   final List<Widget> screens = [
     LetsSingScreen(),
-    const Center(child: Text('Guide Screen Demo', style: TextStyle(color: Colors.white, fontSize: 20))),
+    //const Center(child: Text('Guide Screen Demo', style: TextStyle(color: Colors.white, fontSize: 20))),
     SongPackScreen(),
     ProfileScreen()
   ];
