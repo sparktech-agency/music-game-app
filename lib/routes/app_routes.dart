@@ -52,7 +52,6 @@ class AppRoutes{
 
   static const String welcomeSplash = "/welcomeSplash";
   static const String twoButtonPage = "/twoButtonPage";
-
   static const String appLanding = "/appLanding";
   static const String profileScreen = "/profileScreen";
   static const String settingsScreen = "/settingsScreen";

@@ -38,7 +38,7 @@ class VerifyEmailController extends GetxController {
         );
 
         // Redirect to next page
-        Get.offAllNamed(AppRoutes.loginPage);
+        Get.offAllNamed(AppRoutes.welcomeSplash);
 
       } catch (e) {
         Get.snackbar(
