@@ -20,7 +20,7 @@ class LoginController extends GetxController {
   Future<void> login(String email, String password) async {
     if (email.isEmpty || password.isEmpty) {
       Get.snackbar('Error', 'Email & Password required',
-          snackPosition: SnackPosition.BOTTOM,
+          snackPosition: SnackPosition.TOP,
           backgroundColor: Colors.redAccent,
           colorText: Colors.white);
       return;
@@ -38,9 +38,9 @@ class LoginController extends GetxController {
       isLoading.value = true;
       await _loginUseCase.call(email, password);
       Get.snackbar('Success', 'Login successful!',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.green,
-          colorText: Colors.white);
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: Colors.lightBlueAccent,
+          colorText: Colors.black);
       Get.offAllNamed(AppRoutes.appLanding);
     } catch (e, stackTrace) {
       print("Login Error: $e");

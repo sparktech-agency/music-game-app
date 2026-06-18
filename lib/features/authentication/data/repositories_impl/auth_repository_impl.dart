@@ -28,6 +28,13 @@ class AuthRepositoryImpl implements AuthRepository {
 
     final response = await _remoteSource.register(request);
 
+    await _localSource.registerAuthData(
+        id: response.id,
+        email: response.email,
+        name: response.name,
+        joinDate: response.createdAt.toIso8601String(),
+    );
+
     return response;
   }
 
@@ -61,6 +68,7 @@ class AuthRepositoryImpl implements AuthRepository {
     final response = await _remoteSource.login(request);
 
     await _localSource.saveAuthData(
+      id: response.id,
       accessToken: response.accessToken,
       refreshToken: response.refreshToken,
       email: response.email,

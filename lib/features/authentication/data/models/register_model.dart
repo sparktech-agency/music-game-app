@@ -21,10 +21,12 @@ class RegisterResponseModel extends RegisterEntity {
   const RegisterResponseModel({
     required super.id,
     required super.email,
+    super.name,
     required super.role,
     required super.isActive,
     required super.isVerified,
     required super.isDeleted,
+    required super.createdAt
   });
 
   factory RegisterResponseModel.fromJson(Map<String, dynamic> json) {
@@ -33,10 +35,12 @@ class RegisterResponseModel extends RegisterEntity {
     return RegisterResponseModel(
       id: data['_id'] as String,
       email: data['email'] as String,
+      name: data['name'] as String?,
       role: data['role'] as String,
       isActive: data['isActive'] as String,
       isVerified: data['isVerified'] as bool,
       isDeleted: data['isDeleted'] as bool,
+      createdAt: DateTime.parse(data['createdAt'] as String),
     );
   }
 }
