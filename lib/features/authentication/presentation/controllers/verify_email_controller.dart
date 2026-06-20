@@ -8,6 +8,9 @@ class VerifyEmailController extends GetxController {
   final VerifyOtpUseCase _verifyOtpUseCase;
   final SendOtpUseCase _sendOtpUseCase;
 
+  late final String email;
+  late final String flow;
+
 
   VerifyEmailController({
     required VerifyOtpUseCase verifyOtpUseCase,
@@ -16,7 +19,13 @@ class VerifyEmailController extends GetxController {
         _sendOtpUseCase = sendOtpUseCase;
 
 
-  final String email = Get.arguments ?? '';
+  @override
+  void onInit() {
+    super.onInit();
+    final args = Get.arguments as Map<String, dynamic>? ?? {};
+    email = args['email'] ?? '';
+    flow = args['flow'] ?? 'registration';
+  }
 
   final isLoading = false.obs;
 
@@ -26,19 +35,21 @@ class VerifyEmailController extends GetxController {
       try {
         isLoading.value = true;
 
-
         await _verifyOtpUseCase.call(email, pin);
 
         Get.snackbar(
           'Success',
           'Code verified successfully',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.green,
-          colorText: Colors.white,
+          snackPosition: SnackPosition.TOP,
+          backgroundColor: Colors.lightBlueAccent,
+          colorText: Colors.black,
         );
 
-        // Redirect to next page
-        Get.offAllNamed(AppRoutes.welcomeSplash);
+        if (flow == 'registration') {
+          Get.offAllNamed(AppRoutes.welcomeSplash);
+        } else {
+          Get.offAllNamed(AppRoutes.setPassScreen, arguments: email);
+        }
 
       } catch (e) {
         Get.snackbar(

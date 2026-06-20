@@ -11,7 +11,7 @@ import 'package:music_game_app/features/authentication/presentation/login_page.d
 import 'package:music_game_app/features/authentication/presentation/first_screen.dart';
 import 'package:music_game_app/features/authentication/presentation/phone_input_page.dart';
 import 'package:music_game_app/features/authentication/presentation/registration_page.dart';
-import 'package:music_game_app/features/authentication/presentation/set_password_page.dart';
+import 'package:music_game_app/features/authentication/presentation/reset_password_page.dart';
 import 'package:music_game_app/features/authentication/presentation/verify_email_page.dart';
 import 'package:music_game_app/features/authentication/presentation/verify_phone_page.dart';
 import 'package:music_game_app/features/game_play/presentation/gameplay_page.dart';
@@ -117,7 +117,7 @@ List<GetPage> routes = [
 
 
   GetPage(name: AppRoutes.phoneInputScreen, page: () => const PhoneInputPage()),
-  GetPage(name: AppRoutes.setPassScreen, page: () => const SetPasswordPage()),
+  GetPage(name: AppRoutes.setPassScreen, page: () => const ResetPasswordPage()),
   GetPage(name: AppRoutes.welcomeSplash, page: () =>  WelcomeSplash()),
   GetPage(name: AppRoutes.twoButtonPage, page: () =>  TwoButtonPage()),
 

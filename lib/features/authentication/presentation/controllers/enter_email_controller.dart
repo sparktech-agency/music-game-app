@@ -6,9 +6,8 @@ import 'package:music_game_app/routes/app_routes.dart';
 class EnterEmailController extends GetxController {
   final ForgotPasswordUseCase _forgotPasswordUseCase;
 
-
   EnterEmailController({required ForgotPasswordUseCase forgotPasswordUseCase})
-      : _forgotPasswordUseCase = forgotPasswordUseCase;
+    : _forgotPasswordUseCase = forgotPasswordUseCase;
 
   // Controller for the email input field
   final TextEditingController emailController = TextEditingController();
@@ -55,8 +54,10 @@ class EnterEmailController extends GetxController {
         colorText: Colors.white,
       );
 
-      Get.toNamed(AppRoutes.verifyEmailPage, arguments: email);
-
+      Get.toNamed(
+        AppRoutes.verifyEmailPage,
+        arguments: {'email': email, 'flow': 'forgetPassword'},
+      );
     } catch (e) {
       Get.snackbar(
         "Error",

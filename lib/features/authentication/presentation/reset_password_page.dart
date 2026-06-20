@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:music_game_app/features/authentication/presentation/controllers/password_controller.dart';
+import 'package:music_game_app/features/authentication/presentation/controllers/reset_password_controller.dart'; // ইম্পোর্ট যুক্ত করা হলো
 
-
-class SetPasswordPage extends StatelessWidget {
-  const SetPasswordPage({super.key});
+class ResetPasswordPage extends GetView<ResetPasswordController> {
+  const ResetPasswordPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final PasswordController controller = Get.put(PasswordController());
-
     return Scaffold(
       backgroundColor: const Color(0xFF050A18),
       appBar: AppBar(
@@ -34,7 +31,6 @@ class SetPasswordPage extends StatelessWidget {
                     children: [
                       const SizedBox(height: 30),
 
-
                       Obx(() => _buildPasswordField(
                         controller: controller.passwordController,
                         hint: "Enter password",
@@ -43,7 +39,6 @@ class SetPasswordPage extends StatelessWidget {
                       )),
 
                       const SizedBox(height: 20),
-
 
                       Obx(() => _buildPasswordField(
                         controller: controller.confirmPasswordController,
@@ -54,7 +49,6 @@ class SetPasswordPage extends StatelessWidget {
 
                       const SizedBox(height: 20),
 
-
                       const Text(
                         "The password needs 8-20 digits, containing at least letters and numbers",
                         style: TextStyle(color: Colors.white70, fontSize: 13, height: 1.4),
@@ -64,7 +58,6 @@ class SetPasswordPage extends StatelessWidget {
                 ),
               ),
 
-
               _buildNextButton(controller),
               const SizedBox(height: 20),
             ],
@@ -73,7 +66,6 @@ class SetPasswordPage extends StatelessWidget {
       ),
     );
   }
-
 
   Widget _buildPasswordField({
     required TextEditingController controller,
@@ -111,10 +103,11 @@ class SetPasswordPage extends StatelessWidget {
     );
   }
 
-
-  Widget _buildNextButton(PasswordController controller) {
-    return GestureDetector(
-      onTap: () => controller.setPassword(),
+  Widget _buildNextButton(ResetPasswordController controller) {
+    return Obx(() => GestureDetector(
+      onTap: controller.isLoading.value
+          ? null
+          : () => controller.setPassword(),
       child: Container(
         width: double.infinity,
         height: 60,
@@ -124,13 +117,13 @@ class SetPasswordPage extends StatelessWidget {
           ),
           borderRadius: BorderRadius.circular(30),
         ),
-        child: const Center(
+        child: Center(
           child: Text(
-            "Next",
-            style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+            controller.isLoading.value ? "Saving..." : "Next",
+            style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
           ),
         ),
       ),
-    );
+    ));
   }
 }

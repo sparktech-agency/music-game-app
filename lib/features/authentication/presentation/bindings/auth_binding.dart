@@ -6,11 +6,13 @@ import 'package:music_game_app/features/authentication/domain/repositories/auth_
 import 'package:music_game_app/features/authentication/domain/usecases/forgot_password_usecase.dart';
 import 'package:music_game_app/features/authentication/domain/usecases/login_usecase.dart';
 import 'package:music_game_app/features/authentication/domain/usecases/register_usecase.dart';
+import 'package:music_game_app/features/authentication/domain/usecases/reset_pass_usecase.dart';
 import 'package:music_game_app/features/authentication/domain/usecases/send_otp_usecase.dart';
 import 'package:music_game_app/features/authentication/domain/usecases/verify_otp_usecase.dart';
 import 'package:music_game_app/features/authentication/presentation/controllers/enter_email_controller.dart';
 import 'package:music_game_app/features/authentication/presentation/controllers/login_controller.dart';
 import 'package:music_game_app/features/authentication/presentation/controllers/registration_controller.dart';
+import 'package:music_game_app/features/authentication/presentation/controllers/reset_password_controller.dart';
 import 'package:music_game_app/features/authentication/presentation/controllers/verify_email_controller.dart';
 
 class AuthBinding extends Bindings {
@@ -22,7 +24,10 @@ class AuthBinding extends Bindings {
 
     //===== Repository =====
     Get.lazyPut<AuthRepository>(
-      () => AuthRepositoryImpl(Get.find<AuthRemoteSource>(), Get.find<AuthLocalSource>(),),
+      () => AuthRepositoryImpl(
+        Get.find<AuthRemoteSource>(),
+        Get.find<AuthLocalSource>(),
+      ),
       fenix: true,
     );
 
@@ -33,13 +38,20 @@ class AuthBinding extends Bindings {
 
     Get.lazyPut(() => SendOtpUseCase(Get.find<AuthRepository>()), fenix: true);
 
-    Get.lazyPut(() => VerifyOtpUseCase(Get.find<AuthRepository>()), fenix: true);
+    Get.lazyPut(
+      () => VerifyOtpUseCase(Get.find<AuthRepository>()),
+      fenix: true,
+    );
 
-    Get.lazyPut(() => ForgotPasswordUseCase(Get.find<AuthRepository>()), fenix: true);
+    Get.lazyPut(
+      () => ForgotPasswordUseCase(Get.find<AuthRepository>()),
+      fenix: true,
+    );
 
-
-
-
+    Get.lazyPut(
+      () => ResetPassUseCase(Get.find<AuthRepository>()),
+      fenix: true,
+    );
 
     //===== Controllers =====
     Get.lazyPut<LoginController>(
@@ -48,7 +60,7 @@ class AuthBinding extends Bindings {
     );
 
     Get.lazyPut<RegistrationController>(
-          () => RegistrationController(
+      () => RegistrationController(
         registerUseCase: Get.find<RegisterUseCase>(),
         sendOtpUseCase: Get.find<SendOtpUseCase>(),
       ),
@@ -56,14 +68,23 @@ class AuthBinding extends Bindings {
     );
 
     Get.lazyPut<VerifyEmailController>(
-          () =>
-          VerifyEmailController(verifyOtpUseCase: Get.find<VerifyOtpUseCase>(), sendOtpUseCase: Get.find<SendOtpUseCase>(),),
+      () => VerifyEmailController(
+        verifyOtpUseCase: Get.find<VerifyOtpUseCase>(),
+        sendOtpUseCase: Get.find<SendOtpUseCase>(),
+      ),
       fenix: true,
     );
 
     Get.lazyPut<EnterEmailController>(
-          () => EnterEmailController(
+      () => EnterEmailController(
         forgotPasswordUseCase: Get.find<ForgotPasswordUseCase>(),
+      ),
+      fenix: true,
+    );
+
+    Get.lazyPut<ResetPasswordController>(
+      () => ResetPasswordController(
+        resetPassUseCase: Get.find<ResetPassUseCase>(),
       ),
       fenix: true,
     );

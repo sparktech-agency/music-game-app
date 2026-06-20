@@ -2,6 +2,7 @@ import 'package:music_game_app/core/network/base_provider.dart';
 import 'package:music_game_app/features/authentication/data/models/forgot_password_model.dart';
 import 'package:music_game_app/features/authentication/data/models/login_model.dart';
 import 'package:music_game_app/features/authentication/data/models/register_model.dart';
+import 'package:music_game_app/features/authentication/data/models/reset_pass_model.dart';
 import 'package:music_game_app/features/authentication/data/models/send_otp_model.dart';
 import 'package:music_game_app/features/authentication/data/models/verify_otp_model.dart';
 
@@ -90,6 +91,24 @@ class AuthRemoteSource extends BaseProvider {
         return ForgotPasswordResponseModel.fromJson(response.body);
       } else {
         final errorMessage = response.body?['message'] ?? 'Failed to send reset email';
+        throw Exception(errorMessage);
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<ResetPassResponseModel> resetPassword(ResetPassRequestModel request) async {
+    try {
+      final response = await post(
+        '/auth/reset-password',
+        request.toJson(),
+      );
+
+      if (response.isOk && response.body != null) {
+        return ResetPassResponseModel.fromJson(response.body);
+      } else {
+        final errorMessage = response.body?['message'] ?? 'Failed to reset password';
         throw Exception(errorMessage);
       }
     } catch (e) {

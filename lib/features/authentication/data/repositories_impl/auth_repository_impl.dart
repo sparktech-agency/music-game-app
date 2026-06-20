@@ -1,6 +1,7 @@
 import 'package:music_game_app/features/authentication/data/models/forgot_password_model.dart';
 import 'package:music_game_app/features/authentication/data/models/login_model.dart';
 import 'package:music_game_app/features/authentication/data/models/register_model.dart';
+import 'package:music_game_app/features/authentication/data/models/reset_pass_model.dart';
 import 'package:music_game_app/features/authentication/data/models/send_otp_model.dart';
 import 'package:music_game_app/features/authentication/data/models/verify_otp_model.dart';
 import 'package:music_game_app/features/authentication/data/sources/auth_local_source.dart';
@@ -8,6 +9,7 @@ import 'package:music_game_app/features/authentication/data/sources/auth_remote_
 import 'package:music_game_app/features/authentication/domain/entities/forgot_password_entity.dart';
 import 'package:music_game_app/features/authentication/domain/entities/login_entity.dart';
 import 'package:music_game_app/features/authentication/domain/entities/register_entity.dart';
+import 'package:music_game_app/features/authentication/domain/entities/reset_pass_entity.dart';
 import 'package:music_game_app/features/authentication/domain/entities/send_otp_entity.dart';
 import 'package:music_game_app/features/authentication/domain/entities/verify_otp_entity.dart';
 import 'package:music_game_app/features/authentication/domain/repositories/auth_repository.dart';
@@ -85,6 +87,24 @@ class AuthRepositoryImpl implements AuthRepository {
     final request = ForgotPasswordRequestModel(email: email);
 
     final response = await _remoteSource.forgotPassword(request);
+
+    return response;
+  }
+
+  @override
+  Future<ResetPassEntity> resetPassword({
+    required String email,
+    required String newPass,
+    required String confirmNewPass,
+  }) async {
+
+    final request = ResetPassRequestModel(
+      email: email,
+      oldPassword: newPass,
+      newPassword: confirmNewPass,
+    );
+
+    final response = await _remoteSource.resetPassword(request);
 
     return response;
   }
