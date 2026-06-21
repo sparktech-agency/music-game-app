@@ -30,7 +30,7 @@ class SongPickLoadingController extends GetxController {
       final apiCall = _getSongUseCase.call(
         roundId: roundId,
         turnIndex: 0,
-        category: category,
+        category: 'pop',
       );
 
       final minimumDelay = Future.delayed(const Duration(seconds: 2));

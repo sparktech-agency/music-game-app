@@ -18,7 +18,6 @@ class TurnManagementController extends GetxController {
   var activeSingerTeam = "".obs;
 
 
-  var selectedCategory = "".obs;
   var selectedSong = Rxn<GetSongEntity>();
 
   @override

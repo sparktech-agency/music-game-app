@@ -19,7 +19,6 @@ class SelectedSong extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
-
             SafeArea(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -39,13 +38,9 @@ class SelectedSong extends StatelessWidget {
                         ),
                       ),
                     ),
-
                     const SizedBox(height: 30),
-
                     _buildSongCard(controller),
-
                     const Spacer(),
-
                     _buildNextButton(controller),
                     const SizedBox(height: 30),
                   ],
@@ -66,7 +61,6 @@ class SelectedSong extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
         decoration: BoxDecoration(
           color: Colors.white.withValues(alpha: 0.05),
-
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
             color: Colors.white.withValues(alpha: 0.6),
@@ -85,37 +79,39 @@ class SelectedSong extends StatelessWidget {
             ),
             const SizedBox(height: 10),
 
-            Obx(
-              () => Container(
+
+            Obx(() {
+              final String path = controller.albumArt.value;
+              final bool isNetworkImage = path.startsWith('http');
+
+              return Container(
                 width: 180,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(25),
                   border: Border.all(color: Colors.white, width: 3),
                 ),
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(23),
-                  child: Image.asset(
-                    controller.albumArt.value,
+                  borderRadius: BorderRadius.circular(20),
+                  child: path.isEmpty
+                      ? _buildPlaceholder()
+                      : isNetworkImage
+                      ? Image.network(
+                    path,
                     fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) {
-                      return Container(
-                        color: Colors.black26,
-                        child: const Icon(
-                          Icons.music_note,
-                          color: Colors.white,
-                          size: 50,
-                        ),
-                      );
-                    },
+                    errorBuilder: (context, error, stackTrace) => _buildPlaceholder(),
+                  )
+                      : Image.asset(
+                    path,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) => _buildPlaceholder(),
                   ),
                 ),
-              ),
-            ),
+              );
+            }),
 
             const SizedBox(height: 10),
-
             Obx(
-              () => Text(
+                  () => Text(
                 controller.songTitle.value,
                 textAlign: TextAlign.center,
                 style: const TextStyle(
@@ -125,11 +121,9 @@ class SelectedSong extends StatelessWidget {
                 ),
               ),
             ),
-
             const SizedBox(height: 8),
-
             Obx(
-              () => Text(
+                  () => Text(
                 controller.artistName.value,
                 style: TextStyle(
                   color: Colors.white.withValues(alpha: 0.9),
@@ -140,6 +134,19 @@ class SelectedSong extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+
+  Widget _buildPlaceholder() {
+    return Container(
+      height: 180,
+      color: Colors.black26,
+      child: const Icon(
+        Icons.music_note,
+        color: Colors.white,
+        size: 50,
       ),
     );
   }
@@ -155,8 +162,8 @@ class SelectedSong extends StatelessWidget {
           decoration: BoxDecoration(
             gradient: const LinearGradient(
               colors: [
-                Color(0xFF54EAF2), //
-                Color(0xFF3867FF), //
+                Color(0xFF54EAF2),
+                Color(0xFF3867FF),
               ],
               begin: Alignment.centerLeft,
               end: Alignment.centerRight,
@@ -165,7 +172,7 @@ class SelectedSong extends StatelessWidget {
           ),
           child: const Center(
             child: Text(
-              "Next", //
+              "Next",
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 22,

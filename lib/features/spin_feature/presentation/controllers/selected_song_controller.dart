@@ -6,9 +6,9 @@ import 'package:music_game_app/routes/app_routes.dart';
 class SelectedSongController extends GetxController {
   late final TurnManagementController _turnController;
 
-  var songTitle = "Night Changes".obs;
-  var artistName = "One Direction".obs;
-  var albumArt = "assets/images/one_direction.jpg".obs;
+  var songTitle = "Loading...".obs;
+  var artistName = "".obs;
+  var albumArt = "".obs;
 
   @override
   void onInit() {

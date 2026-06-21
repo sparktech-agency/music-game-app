@@ -37,8 +37,7 @@ import 'package:music_game_app/features/spin_feature/presentation/spin_wheel_pag
 import 'package:music_game_app/features/welcome_splash/presentation/two_button_page.dart';
 import 'package:music_game_app/features/welcome_splash/presentation/welcome_splash.dart';
 
-
-class AppRoutes{
+class AppRoutes {
   AppRoutes._();
 
   static const String firstScreen = "/firstScreen";
@@ -74,157 +73,116 @@ class AppRoutes{
   static const String lyricsPage = "/lyricsPage";
   static const String gameplayPage = "/gameplayPage";
   static const String resultPage = "/resultPage";
-
-
 }
 
-
 List<GetPage> routes = [
-
   GetPage(name: AppRoutes.firstScreen, page: () => const FirstScreen()),
 
   GetPage(
-      name: AppRoutes.loginPage,
-      page: () => const LogInPage(),
-      binding: AuthBinding(),
+    name: AppRoutes.loginPage,
+    page: () => const LogInPage(),
+    binding: AuthBinding(),
   ),
 
   GetPage(
-      name: AppRoutes.registrationPage,
-      page: () => const RegistrationPage(),
-      binding: AuthBinding(),
-
+    name: AppRoutes.registrationPage,
+    page: () => const RegistrationPage(),
+    binding: AuthBinding(),
   ),
 
   GetPage(
-      name: AppRoutes.verifyEmailPage,
-      page: () => const VerifyEmailPage(),
-      binding: AuthBinding()
+    name: AppRoutes.verifyEmailPage,
+    page: () => const VerifyEmailPage(),
+    binding: AuthBinding(),
   ),
 
   GetPage(
-      name: AppRoutes.verifyPhonePage,
-      page: () => const VerifyPhonePage(),
-      binding: AuthBinding()
+    name: AppRoutes.verifyPhonePage,
+    page: () => const VerifyPhonePage(),
+    binding: AuthBinding(),
   ),
 
   GetPage(
-      name: AppRoutes.enterEmailPage,
-      page: () => const EnterEmailPage(),
-      binding: AuthBinding()
+    name: AppRoutes.enterEmailPage,
+    page: () => const EnterEmailPage(),
+    binding: AuthBinding(),
   ),
-
-
 
   GetPage(name: AppRoutes.phoneInputScreen, page: () => const PhoneInputPage()),
   GetPage(name: AppRoutes.setPassScreen, page: () => const ResetPasswordPage()),
-  GetPage(name: AppRoutes.welcomeSplash, page: () =>  WelcomeSplash()),
-  GetPage(name: AppRoutes.twoButtonPage, page: () =>  TwoButtonPage()),
+  GetPage(name: AppRoutes.welcomeSplash, page: () => WelcomeSplash()),
+  GetPage(name: AppRoutes.twoButtonPage, page: () => TwoButtonPage()),
 
   GetPage(
-      name: AppRoutes.appLanding,
-      page: () =>  AppLanding(),
-      bindings: [
-        AppLandingBinding(),
-        ProfileBinding()
-
-
-      ]
-      ),
-
-
-
-  GetPage(
-      name: AppRoutes.profileScreen,
-      page: () =>  ProfileScreen(),
-      binding: ProfileBinding()
-  ),
-
-
-
-
-
-  GetPage(name: AppRoutes.settingsScreen, page: () =>  SettingsScreen()),
-  GetPage(name: AppRoutes.profileSettings, page: () =>  ProfileSettingsScreen()),
-  GetPage(name: AppRoutes.accountSettings, page: () =>  AccountSettingsScreen()),
-  GetPage(name: AppRoutes.letsSingScreen, page: () =>  LetsSingScreen()),
-  GetPage(name: AppRoutes.letsPlayScreen, page: () =>  LetsPlayScreen()),
-  GetPage(name: AppRoutes.mainSplash, page: () =>  MainSplash()),
-  GetPage(name: AppRoutes.afterSplash, page: () =>  AfterSplash()),
-
-
-
-
-
-
-  GetPage(
-      name: AppRoutes.roundSelection,
-      page: () =>  RoundSelection(),
-      binding: SessionBindings()
+    name: AppRoutes.appLanding,
+    page: () => AppLanding(),
+    bindings: [AppLandingBinding(), ProfileBinding()],
   ),
 
   GetPage(
-      name: AppRoutes.teamNumber,
-      page: () =>  TeamNumber(),
-      binding: SessionBindings()
+    name: AppRoutes.profileScreen,
+    page: () => ProfileScreen(),
+    binding: ProfileBinding(),
   ),
 
+  GetPage(name: AppRoutes.settingsScreen, page: () => SettingsScreen()),
+  GetPage(name: AppRoutes.profileSettings, page: () => ProfileSettingsScreen()),
+  GetPage(name: AppRoutes.accountSettings, page: () => AccountSettingsScreen()),
+  GetPage(name: AppRoutes.letsSingScreen, page: () => LetsSingScreen()),
+  GetPage(name: AppRoutes.letsPlayScreen, page: () => LetsPlayScreen()),
+  GetPage(name: AppRoutes.mainSplash, page: () => MainSplash()),
+  GetPage(name: AppRoutes.afterSplash, page: () => AfterSplash()),
 
   GetPage(
-      name: AppRoutes.singerNumber,
-      page: () =>  SingerNumber(),
-      binding: SessionBindings()
+    name: AppRoutes.roundSelection,
+    page: () => RoundSelection(),
+    binding: SessionBindings(),
   ),
-
 
   GetPage(
-      name: AppRoutes.teamName,
-      page: () =>  TeamName(),
-      binding: SessionBindings()
+    name: AppRoutes.teamNumber,
+    page: () => TeamNumber(),
+    binding: SessionBindings(),
   ),
-
 
   GetPage(
-      name: AppRoutes.whichTeam,
-      page: () =>  WhichTeam(),
-      binding: SessionBindings()
+    name: AppRoutes.singerNumber,
+    page: () => SingerNumber(),
+    binding: SessionBindings(),
   ),
-
-
-
 
   GetPage(
-      name: AppRoutes.playerName,
-      page: () => PlayerName(),
-      binding: SessionBindings()
+    name: AppRoutes.teamName,
+    page: () => TeamName(),
+    binding: SessionBindings(),
   ),
-
-
-
-
-
-
 
   GetPage(
-      name: AppRoutes.spinFrontPage,
-      page: () => SpinFrontPage(),
-      binding: SpinFeatureBindings()
+    name: AppRoutes.whichTeam,
+    page: () => WhichTeam(),
+    binding: SessionBindings(),
   ),
 
+  GetPage(
+    name: AppRoutes.playerName,
+    page: () => PlayerName(),
+    binding: SessionBindings(),
+  ),
 
-
-
-
-
-
-
-
+  GetPage(
+    name: AppRoutes.spinFrontPage,
+    page: () => SpinFrontPage(),
+    binding: SpinFeatureBindings(),
+  ),
 
   GetPage(name: AppRoutes.spinWheelPage, page: () => SpinWheelPage()),
-  GetPage(name: AppRoutes.songPickLoading, page: () => SongPickLoadingPage(), binding: SpinFeatureBindings()),
+  GetPage(
+    name: AppRoutes.songPickLoading,
+    page: () => SongPickLoadingPage(),
+    binding: SpinFeatureBindings(),
+  ),
   GetPage(name: AppRoutes.selectedSong, page: () => SelectedSong()),
   GetPage(name: AppRoutes.lyricsPage, page: () => LyricsPage()),
   GetPage(name: AppRoutes.gameplayPage, page: () => GameplayPage()),
   GetPage(name: AppRoutes.resultPage, page: () => ResultPage()),
-
 ];
