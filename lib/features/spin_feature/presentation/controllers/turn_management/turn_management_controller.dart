@@ -6,8 +6,9 @@ import 'package:music_game_app/routes/app_routes.dart';
 class TurnManagementController extends GetxController {
   late final CentralSessionController _sessionController;
 
-  var roundId = "".obs;
 
+
+  var roundId = "".obs;
   var currentRound = 1.obs;
   var currentTeamIndex = 0.obs;
   var teamScores = <String, int>{}.obs;

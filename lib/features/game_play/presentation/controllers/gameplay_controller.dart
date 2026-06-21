@@ -5,7 +5,10 @@ import 'package:music_game_app/features/spin_feature/presentation/controllers/tu
 import 'package:music_game_app/features/session/presentation/controllers/central_session_controller/central_session_controller.dart'; // নতুন ইম্পোর্ট
 
 class GameplayController extends GetxController {
+
+
   late final TurnManagementController _turnController;
+  late final CentralSessionController _sessionController;
 
   var teamInfo = "".obs;
   var singerStatus = "".obs;
@@ -56,7 +59,7 @@ class GameplayController extends GetxController {
     final List<String> currentTeamPlayers = centralSessionController.teamPlayersMap[guessingTeamName] ?? [];
 
 
-    totalSongs.value = currentTeamPlayers.length;
+    totalSongs.value = currentTeamPlayers.length * _sessionController.numberOfRounds.value;
 
 
     songsGuessed.value = _turnController.teamScores[_turnController.currentGuessingTeamName] ?? 0;
