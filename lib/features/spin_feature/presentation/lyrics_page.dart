@@ -24,7 +24,6 @@ class LyricsPage extends StatelessWidget {
               ],
             ),
           ),
-
           if (controller.isCountingDown.value) _buildTimerOverlay(controller),
         ],
       )),
@@ -80,23 +79,31 @@ class LyricsPage extends StatelessWidget {
       child: Row(
         children: [
 
-          Obx(() => ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: Image.asset(
-              controller.albumArt.value,
-              width: 45,
-              height: 45,
-              fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) {
-                return Container(
-                  width: 45,
-                  height: 45,
-                  color: Colors.black26,
-                  child: const Icon(Icons.music_note, color: Colors.white, size: 20),
-                );
-              },
-            ),
-          )),
+          Obx(() {
+            final String path = controller.albumArt.value;
+            final bool isNetworkImage = path.startsWith('http');
+
+            return ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: path.isEmpty
+                  ? _buildPlaceholder()
+                  : isNetworkImage
+                  ? Image.network(
+                path,
+                width: 45,
+                height: 45,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) => _buildPlaceholder(),
+              )
+                  : Image.asset(
+                path,
+                width: 45,
+                height: 45,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) => _buildPlaceholder(),
+              ),
+            );
+          }),
           const SizedBox(width: 12),
           Expanded(
             child: Column(
@@ -119,34 +126,54 @@ class LyricsPage extends StatelessWidget {
   }
 
 
-
-  //Lyrics Section
-
-  Widget _buildLyricsList(LyricsController controller) {
-    return Expanded(
-      child: Obx(() => ListView.builder(
-        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-        itemCount: controller.lyrics.length,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.only(bottom: 10),
-            child: Text(
-              controller.lyrics[index],
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          );
-        },
-      )),
+  Widget _buildPlaceholder() {
+    return Container(
+      width: 45,
+      height: 45,
+      color: Colors.black26,
+      child: const Icon(Icons.music_note, color: Colors.white, size: 20),
     );
   }
 
 
+  Widget _buildLyricsList(LyricsController controller) {
+    return Expanded(
+      child: Obx(() {
+        if (controller.lyrics.isEmpty) {
+          return const Center(
+            child: Text(
+              "No lyrics found",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          );
+        }
 
+        return ListView.builder(
+          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+          itemCount: controller.lyrics.length,
+          itemBuilder: (context, index) {
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 10),
+              child: Text(
+                controller.lyrics[index],
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            );
+          },
+        );
+      }),
+    );
+  }
 
   Widget _buildStartButton(LyricsController controller) {
     return Padding(
@@ -159,8 +186,8 @@ class LyricsPage extends StatelessWidget {
           decoration: BoxDecoration(
             gradient: const LinearGradient(
               colors: [
-                Color(0xFF54EAF2), //
-                Color(0xFF3867FF), //
+                Color(0xFF54EAF2),
+                Color(0xFF3867FF),
               ],
               begin: Alignment.centerLeft,
               end: Alignment.centerRight,

@@ -7,20 +7,17 @@ class ResultPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final controller = Get.put(ResultPageController());
 
     return Scaffold(
       body: Stack(
         children: [
-
           Positioned.fill(
             child: Image.asset(
               'assets/images/game_result_bg.png',
               fit: BoxFit.cover,
             ),
           ),
-
           SafeArea(
             child: Column(
               children: [
@@ -34,7 +31,6 @@ class ResultPage extends StatelessWidget {
                     ),
                   ),
                 ),
-
                 Expanded(
                   child: Center(
                     child: SingleChildScrollView(
@@ -44,22 +40,17 @@ class ResultPage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           const SizedBox(height: 20),
-
-
                           Obx(() => _buildWinnerSection(
                             teamName: controller.winnerTeamName.value,
                             guesses: controller.winnerScoreText.value,
                             time: controller.totalTimeText.value,
                           )),
-
                           const SizedBox(height: 30),
                         ],
                       ),
                     ),
                   ),
                 ),
-
-
                 Padding(
                   padding: const EdgeInsets.only(bottom: 25, left: 30, right: 30),
                   child: _buildPlayAgainButton(controller),
@@ -71,7 +62,6 @@ class ResultPage extends StatelessWidget {
       ),
     );
   }
-
 
   Widget _buildWinnerSection({
     required String teamName,
@@ -106,7 +96,7 @@ class ResultPage extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _buildStatBox(guesses, "# of guesses"),
+            _buildStatBox(guesses, "from total songs"),
             const SizedBox(width: 15),
             _buildStatBox(time, "total time"),
           ],

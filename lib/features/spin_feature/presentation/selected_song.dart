@@ -85,7 +85,7 @@ class SelectedSong extends StatelessWidget {
               final bool isNetworkImage = path.startsWith('http');
 
               return Container(
-                width: 180,
+                width: 220,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(25),
                   border: Border.all(color: Colors.white, width: 3),

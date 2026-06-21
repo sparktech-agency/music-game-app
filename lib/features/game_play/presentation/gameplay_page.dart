@@ -82,23 +82,31 @@ class GameplayPage extends StatelessWidget {
       child: Row(
         children: [
 
-          Obx(() => ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: Image.asset(
-              controller.albumArt.value,
-              width: 45,
-              height: 45,
-              fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) {
-                return Container(
-                  width: 45,
-                  height: 45,
-                  color: Colors.black26,
-                  child: const Icon(Icons.music_note, color: Colors.white, size: 20),
-                );
-              },
-            ),
-          )),
+          Obx(() {
+            final String path = controller.albumArt.value;
+            final bool isNetworkImage = path.startsWith('http');
+
+            return ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: path.isEmpty
+                  ? _buildPlaceholder()
+                  : isNetworkImage
+                  ? Image.network(
+                path,
+                width: 45,
+                height: 45,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) => _buildPlaceholder(),
+              )
+                  : Image.asset(
+                path,
+                width: 45,
+                height: 45,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) => _buildPlaceholder(),
+              ),
+            );
+          }),
           const SizedBox(width: 12),
           Expanded(
             child: Column(
@@ -142,6 +150,16 @@ class GameplayPage extends StatelessWidget {
     );
   }
 
+
+  Widget _buildPlaceholder() {
+    return Container(
+      width: 45,
+      height: 45,
+      color: Colors.black26,
+      child: const Icon(Icons.music_note, color: Colors.white, size: 20),
+    );
+  }
+
   Widget _buildScoreAndSmallTimer(GameplayController controller) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
@@ -175,7 +193,6 @@ class GameplayPage extends StatelessWidget {
     );
   }
 
-
   Widget _buildMainAnimatedTimer(GameplayController controller) {
     return Obx(() => Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -197,27 +214,44 @@ class GameplayPage extends StatelessWidget {
     ));
   }
 
+
   Widget _buildLyricsSection(GameplayController controller) {
     return Expanded(
-      child: Obx(() => ListView.builder(
-        itemCount: controller.lyrics.length,
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        itemBuilder: (context, index) {
-          bool isCurrent = controller.currentLyricIndex.value == index;
-          return Padding(
-            padding: const EdgeInsets.only(bottom: 10),
+      child: Obx(() {
+        if (controller.lyrics.isEmpty) {
+          return const Center(
             child: Text(
-              controller.lyrics[index],
+              "No lyrics found",
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: isCurrent ? const Color(0xFF42E8FF) : Colors.white,
+                color: Colors.white70,
                 fontSize: 18,
-                fontWeight: isCurrent ? FontWeight.bold : FontWeight.w400,
+                fontWeight: FontWeight.w500,
               ),
             ),
           );
-        },
-      )),
+        }
+
+        return ListView.builder(
+          itemCount: controller.lyrics.length,
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          itemBuilder: (context, index) {
+            bool isCurrent = controller.currentLyricIndex.value == index;
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 10),
+              child: Text(
+                controller.lyrics[index],
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: isCurrent ? const Color(0xFF42E8FF) : Colors.white,
+                  fontSize: 18,
+                  fontWeight: isCurrent ? FontWeight.bold : FontWeight.w400,
+                ),
+              ),
+            );
+          },
+        );
+      }),
     );
   }
 
@@ -226,7 +260,6 @@ class GameplayPage extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       child: Row(
         children: [
-          // ==== ১. Correct Guess Button ====
           Expanded(
             child: GestureDetector(
               onTap: () => controller.onCorrectGuess(),
@@ -248,10 +281,7 @@ class GameplayPage extends StatelessWidget {
               ),
             ),
           ),
-
           const SizedBox(width: 10),
-
-          // ==== ২. I Give Up Button ====
           Expanded(
             child: GestureDetector(
               onTap: () => controller.showPauseDialogue(),

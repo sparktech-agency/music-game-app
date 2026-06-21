@@ -5,17 +5,16 @@ import 'package:music_game_app/features/spin_feature/presentation/controllers/tu
 import 'package:music_game_app/routes/app_routes.dart';
 
 class LyricsController extends GetxController {
-
   late final TurnManagementController _turnController;
 
 
-  var teamName = "Team 1".obs;
-  var roundNumber = "Round 1".obs;
-  var singerName = "doejohn".obs;
+  var teamName = "".obs;
+  var roundNumber = "".obs;
+  var singerName = "".obs;
 
-  var songTitle = "Night Changes".obs;
-  var artistName = "One Direction".obs;
-  var albumArt = "assets/images/one_direction.jpg".obs;
+  var songTitle = "Loading...".obs;
+  var artistName = "".obs;
+  var albumArt = "".obs;
 
   final RxList<String> lyrics = <String>[].obs;
 
@@ -23,7 +22,6 @@ class LyricsController extends GetxController {
   var isCountingDown = false.obs;
   late FixedExtentScrollController scrollController;
   Timer? _timer;
-
 
   @override
   void onInit() {
@@ -62,7 +60,6 @@ class LyricsController extends GetxController {
       } else {
         _timer?.cancel();
         isCountingDown.value = false;
-
         Get.offNamed(AppRoutes.gameplayPage);
       }
     });

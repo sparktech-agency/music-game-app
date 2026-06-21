@@ -21,7 +21,7 @@ class SessionBindings extends Bindings{
 
 
     //============== Data Source ==============
-    Get.lazyPut<SessionRemoteSource>(() => SessionRemoteSource());
+    Get.lazyPut<SessionRemoteSource>(() => SessionRemoteSource(), fenix: true);
 
 
 
@@ -49,23 +49,14 @@ class SessionBindings extends Bindings{
 
 
 
-
-
-
-
-
-
-
-
-
     //================= Controllers =================
-    Get.lazyPut<CentralSessionController>(
-          () => CentralSessionController(
+    Get.put<CentralSessionController>(
+      CentralSessionController(
         Get.find<CreateSessionUseCase>(),
         Get.find<StartSessionUseCase>(),
         Get.find<CreateRoundUseCase>(),
       ),
-      fenix: true,
+      permanent: true,
     );
 
     Get.lazyPut<RoundSelectionController>(()=>RoundSelectionController());

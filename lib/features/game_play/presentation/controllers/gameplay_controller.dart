@@ -1,27 +1,23 @@
-
-
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:music_game_app/features/spin_feature/presentation/controllers/turn_management/turn_management_controller.dart';
+import 'package:music_game_app/features/session/presentation/controllers/central_session_controller/central_session_controller.dart'; // নতুন ইম্পোর্ট
 
 class GameplayController extends GetxController {
   late final TurnManagementController _turnController;
-
 
   var teamInfo = "".obs;
   var singerStatus = "".obs;
   var songTitle = "".obs;
   var artistName = "".obs;
-  var albumArt = "assets/images/one_direction.jpg".obs;
+  var albumArt = "".obs;
   final RxList<String> lyrics = <String>[].obs;
 
-
   var songsGuessed = 0.obs;
-  var totalSongs = 1.obs;
+  var totalSongs = 0.obs;
   var timeElapsed = "00:00".obs;
   var mainTimer = "60".obs;
-
 
   var currentLyricIndex = 0.obs;
   var timerColor = const Color(0xFF42E8FF).obs;
@@ -35,16 +31,10 @@ class GameplayController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-
     _turnController = Get.find<TurnManagementController>();
-
-
     _loadGameplayData();
-
-
     _startTimers();
   }
-
 
   void _loadGameplayData() {
     teamInfo.value = "${_turnController.currentGuessingTeamName} | ROUND ${_turnController.currentRound.value}";
@@ -59,18 +49,24 @@ class GameplayController extends GetxController {
     }
 
 
+    final centralSessionController = Get.find<CentralSessionController>();
+    final guessingTeamName = _turnController.currentGuessingTeamName;
+
+
+    final List<String> currentTeamPlayers = centralSessionController.teamPlayersMap[guessingTeamName] ?? [];
+
+
+    totalSongs.value = currentTeamPlayers.length;
+
+
     songsGuessed.value = _turnController.teamScores[_turnController.currentGuessingTeamName] ?? 0;
   }
 
-
   void _startTimers() {
-
     _countdownTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (_secondsLeft > 0) {
         _secondsLeft--;
         mainTimer.value = _secondsLeft.toString().padLeft(2, '0');
-
-
         _updateTimerColor(_secondsLeft);
       } else {
         _stopAllTimers();
@@ -78,14 +74,12 @@ class GameplayController extends GetxController {
       }
     });
 
-
     _elapsedTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
       _secondsElapsed++;
       int m = _secondsElapsed ~/ 60;
       int s = _secondsElapsed % 60;
       timeElapsed.value = "${m.toString().padLeft(2, '0')}:${s.toString().padLeft(2, '0')}";
     });
-
 
     if (lyrics.isNotEmpty) {
       _lyricScrollTimer = Timer.periodic(const Duration(seconds: 2), (timer) {
@@ -98,14 +92,13 @@ class GameplayController extends GetxController {
     }
   }
 
-
   void _updateTimerColor(int seconds) {
     if (seconds > 20) {
-      timerColor.value = const Color(0xFF42E8FF); // Blue
+      timerColor.value = const Color(0xFF42E8FF);
     } else if (seconds > 10) {
-      timerColor.value = const Color(0xFFFFD93D); // Yellow
+      timerColor.value = const Color(0xFFFFD93D);
     } else {
-      timerColor.value = const Color(0xFFFF4A4A); // Red
+      timerColor.value = const Color(0xFFFF4A4A);
     }
   }
 
@@ -113,7 +106,6 @@ class GameplayController extends GetxController {
     _stopAllTimers();
     showCorrectGuessModal();
   }
-
 
   void showCorrectGuessModal() {
     Get.bottomSheet(
@@ -133,7 +125,6 @@ class GameplayController extends GetxController {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            // Success Icon
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
@@ -147,8 +138,6 @@ class GameplayController extends GetxController {
               ),
             ),
             const SizedBox(height: 10),
-
-            // Success Text
             const Text(
               "Correct Guess",
               style: TextStyle(
@@ -158,16 +147,10 @@ class GameplayController extends GetxController {
               ),
             ),
             const SizedBox(height: 20),
-
-            // Stop Song Button
             GestureDetector(
               onTap: () {
                 Get.back();
-
-
-                _turnController.addPointToGuessingTeam();
-
-
+                _turnController.addPointToGuessingTeam(_secondsElapsed);
                 _turnController.completeCurrentSingerPerformance();
               },
               child: Container(
@@ -199,11 +182,9 @@ class GameplayController extends GetxController {
     );
   }
 
-
   void _onTimeOut() {
     _turnController.completeCurrentSingerPerformance();
   }
-
 
   void showPauseDialogue() {
     Get.dialog(
@@ -226,8 +207,6 @@ class GameplayController extends GetxController {
             onPressed: () {
               Get.back();
               _stopAllTimers();
-
-
               _turnController.completeCurrentSingerPerformance();
             },
             child: const Text("END TURN", style: TextStyle(color: Color(0xFFFF4A4A))),

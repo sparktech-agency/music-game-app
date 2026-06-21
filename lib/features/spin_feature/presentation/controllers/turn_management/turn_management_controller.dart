@@ -13,33 +13,33 @@ class TurnManagementController extends GetxController {
   var teamScores = <String, int>{}.obs;
 
 
-  var remainingSingers = <Map<String, String>>[].obs;
-  var activeSingerName = "doe john".obs;
-  var activeSingerTeam = "".obs;
+  var teamElapsedTimes = <String, int>{}.obs;
 
+  var remainingSingers = <Map<String, String>>[].obs;
+  var activeSingerName = "".obs;
+  var activeSingerTeam = "".obs;
 
   var selectedSong = Rxn<GetSongEntity>();
 
   @override
   void onInit() {
     super.onInit();
-
     _sessionController = Get.find<CentralSessionController>();
-
     initializeGameSession();
   }
 
 
   void initializeGameSession() {
     teamScores.clear();
+    teamElapsedTimes.clear();
     for (var name in _sessionController.teamNames) {
       teamScores[name] = 0;
+      teamElapsedTimes[name] = 0;
     }
     currentRound.value = 1;
     currentTeamIndex.value = 0;
     prepareOpponentSingersForTurn();
   }
-
 
   String get currentGuessingTeamName {
     if (_sessionController.teamNames.isNotEmpty &&
@@ -48,7 +48,6 @@ class TurnManagementController extends GetxController {
     }
     return "";
   }
-
 
   void prepareOpponentSingersForTurn() {
     remainingSingers.clear();
@@ -68,7 +67,6 @@ class TurnManagementController extends GetxController {
     _setupNextSinger();
   }
 
-
   bool _setupNextSinger() {
     if (remainingSingers.isNotEmpty) {
       final nextSinger = remainingSingers.first;
@@ -80,13 +78,17 @@ class TurnManagementController extends GetxController {
   }
 
 
-  void addPointToGuessingTeam() {
+  void addPointToGuessingTeam(int elapsedSeconds) {
     String guessingTeamName = currentGuessingTeamName;
     if (teamScores.containsKey(guessingTeamName)) {
       teamScores[guessingTeamName] = (teamScores[guessingTeamName] ?? 0) + 1;
     }
-  }
 
+
+    if (teamElapsedTimes.containsKey(guessingTeamName)) {
+      teamElapsedTimes[guessingTeamName] = (teamElapsedTimes[guessingTeamName] ?? 0) + elapsedSeconds;
+    }
+  }
 
   void completeCurrentSingerPerformance() {
     if (remainingSingers.isNotEmpty) {
@@ -94,28 +96,23 @@ class TurnManagementController extends GetxController {
     }
 
     if (_setupNextSinger()) {
-
       selectedSong.value = null;
       Get.offAllNamed(AppRoutes.spinFrontPage);
     } else {
-
       _advanceToNextGuessingTeam();
     }
   }
-
 
   void _advanceToNextGuessingTeam() {
     if (currentTeamIndex.value < _sessionController.teamNames.length - 1) {
       currentTeamIndex.value++;
       _resetForNextTurn();
     } else {
-
       if (currentRound.value < _sessionController.numberOfRounds.value) {
         currentRound.value++;
         currentTeamIndex.value = 0;
         _resetForNextTurn();
       } else {
-
         Get.offAllNamed(AppRoutes.resultPage);
       }
     }
@@ -127,5 +124,4 @@ class TurnManagementController extends GetxController {
     prepareOpponentSingersForTurn();
     Get.offAllNamed(AppRoutes.spinFrontPage);
   }
-
 }
