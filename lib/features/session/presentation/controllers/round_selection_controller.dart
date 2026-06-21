@@ -11,11 +11,11 @@ class RoundSelectionController extends GetxController {
 
   String get currentRoundImage {
     switch (numberOfRound.value) {
-      case 2:
+      case 1:
         return 'assets/images/two_player.png';
-      case 3:
+      case 2:
         return 'assets/images/three_player.png';
-      case 4:
+      case 3:
         return 'assets/images/four_player.png';
       default:
         return 'assets/images/two_player.png';

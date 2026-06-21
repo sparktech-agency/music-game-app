@@ -8,23 +8,23 @@ import 'package:music_game_app/features/spin_feature/presentation/controllers/tu
 class GameplayController extends GetxController {
   late final TurnManagementController _turnController;
 
-  // রিঅ্যাক্টিভ অবজেক্টস ট্র্যাকিং (ভিউ পেজের সাথে কানেকশন)
+
   var teamInfo = "".obs;
   var singerStatus = "".obs;
   var songTitle = "".obs;
   var artistName = "".obs;
-  var albumArt = "assets/images/one_direction.jpg".obs; // সংশোধন: এখন ডিক্লেয়ার করা হয়েছে
+  var albumArt = "assets/images/one_direction.jpg".obs;
   final RxList<String> lyrics = <String>[].obs;
 
-  // গেমপ্লে ডাটা ও স্কোরিং
+
   var songsGuessed = 0.obs;
   var totalSongs = 1.obs;
   var timeElapsed = "00:00".obs;
   var mainTimer = "60".obs;
 
-  // লিরিক্স স্ক্রলিং এবং টাইমার বর্ডার গলো কালার
+
   var currentLyricIndex = 0.obs;
-  var timerColor = const Color(0xFF42E8FF).obs; // ডিফল্ট ব্লু কালার
+  var timerColor = const Color(0xFF42E8FF).obs;
 
   Timer? _countdownTimer;
   Timer? _elapsedTimer;
@@ -35,17 +35,17 @@ class GameplayController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    // ফাইনাল হওয়া TurnManagementController-টি খুঁজে নেওয়া
+
     _turnController = Get.find<TurnManagementController>();
 
-    // গেমপ্লে ডেটা ডাইনামিকালি লোড করা
+
     _loadGameplayData();
 
-    // খেলার কাউন্টডাউন টাইমারসমূহ চালু করা
+
     _startTimers();
   }
 
-  // খেলার রিয়েল ডাটা লোড করার মেথড
+
   void _loadGameplayData() {
     teamInfo.value = "${_turnController.currentGuessingTeamName} | ROUND ${_turnController.currentRound.value}";
     singerStatus.value = "${_turnController.activeSingerName.value} is singing";
@@ -54,31 +54,31 @@ class GameplayController extends GetxController {
     if (song != null) {
       songTitle.value = song.title;
       artistName.value = song.artist;
-      albumArt.value = song.albumArt; // ডাইনামিক অ্যালবাম আর্ট অ্যাসাইন করা হলো
+      albumArt.value = song.albumArt;
       lyrics.assignAll(song.lyrics);
     }
 
-    // বর্তমানে গেস করা টিমের বর্তমান পয়েন্ট স্কোরবোর্ড থেকে লোড করা
+
     songsGuessed.value = _turnController.teamScores[_turnController.currentGuessingTeamName] ?? 0;
   }
 
-  // কাউন্টডাউন ও প্রোগ্রেস টাইমার মেথডস
+
   void _startTimers() {
-    // ৬০ সেকেন্ডের মূল কাউন্টডাউন লুপ
+
     _countdownTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (_secondsLeft > 0) {
         _secondsLeft--;
         mainTimer.value = _secondsLeft.toString().padLeft(2, '0');
 
-        // টাইমারের বর্ডার কালার শিফট লজিক (Blue > 20s -> Yellow > 10s -> Red <= 10s)
+
         _updateTimerColor(_secondsLeft);
       } else {
         _stopAllTimers();
-        _onTimeOut(); // ৬০ সেকেন্ড শেষ হয়ে গেলে টাইমআউট
+        _onTimeOut();
       }
     });
 
-    // সর্বমোট অতিবাহিত সময় (Time allotted ট্র্যাকিং)
+
     _elapsedTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
       _secondsElapsed++;
       int m = _secondsElapsed ~/ 60;
@@ -86,9 +86,9 @@ class GameplayController extends GetxController {
       timeElapsed.value = "${m.toString().padLeft(2, '0')}:${s.toString().padLeft(2, '0')}";
     });
 
-    // গাইড লিরিক্স হাইলাইট পরিবর্তন (প্রতি ৫ সেকেন্ড পর পর পরবর্তী লাইনে অটো স্ক্রল)
+
     if (lyrics.isNotEmpty) {
-      _lyricScrollTimer = Timer.periodic(const Duration(seconds: 5), (timer) {
+      _lyricScrollTimer = Timer.periodic(const Duration(seconds: 2), (timer) {
         if (currentLyricIndex.value < lyrics.length - 1) {
           currentLyricIndex.value++;
         } else {
@@ -98,7 +98,7 @@ class GameplayController extends GetxController {
     }
   }
 
-  // টাইমারের প্রোগ্রেস কালার কোডিং (Blue > 20s -> Yellow > 10s -> Red <= 10s)
+
   void _updateTimerColor(int seconds) {
     if (seconds > 20) {
       timerColor.value = const Color(0xFF42E8FF); // Blue
@@ -109,13 +109,12 @@ class GameplayController extends GetxController {
     }
   }
 
-  // সঠিক উত্তর অনুমান করলে (Correct Guess)
   void onCorrectGuess() {
-    _stopAllTimers(); // ১. টাইমার প্রথমে স্টপ হয়ে যাবে
-    showCorrectGuessModal(); // ২. এরপর বটম শীট মডালটি ওপেন হবে
+    _stopAllTimers();
+    showCorrectGuessModal();
   }
 
-  // সফল অনুমানের ইন্টারেক্টিভ বটম শীট মডাল
+
   void showCorrectGuessModal() {
     Get.bottomSheet(
       Container(
@@ -163,12 +162,12 @@ class GameplayController extends GetxController {
             // Stop Song Button
             GestureDetector(
               onTap: () {
-                Get.back(); // বটম শীটটি বন্ধ হবে
+                Get.back();
 
-                // ১. অনুমানকারী দলের স্কোরে +১ পয়েন্ট যোগ হবে
+
                 _turnController.addPointToGuessingTeam();
 
-                // ২. টার্ন বা সিঙ্গারের ট্রানজিশন এগিয়ে যাবে
+
                 _turnController.completeCurrentSingerPerformance();
               },
               child: Container(
@@ -200,12 +199,12 @@ class GameplayController extends GetxController {
     );
   }
 
-  // ৬০ সেকেন্ড শেষ হয়ে গেলে (Timeout)
+
   void _onTimeOut() {
     _turnController.completeCurrentSingerPerformance();
   }
 
-  // "I Give Up" বাটন প্রেস করলে কনফার্মেশন ডায়ালগ
+
   void showPauseDialogue() {
     Get.dialog(
       AlertDialog(
@@ -225,10 +224,10 @@ class GameplayController extends GetxController {
           ),
           TextButton(
             onPressed: () {
-              Get.back(); // ডায়ালগ ক্লোজ করা
+              Get.back();
               _stopAllTimers();
 
-              // কোনো পয়েন্ট যোগ ছাড়া পরবর্তী গায়কের স্লটে চলে যাবে
+
               _turnController.completeCurrentSingerPerformance();
             },
             child: const Text("END TURN", style: TextStyle(color: Color(0xFFFF4A4A))),

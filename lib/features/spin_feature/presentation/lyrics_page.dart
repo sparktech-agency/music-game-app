@@ -1,5 +1,3 @@
-// features/spin_feature/presentation/views/lyrics_page.dart
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:music_game_app/features/spin_feature/presentation/controllers/lyrics_controller.dart';
@@ -120,24 +118,25 @@ class LyricsPage extends StatelessWidget {
     );
   }
 
+
+
+  //Lyrics Section
+
   Widget _buildLyricsList(LyricsController controller) {
     return Expanded(
       child: Obx(() => ListView.builder(
-        padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
         itemCount: controller.lyrics.length,
         itemBuilder: (context, index) {
           return Padding(
-            padding: const EdgeInsets.only(bottom: 30),
+            padding: const EdgeInsets.only(bottom: 10),
             child: Text(
               controller.lyrics[index],
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: Colors.white.withValues(
-                  alpha: index == controller.lyrics.length - 1 ? 0.3 : 1.0,
-                ),
-                fontSize: 20,
+                color: Colors.white,
+                fontSize: 18,
                 fontWeight: FontWeight.w600,
-                letterSpacing: 0.5,
               ),
             ),
           );
@@ -145,6 +144,9 @@ class LyricsPage extends StatelessWidget {
       )),
     );
   }
+
+
+
 
   Widget _buildStartButton(LyricsController controller) {
     return Padding(
@@ -156,9 +158,14 @@ class LyricsPage extends StatelessWidget {
           height: 65,
           decoration: BoxDecoration(
             gradient: const LinearGradient(
-              colors: [Color(0xFF3B82F6), Color(0xFF2563EB)],
+              colors: [
+                Color(0xFF54EAF2), //
+                Color(0xFF3867FF), //
+              ],
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
             ),
-            borderRadius: BorderRadius.circular(35),
+            borderRadius: BorderRadius.circular(40),
             boxShadow: [
               BoxShadow(
                 color: Colors.blue.withValues(alpha: 0.4),

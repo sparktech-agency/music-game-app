@@ -97,7 +97,7 @@ class RoundSelection extends GetView<RoundSelectionController> {
 
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [2, 3, 4].map((round) => _buildRoundCircle(round)).toList(),
+                  children: [1,2,3].map((round) => _buildRoundCircle(round)).toList(),
                 ),
 
                 const Spacer(),

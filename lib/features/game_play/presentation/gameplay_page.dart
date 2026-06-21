@@ -205,13 +205,13 @@ class GameplayPage extends StatelessWidget {
         itemBuilder: (context, index) {
           bool isCurrent = controller.currentLyricIndex.value == index;
           return Padding(
-            padding: const EdgeInsets.only(bottom: 16),
+            padding: const EdgeInsets.only(bottom: 10),
             child: Text(
               controller.lyrics[index],
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: isCurrent ? const Color(0xFF42E8FF) : Colors.white,
-                fontSize: 20,
+                fontSize: 18,
                 fontWeight: isCurrent ? FontWeight.bold : FontWeight.w400,
               ),
             ),
