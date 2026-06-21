@@ -34,7 +34,7 @@ class _SpinWheelPageState extends State<SpinWheelPage>
   double _currentRotation = 0.0;
   double _targetRotation = 0.0;
 
-  final SpinWheelController controller = Get.put(SpinWheelController());
+  final SpinWheelController controller = Get.find<SpinWheelController>();
 
 
   final List<CategoryItem> _items = [
@@ -341,48 +341,47 @@ class _SpinWheelPageState extends State<SpinWheelPage>
         const Spacer(),
 
         // ===== Get Song Button — CONSTANT, never changes =====
-        Obx(
-              () =>
-              GestureDetector(
-                onTap: controller.hasSpun.value
-                    ? () {
-                  Get.offNamed(AppRoutes.songPickLoading);
-                }
-                    : null,
-                child: Container(
-                  width: 300,
-                  height: 58,
-                  margin: const EdgeInsets.only(bottom: 34),
-                  decoration: BoxDecoration(
-                    gradient: controller.hasSpun.value
-                        ? const LinearGradient(
-                      colors: [
-                        Color(0xFF54EAF2),
-                        Color(0xFF3867FF),
-                      ],
-                      begin: Alignment.centerLeft,
-                      end: Alignment.centerRight,
-                    )
-                        : null,
-                    color: controller.hasSpun.value ? null : Colors.black26,
-                    borderRadius: BorderRadius.circular(32),
+              Obx(
+                    () => GestureDetector(
+                      onTap: controller.hasSpun.value
+                          ? () {
+                        Get.offNamed(AppRoutes.songPickLoading, arguments: controller.resultText.value);
+                      }
+                          : null,
+                  child: Container(
+                    width: 300,
+                    height: 58,
+                    margin: const EdgeInsets.only(bottom: 34),
+                    decoration: BoxDecoration(
+                      gradient: controller.hasSpun.value
+                          ? const LinearGradient(
+                        colors: [
+                          Color(0xFF54EAF2),
+                          Color(0xFF3867FF),
+                        ],
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                      )
+                          : null,
+                      color: controller.hasSpun.value ? null : Colors.black26,
+                      borderRadius: BorderRadius.circular(32),
+                    ),
+                    child: Center(
+                      child: Text(
+                        "Get Song",
+                        style: TextStyle(
+                          color: controller.hasSpun.value
+                              ? Colors.white
+                              : Colors.white24,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w800,
+                          letterSpacing: 0.5,
+                        ),
+                      ),
+                    ),
                   ),
-          child: Center(
-            child: Text(
-              "Get Song",
-              style: TextStyle(
-                color: controller.hasSpun.value
-                    ? Colors.white
-                    : Colors.white24,
-                fontSize: 20,
-                fontWeight: FontWeight.w800,
-                letterSpacing: 0.5,
+                ),
               ),
-            ),
-          ),
-        ),
-      ),
-    ),
     ],
     ),
     ),

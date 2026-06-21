@@ -1,27 +1,15 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:music_game_app/routes/app_routes.dart';
+import 'package:music_game_app/features/spin_feature/presentation/controllers/song_pick_loading_controller.dart';
 
-class SongPickLoadingPage extends StatefulWidget {
+class SongPickLoadingPage extends GetView<SongPickLoadingController> {
   const SongPickLoadingPage({super.key});
 
   @override
-  State<SongPickLoadingPage> createState() => _SongPickLoadingPageState();
-}
-
-class _SongPickLoadingPageState extends State<SongPickLoadingPage> {
-  @override
-  void initState() {
-    super.initState();
-
-    Timer(const Duration(seconds: 2), () {
-      Get.offNamed(AppRoutes.selectedSong);
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
+
+    controller;
+
     return Scaffold(
       backgroundColor: const Color(0xFF050A24),
       body: SafeArea(
@@ -36,7 +24,6 @@ class _SongPickLoadingPageState extends State<SongPickLoadingPage> {
                 ),
               ),
             ),
-
             Center(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 40),
@@ -44,9 +31,7 @@ class _SongPickLoadingPageState extends State<SongPickLoadingPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const PixelPerfect4DotLoader(),
-
                     const SizedBox(height: 50),
-
                     const Text(
                       "Your song is about to be selected",
                       textAlign: TextAlign.center,
@@ -56,9 +41,7 @@ class _SongPickLoadingPageState extends State<SongPickLoadingPage> {
                         fontWeight: FontWeight.w700,
                       ),
                     ),
-
                     const SizedBox(height: 25),
-
                     const Text(
                       "We’ll randomly select a song based on the\nselected category. Get ready to sing! 🎶",
                       textAlign: TextAlign.center,
@@ -80,6 +63,7 @@ class _SongPickLoadingPageState extends State<SongPickLoadingPage> {
     );
   }
 }
+
 
 class PixelPerfect4DotLoader extends StatefulWidget {
   const PixelPerfect4DotLoader({super.key});

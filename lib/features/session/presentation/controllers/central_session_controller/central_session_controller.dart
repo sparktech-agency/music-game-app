@@ -1,13 +1,21 @@
 import 'package:get/get.dart';
 import 'package:music_game_app/features/session/domain/entities/create_session_entity.dart';
+import 'package:music_game_app/features/session/domain/usecases/create_round_usecase.dart';
 import 'package:music_game_app/features/session/domain/usecases/create_session_usecase.dart';
+import 'package:music_game_app/features/session/domain/usecases/start_session_usecase.dart';
 import 'package:music_game_app/features/spin_feature/presentation/controllers/turn_management/turn_management_controller.dart';
 
 class CentralSessionController extends GetxController {
   // UseCase
   final CreateSessionUseCase _createSessionUseCase;
+  final StartSessionUseCase _startSessionUseCase;
+  final CreateRoundUseCase _createRoundUseCase;
 
-  CentralSessionController(this._createSessionUseCase);
+  CentralSessionController(
+      this._createSessionUseCase,
+      this._startSessionUseCase,
+      this._createRoundUseCase,
+      );
 
   var numberOfRounds = 1.obs;
   var numberOfTeams = 2.obs;
@@ -26,6 +34,8 @@ class CentralSessionController extends GetxController {
     teamPlayersMap[teamName] = players;
     print("Saved: $teamName -> $players");
   }
+
+
 
   Future<bool> createSession() async {
     try {
@@ -62,4 +72,41 @@ class CentralSessionController extends GetxController {
       isLoading.value = false;
     }
   }
+
+  Future<bool> startSessionAndFirstRound(String sessionId) async {
+    try {
+      isLoading.value = true;
+      await _startSessionUseCase.call(sessionId);
+
+      final roundResult = await _createRoundUseCase.call(
+        sessionId: sessionId,
+        roundNumber: 1,
+      );
+
+      final turnController = Get.put(TurnManagementController(), permanent: true);
+      turnController.roundId.value = roundResult.id;
+      return true;
+
+    } catch (e) {
+      Get.snackbar(
+        'Error',
+        e.toString().replaceAll('Exception: ', ''),
+        snackPosition: SnackPosition.BOTTOM,
+      );
+      return false;
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
 }

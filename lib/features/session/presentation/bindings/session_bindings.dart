@@ -2,7 +2,9 @@ import 'package:get/get.dart';
 import 'package:music_game_app/features/session/data/repositories_impl/session_repository_impl.dart';
 import 'package:music_game_app/features/session/data/sources/session_remote_source.dart';
 import 'package:music_game_app/features/session/domain/repositories/session_repository.dart';
+import 'package:music_game_app/features/session/domain/usecases/create_round_usecase.dart';
 import 'package:music_game_app/features/session/domain/usecases/create_session_usecase.dart';
+import 'package:music_game_app/features/session/domain/usecases/start_session_usecase.dart';
 import 'package:music_game_app/features/session/presentation/controllers/central_session_controller/central_session_controller.dart';
 import 'package:music_game_app/features/session/presentation/controllers/player_name_controller.dart';
 import 'package:music_game_app/features/session/presentation/controllers/round_selection_controller.dart';
@@ -35,6 +37,14 @@ class SessionBindings extends Bindings{
           () => CreateSessionUseCase(Get.find<SessionRepository>()),
     );
 
+    Get.lazyPut<StartSessionUseCase>(
+          () => StartSessionUseCase(Get.find<SessionRepository>()),
+    );
+
+    Get.lazyPut<CreateRoundUseCase>(
+          () => CreateRoundUseCase(Get.find<SessionRepository>()),
+    );
+
 
 
 
@@ -49,7 +59,14 @@ class SessionBindings extends Bindings{
 
 
     //================= Controllers =================
-    Get.lazyPut<CentralSessionController>(() => CentralSessionController(Get.find<CreateSessionUseCase>()), fenix: true, );
+    Get.lazyPut<CentralSessionController>(
+          () => CentralSessionController(
+        Get.find<CreateSessionUseCase>(),
+        Get.find<StartSessionUseCase>(),
+        Get.find<CreateRoundUseCase>(),
+      ),
+      fenix: true,
+    );
 
     Get.lazyPut<RoundSelectionController>(()=>RoundSelectionController());
     Get.lazyPut<TeamNumberController>(()=>TeamNumberController());

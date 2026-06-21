@@ -1,12 +1,12 @@
-import 'dart:math';
 import 'package:get/get.dart';
 import 'package:music_game_app/features/session/presentation/controllers/central_session_controller/central_session_controller.dart';
-import 'package:music_game_app/features/spin_feature/data/song_model/song_model.dart';
+import 'package:music_game_app/features/spin_feature/domain/entities/get_song_entity.dart';
 import 'package:music_game_app/routes/app_routes.dart';
 
 class TurnManagementController extends GetxController {
   late final CentralSessionController _sessionController;
 
+  var roundId = "".obs;
 
   var currentRound = 1.obs;
   var currentTeamIndex = 0.obs;
@@ -19,7 +19,7 @@ class TurnManagementController extends GetxController {
 
 
   var selectedCategory = "".obs;
-  var selectedSong = Rxn<Song>();
+  var selectedSong = Rxn<GetSongEntity>();
 
   @override
   void onInit() {
@@ -129,17 +129,4 @@ class TurnManagementController extends GetxController {
     Get.offAllNamed(AppRoutes.spinFrontPage);
   }
 
-
-  void pickSongFromDatabase(String category) {
-    selectedCategory.value = category;
-    final matchedSongs = songDatabase
-        .where((s) => s.category.toLowerCase() == category.toLowerCase())
-        .toList();
-
-    if (matchedSongs.isNotEmpty) {
-      selectedSong.value = matchedSongs[Random().nextInt(matchedSongs.length)];
-    } else {
-      selectedSong.value = songDatabase.first;
-    }
-  }
 }
