@@ -103,7 +103,7 @@ class ProfileScreen extends GetView<ProfileScreenController> {
               )),
 
               Obx(() => Text(
-                controller.userId.value,
+                controller.userEmail.value,
                 style: TextStyle(
                   color: Colors.white.withValues(alpha: 0.7),
                   fontSize: 18,

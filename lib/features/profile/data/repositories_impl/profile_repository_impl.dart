@@ -1,0 +1,35 @@
+import 'package:music_game_app/features/profile/data/models/update_user_model.dart';
+import 'package:music_game_app/features/profile/data/sources/profile_remote_source.dart';
+import 'package:music_game_app/features/profile/domain/entities/update_user_entity.dart';
+import 'package:music_game_app/features/profile/domain/repositories/profile_repository.dart';
+
+class ProfileRepositoryImpl implements ProfileRepository {
+  final ProfileRemoteSource _remoteSource;
+
+  ProfileRepositoryImpl(this._remoteSource);
+
+  @override
+  Future<UpdateUserEntity> updateUser({
+    required String userId,
+    required String firstName,
+    required String lastName,
+    required String nickName,
+    String? profilePath,
+  }) async {
+
+    final request = UpdateUserRequestModel(
+      firstName: firstName,
+      lastName: lastName,
+      nickName: nickName,
+      profilePath: profilePath,
+    );
+
+
+    final response = await _remoteSource.updateUser(
+      userId: userId,
+      request: request,
+    );
+
+    return response;
+  }
+}

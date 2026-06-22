@@ -33,7 +33,7 @@ class AuthRepositoryImpl implements AuthRepository {
     await _localSource.registerAuthData(
         id: response.id,
         email: response.email,
-        name: response.name,
+        nickName: response.name,
         joinDate: response.createdAt.toIso8601String(),
     );
 
@@ -75,7 +75,7 @@ class AuthRepositoryImpl implements AuthRepository {
       refreshToken: response.refreshToken,
       email: response.email,
       role: response.role,
-      name: response.name,
+      nickName: response.name,
       joinDate: response.createdAt.toIso8601String(),
     );
 

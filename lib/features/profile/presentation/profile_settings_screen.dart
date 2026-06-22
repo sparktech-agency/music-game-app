@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:music_game_app/core/widgets/custom_appbar.dart';
+import 'package:music_game_app/routes/app_routes.dart';
 
 class ProfileSettingsScreen extends StatelessWidget {
   const ProfileSettingsScreen({super.key});
@@ -20,7 +22,7 @@ class ProfileSettingsScreen extends StatelessWidget {
               icon: Icons.person_outline,
               title: "My Name",
               onTap: () {
-
+                Get.toNamed(AppRoutes.updateName);
               },
             ),
             const Divider(color: Colors.white12, thickness: 1, height: 1),
@@ -30,7 +32,7 @@ class ProfileSettingsScreen extends StatelessWidget {
               icon: Icons.person_outline,
               title: "My Nickname",
               onTap: () {
-
+                Get.toNamed(AppRoutes.updateNickName);
               },
             ),
             const Divider(color: Colors.white12, thickness: 1, height: 1),
@@ -40,6 +42,8 @@ class ProfileSettingsScreen extends StatelessWidget {
               icon: Icons.image_outlined,
               title: "Profile Picture",
               onTap: () {
+
+                Get.toNamed(AppRoutes.updateProfilePic);
 
               },
             ),

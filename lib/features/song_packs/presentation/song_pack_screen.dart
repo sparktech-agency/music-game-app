@@ -13,7 +13,7 @@ class SongPackScreen extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final AuthLocalSource localSource = Get.find<AuthLocalSource>();
-    final String userName = localSource.getName() ?? 'User';
+    final String userName = localSource.getNickName() ?? 'User';
 
 
 

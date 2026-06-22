@@ -21,6 +21,9 @@ import 'package:music_game_app/features/profile/presentation/bindings/profile_bi
 import 'package:music_game_app/features/profile/presentation/profile_screen.dart';
 import 'package:music_game_app/features/profile/presentation/profile_settings_screen.dart';
 import 'package:music_game_app/features/profile/presentation/settings_screen.dart';
+import 'package:music_game_app/features/profile/presentation/update_name_screen.dart';
+import 'package:music_game_app/features/profile/presentation/update_nickname_screen.dart';
+import 'package:music_game_app/features/profile/presentation/update_profile_picture_screen.dart';
 import 'package:music_game_app/features/session/presentation/bindings/session_bindings.dart';
 import 'package:music_game_app/features/session/presentation/player_name.dart';
 import 'package:music_game_app/features/session/presentation/round_selection.dart';
@@ -48,7 +51,6 @@ class AppRoutes {
   static const String enterEmailPage = "/enterEmailPage";
   static const String phoneInputScreen = "/phoneInputScreen";
   static const String setPassScreen = "/setPassScreen";
-
   static const String welcomeSplash = "/welcomeSplash";
   static const String twoButtonPage = "/twoButtonPage";
   static const String appLanding = "/appLanding";
@@ -56,6 +58,12 @@ class AppRoutes {
   static const String settingsScreen = "/settingsScreen";
   static const String profileSettings = "/profileSettings";
   static const String accountSettings = "/accountSettings";
+
+  static const String updateName = "/updateName";
+  static const String updateNickName = "/updateNickName";
+  static const String updateProfilePic = "/updateProfilePic";
+
+
   static const String letsSingScreen = "/letsSingScreen";
   static const String letsPlayScreen = "/letsPlayScreen";
   static const String mainSplash = "/mainSplash";
@@ -128,6 +136,16 @@ List<GetPage> routes = [
   GetPage(name: AppRoutes.settingsScreen, page: () => SettingsScreen()),
   GetPage(name: AppRoutes.profileSettings, page: () => ProfileSettingsScreen()),
   GetPage(name: AppRoutes.accountSettings, page: () => AccountSettingsScreen()),
+
+  GetPage(name: AppRoutes.updateName, page: () => UpdateNameScreen(), binding: ProfileBinding()),
+  GetPage(name: AppRoutes.updateNickName, page: () => UpdateNicknameScreen(), binding: ProfileBinding()),
+  GetPage(name: AppRoutes.updateProfilePic, page: () => UpdateProfilePictureScreen(), binding: ProfileBinding()),
+
+
+
+
+
+
   GetPage(name: AppRoutes.letsSingScreen, page: () => LetsSingScreen()),
   GetPage(name: AppRoutes.letsPlayScreen, page: () => LetsPlayScreen()),
   GetPage(name: AppRoutes.mainSplash, page: () => MainSplash()),
