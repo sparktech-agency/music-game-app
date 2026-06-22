@@ -35,6 +35,7 @@ class GameplayController extends GetxController {
   void onInit() {
     super.onInit();
     _turnController = Get.find<TurnManagementController>();
+    _sessionController = Get.find<CentralSessionController>();
     _loadGameplayData();
     _startTimers();
   }
