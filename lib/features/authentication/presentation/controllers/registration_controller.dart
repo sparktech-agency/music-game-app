@@ -56,7 +56,7 @@ class RegistrationController extends GetxController {
 
       _showSuccessSnackbar('Registration successful!');
 
-      Get.toNamed(AppRoutes.verifyEmailPage, arguments: email,);
+      Get.toNamed(AppRoutes.verifyEmailPage, arguments: {"email": email},);
 
 
     } catch (e) {
