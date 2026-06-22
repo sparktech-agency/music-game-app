@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:music_game_app/features/spin_feature/presentation/controllers/turn_management/turn_management_controller.dart';
@@ -9,6 +10,8 @@ class GameplayController extends GetxController {
 
   late final TurnManagementController _turnController;
   late final CentralSessionController _sessionController;
+
+  final AudioPlayer _audioPlayer = AudioPlayer();
 
   var teamInfo = "".obs;
   var singerStatus = "".obs;
@@ -38,6 +41,7 @@ class GameplayController extends GetxController {
     _sessionController = Get.find<CentralSessionController>();
     _loadGameplayData();
     _startTimers();
+    _playSong();
   }
 
   void _loadGameplayData() {
@@ -65,6 +69,22 @@ class GameplayController extends GetxController {
 
     songsGuessed.value = _turnController.teamScores[_turnController.currentGuessingTeamName] ?? 0;
   }
+
+
+  Future<void> _playSong() async {
+    final song = _turnController.selectedSong.value;
+    if (song != null && song.audioPath.isNotEmpty) {
+      try {
+        await _audioPlayer.play(UrlSource(song.audioPath));
+      } catch (e) {
+        debugPrint("Error playing audio: $e");
+      }
+    }
+  }
+
+
+
+
 
   void _startTimers() {
     _countdownTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
@@ -153,6 +173,7 @@ class GameplayController extends GetxController {
             const SizedBox(height: 20),
             GestureDetector(
               onTap: () {
+                _audioPlayer.stop();
                 Get.back();
                 _turnController.addPointToGuessingTeam(_secondsElapsed);
                 _turnController.completeCurrentSingerPerformance();
@@ -187,6 +208,7 @@ class GameplayController extends GetxController {
   }
 
   void _onTimeOut() {
+    _audioPlayer.stop();
     _turnController.completeCurrentSingerPerformance();
   }
 
@@ -209,6 +231,7 @@ class GameplayController extends GetxController {
           ),
           TextButton(
             onPressed: () {
+              _audioPlayer.stop();
               Get.back();
               _stopAllTimers();
               _turnController.completeCurrentSingerPerformance();
@@ -229,6 +252,8 @@ class GameplayController extends GetxController {
   @override
   void onClose() {
     _stopAllTimers();
+    _audioPlayer.stop();
+    _audioPlayer.dispose();
     super.onClose();
   }
 }
