@@ -1,7 +1,8 @@
-
-
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:music_game_app/core/widgets/custom_appbar.dart';
+import 'package:music_game_app/features/profile/presentation/controllers/update_profilepic_controller.dart';
 import 'package:music_game_app/features/profile/presentation/widgets/save_button.dart';
 
 class UpdateProfilePictureScreen extends StatelessWidget {
@@ -9,9 +10,13 @@ class UpdateProfilePictureScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final controller = Get.find<UpdateProfilePicController>();
+
+
     return Scaffold(
       backgroundColor: const Color(0xFF0A0E21),
-      appBar: CustomAppBar(
+      appBar: const CustomAppBar(
         title: 'Update Profile Picture',
       ),
       body: SafeArea(
@@ -25,54 +30,76 @@ class UpdateProfilePictureScreen extends StatelessWidget {
                     alignment: Alignment.center,
                     children: [
 
-                      Container(
-                        width: 210,
-                        height: 210,
-                        decoration: const BoxDecoration(
-                          color: Color(0xFF193B46),
-                          shape: BoxShape.circle,
-                        ),
-                        child: const Icon(
-                          Icons.person,
-                          size: 110,
-                          color: Colors.white24,
-                        ),
-                      ),
+                      Obx(() {
+                        return Container(
+                          width: 210,
+                          height: 210,
+                          decoration: const BoxDecoration(
+                            color: Color(0xFF193B46),
+                            shape: BoxShape.circle,
+                          ),
+                          clipBehavior: Clip.antiAlias,
+                          child: controller.selectedImage.value != null
+                              ? Image.file(
+                            controller.selectedImage.value!,
+                            fit: BoxFit.cover,
+                          )
+                              : controller.currentImageUrl.value.isNotEmpty
+                              ? Image.network(
+                            controller.currentImageUrl.value,
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) =>
+                            const Icon(Icons.person, size: 110, color: Colors.white24),
+                          )
+                              : const Icon(
+                            Icons.person,
+                            size: 110,
+                            color: Colors.white24,
+                          ),
+                        );
+                      }),
+
 
                       Positioned(
                         bottom: 8,
                         right: 8,
-                        child: Container(
-                          width: 58,
-                          height: 58,
-                          decoration: const BoxDecoration(
-                            color: Color(0xFF338DFF),
-                            shape: BoxShape.circle,
-                          ),
-                          padding: const EdgeInsets.all(3),
+                        child: GestureDetector(
+                          onTap: () {
+
+                            controller.pickImage(ImageSource.gallery);
+                          },
                           child: Container(
+                            width: 58,
+                            height: 58,
                             decoration: const BoxDecoration(
-                              color: Colors.white,
+                              color: Color(0xFF338DFF),
                               shape: BoxShape.circle,
                             ),
-                            child: const Stack(
-                              alignment: Alignment.center,
-                              children: [
-                                Icon(
-                                  Icons.cloud_outlined,
-                                  color: Colors.grey,
-                                  size: 28,
-                                ),
-                                Positioned(
-                                  bottom: 17,
-                                  child: Icon(
-                                    Icons.arrow_upward,
-                                    color: Colors.redAccent,
-                                    size: 14,
-                                    weight: 3.0,
+                            padding: const EdgeInsets.all(3),
+                            child: Container(
+                              decoration: const BoxDecoration(
+                                color: Colors.white,
+                                shape: BoxShape.circle,
+                              ),
+                              child: const Stack(
+                                alignment: Alignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.cloud_outlined,
+                                    color: Colors.grey,
+                                    size: 28,
                                   ),
-                                ),
-                              ],
+                                  Positioned(
+                                    bottom: 17,
+                                    child: Icon(
+                                      Icons.arrow_upward,
+                                      color: Colors.redAccent,
+                                      size: 14,
+                                      weight: 3.0,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
@@ -81,11 +108,17 @@ class UpdateProfilePictureScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              buildSaveButton(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
+
+
+              Obx(() {
+                return controller.isLoading.value
+                    ? const CircularProgressIndicator(color: Colors.green)
+                    : buildSaveButton(
+                  onTap: () {
+                    controller.updateProfilePicture();
+                  },
+                );
+              }),
             ],
           ),
         ),

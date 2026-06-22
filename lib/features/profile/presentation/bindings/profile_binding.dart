@@ -6,6 +6,8 @@ import 'package:music_game_app/features/profile/domain/repositories/profile_repo
 import 'package:music_game_app/features/profile/domain/usecases/update_user_usecase.dart';
 import 'package:music_game_app/features/profile/presentation/controllers/profile_screen_controller.dart';
 import 'package:music_game_app/features/profile/presentation/controllers/update_name_controller.dart';
+import 'package:music_game_app/features/profile/presentation/controllers/update_nickname_controller.dart';
+import 'package:music_game_app/features/profile/presentation/controllers/update_profilepic_controller.dart';
 
 class ProfileBinding extends Bindings {
   @override
@@ -31,12 +33,25 @@ class ProfileBinding extends Bindings {
     //======= Controllers ===============
     Get.lazyPut<ProfileScreenController>(
       () => ProfileScreenController(
-        updateUserUseCase: Get.find<UpdateUserUseCase>(),
         authLocalSource: Get.find<AuthLocalSource>(),
       ),
     );
     Get.lazyPut<UpdateNameController>(
       () => UpdateNameController(
+        updateUserUseCase: Get.find<UpdateUserUseCase>(),
+        authLocalSource: Get.find<AuthLocalSource>(),
+      ),
+    );
+
+    Get.lazyPut<UpdateNicknameController>(
+          () => UpdateNicknameController(
+        updateUserUseCase: Get.find<UpdateUserUseCase>(),
+        authLocalSource: Get.find<AuthLocalSource>(),
+      ),
+    );
+
+    Get.lazyPut<UpdateProfilePicController>(
+          () => UpdateProfilePicController(
         updateUserUseCase: Get.find<UpdateUserUseCase>(),
         authLocalSource: Get.find<AuthLocalSource>(),
       ),
