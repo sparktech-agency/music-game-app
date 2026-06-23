@@ -32,21 +32,14 @@ class SongPackController extends GetxController {
         gradientColors: [Color(0xFF8E2DE2), Color(0xFF4A00E0)],
       ),
       SongPack(
-        title: "EDM",
+        title: "Hiphop",
         description: "High energy. Non-stop rhythm",
         songCount: "17 songs available",
         imageUrl: "assets/images/Screenshot_42.png",
         gradientColors: [Color(0xFF8E2DE2), Color(0xFF4A00E0)],
       ),
       SongPack(
-        title: "Pop",
-        description: "Popular hits many players will recognize",
-        songCount: "17 songs available",
-        imageUrl: "assets/images/Screenshot_40.png",
-        gradientColors: [Color(0xFF6A82FB), Color(0xFFFC5C7D)],
-      ),
-      SongPack(
-        title: "Pop",
+        title: "acoustic",
         description: "Popular hits many players will recognize",
         songCount: "17 songs available",
         imageUrl: "assets/images/Screenshot_40.png",

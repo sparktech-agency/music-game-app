@@ -44,7 +44,7 @@ class SongPackScreen extends StatelessWidget {
                   "My Song Packs",
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 22,
+                    fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
                 ),

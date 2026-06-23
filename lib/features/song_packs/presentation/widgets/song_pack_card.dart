@@ -11,38 +11,51 @@ class SongPackCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         Get.to(
-              () => SongPackDetails(
+          () => SongPackDetails(
             categoryName: pack.title,
             categoryImage: pack.imageUrl,
           ),
-
         );
       },
-
       child: Container(
-        margin: const EdgeInsets.only(bottom: 14),
-        height: 170,
+        margin: const EdgeInsets.only(bottom: 16),
+        height: 185,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(22),
           gradient: LinearGradient(
             colors: pack.gradientColors,
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
+          boxShadow: [
+            BoxShadow(
+              color: pack.gradientColors.last.withValues(alpha: .35),
+              blurRadius: 24,
+              offset: const Offset(0, 12),
+            ),
+          ],
         ),
-
         clipBehavior: Clip.hardEdge,
+
         child: Stack(
           children: [
+            /// Background Glow
+            Positioned(
+              left: -120,
+              top: -60,
+              child: Container(
+                width: 280,
+                height: 280,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.white.withValues(alpha: .08),
+                ),
+              ),
+            ),
 
-            // ==========================================
-            // Left Side: Parallel Curved Borders & Image
-            // ==========================================
-
-
-            // 2. Inner Border
+            /// Ring
             Positioned(
               left: -100,
               top: -30,
@@ -51,83 +64,134 @@ class SongPackCard extends StatelessWidget {
               child: Container(
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Colors.white.withValues(alpha: 0.4),
+                  border: Border.all(
+                    color: Colors.white.withValues(alpha: .35),
+                    width: 2,
+                  ),
                 ),
               ),
             ),
 
-            // 3. Main Image
+            /// Main Image
             Positioned(
               left: -90,
               top: -20,
               bottom: -20,
               width: 210,
-              child: Container(
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: DecorationImage(
-                    image: AssetImage(pack.imageUrl),
-                    fit: BoxFit.cover,
+              child: Hero(
+                tag: pack.title,
+                child: Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                      image: AssetImage(pack.imageUrl),
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
               ),
             ),
 
-            // ==========================================
-            // Right Side: Content
-            // ==========================================
-
-            Positioned(
-              left: 135,
-              top: 15,
-              right: 15,
-              bottom: 15,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  // Title and Description
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        pack.title,
-                        style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        pack.description,
-                        style: const TextStyle(color: Colors.white70, fontSize: 13),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      const SizedBox(height: 8),
-                      // Song Count
-                      Row(
-                        children: [
-                          const Icon(Icons.music_note, color: Colors.white54, size: 16),
-                          const SizedBox(width: 4),
-                          Text(
-                              pack.songCount,
-                              style: const TextStyle(color: Colors.white54, fontSize: 12)
-                          ),
-                        ],
-                      ),
+            /// Dark Overlay
+            Positioned.fill(
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
+                    colors: [
+                      Colors.transparent,
+                      Colors.black.withValues(alpha: .18),
                     ],
                   ),
+                ),
+              ),
+            ),
 
-                  // Bottom Row: Stars & Button
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      const Icon(Icons.auto_awesome, color: Colors.amberAccent, size: 24),
-                      _buildOwnedButton(),
-                    ],
+            /// Top Spark Icon
+            const Positioned(
+              right: 18,
+              top: 16,
+              child: Icon(
+                Icons.auto_awesome,
+                color: Colors.amberAccent,
+                size: 18,
+              ),
+            ),
+
+            /// CONTENT
+            Positioned(
+              left: 140,
+              right: 18,
+              top: 18,
+              bottom: 18,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          pack.title,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 22,
+                            fontWeight: FontWeight.w800,
+                          ),
+                        ),
+
+                        const SizedBox(height: 6),
+
+                        Expanded(
+                          child: Text(
+                            pack.description,
+                            maxLines: 3,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              color: Colors.white.withValues(alpha: .82),
+                              fontSize: 13,
+                              height: 1.35,
+                            ),
+                          ),
+                        ),
+
+                        const SizedBox(height: 8),
+
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.music_note_rounded,
+                              size: 15,
+                              color: Colors.white.withValues(alpha: .75),
+                            ),
+
+                            const SizedBox(width: 5),
+
+                            Expanded(
+                              child: Text(
+                                pack.songCount,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  color: Colors.white.withValues(alpha: .75),
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  const SizedBox(height: 10),
+
+                  Align(
+                    alignment: Alignment.bottomRight,
+                    child: _buildOwnedButton(),
                   ),
                 ],
               ),
@@ -140,20 +204,28 @@ class SongPackCard extends StatelessWidget {
 
   Widget _buildOwnedButton() {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
       decoration: BoxDecoration(
-        color: const Color(0xFF1ED760),
+        color: Colors.white.withValues(alpha: .15),
         borderRadius: BorderRadius.circular(20),
-        boxShadow: const [
-          BoxShadow(color: Colors.black26, blurRadius: 4, offset: Offset(0, 2))
-        ],
+        border: Border.all(color: Colors.white24),
       ),
+
       child: const Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.check_circle_outline, color: Colors.white, size: 18),
+          Icon(Icons.check_circle, color: Color(0xFF1ED760), size: 18),
+
           SizedBox(width: 6),
-          Text("Owned", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+
+          Text(
+            "Owned",
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.w700,
+              fontSize: 13,
+            ),
+          ),
         ],
       ),
     );
