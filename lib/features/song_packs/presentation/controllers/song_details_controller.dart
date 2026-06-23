@@ -17,6 +17,10 @@ class SongDetailsController extends GetxController {
       Song(title: "Nobody's Son", artist: "Sabrina Carpenter", lyrics: "Hi... I hope you're great...", imageUrl: "https://via.placeholder.com/150"),
       Song(title: "Man I Need", artist: "Olivia Dean", lyrics: "Talk to me, talk to me...", imageUrl: "https://via.placeholder.com/150"),
       Song(title: "Locked out of Heaven", artist: "Bruno Mars", lyrics: "One, two, one, two...", imageUrl: "https://via.placeholder.com/150"),
+      Song(title: "Opalite", artist: "Taylor Swift", lyrics: "I had a bad habit...", imageUrl: "https://via.placeholder.com/150"),
+      Song(title: "Nobody's Son", artist: "Sabrina Carpenter", lyrics: "Hi... I hope you're great...", imageUrl: "https://via.placeholder.com/150"),
+      Song(title: "Man I Need", artist: "Olivia Dean", lyrics: "Talk to me, talk to me...", imageUrl: "https://via.placeholder.com/150"),
+      Song(title: "Locked out of Heaven", artist: "Bruno Mars", lyrics: "One, two, one, two...", imageUrl: "https://via.placeholder.com/150"),
     ];
     songs.assignAll(serverData);
     filteredSongs.assignAll(serverData);
