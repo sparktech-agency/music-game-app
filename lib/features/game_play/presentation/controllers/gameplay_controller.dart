@@ -214,34 +214,104 @@ class GameplayController extends GetxController {
 
   void showPauseDialogue() {
     Get.dialog(
-      AlertDialog(
-        backgroundColor: const Color(0xFF161B2E),
-        title: const Text(
-          "End Turn?",
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-        ),
-        content: const Text(
-          "Are you sure you want to surrender this turn early? No point will be awarded.",
-          style: TextStyle(color: Colors.white70),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Get.back(),
-            child: const Text("CANCEL", style: TextStyle(color: Color(0xFF42E8FF))),
+      Dialog(
+        backgroundColor: Colors.transparent,
+        insetPadding: const EdgeInsets.symmetric(horizontal: 24.0),
+        child: Container(
+          padding: const EdgeInsets.all(32.0),
+          decoration: BoxDecoration(
+            color: const Color(0xFF222222),
+            borderRadius: BorderRadius.circular(28.0),
           ),
-          TextButton(
-            onPressed: () {
-              _audioPlayer.stop();
-              Get.back();
-              _stopAllTimers();
-              _turnController.completeCurrentSingerPerformance();
-            },
-            child: const Text("END TURN", style: TextStyle(color: Color(0xFFFF4A4A))),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+
+              const Icon(
+                Icons.lightbulb_outline_rounded,
+                color: Color(0xFFF1BA33),
+                size: 64.0,
+              ),
+              const SizedBox(height: 24.0),
+
+
+              const Text(
+                "Do you want to end your turn?",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 22.0,
+                  fontWeight: FontWeight.bold,
+                  height: 1.3,
+                ),
+              ),
+              const SizedBox(height: 12.0),
+
+              const Text(
+                "This will pass the turn to the next player.",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.white70,
+                  fontSize: 15.0,
+                  height: 1.4,
+                ),
+              ),
+              const SizedBox(height: 32.0),
+
+
+              ElevatedButton(
+                onPressed: () {
+                  _audioPlayer.stop();
+                  Get.back();
+                  _stopAllTimers();
+                  _turnController.completeCurrentSingerPerformance();
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFFF1BA33),
+                  foregroundColor: Colors.black,
+                  minimumSize: const Size(double.infinity, 54.0),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(27.0),
+                  ),
+                  elevation: 0,
+                ),
+                child: const Text(
+                  "End Turn",
+                  style: TextStyle(
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16.0),
+
+
+              TextButton(
+                onPressed: () => Get.back(),
+                style: TextButton.styleFrom(
+                  minimumSize: const Size(double.infinity, 44.0),
+                ),
+                child: const Text(
+                  "Cancel",
+                  style: TextStyle(
+                    color: Color(0xFFF1BA33),
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
+
+
+
+
+
 
   void _stopAllTimers() {
     _countdownTimer?.cancel();
