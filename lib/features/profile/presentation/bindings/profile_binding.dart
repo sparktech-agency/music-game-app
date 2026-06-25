@@ -17,7 +17,6 @@ class ProfileBinding extends Bindings {
     Get.lazyPut<ProfileRemoteSource>(() => ProfileRemoteSource(), fenix: true);
 
     //===== Repository =====
-
     Get.lazyPut<ProfileRepository>(
       () => ProfileRepositoryImpl(Get.find<ProfileRemoteSource>()),
       fenix: true,

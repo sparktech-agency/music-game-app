@@ -14,8 +14,4 @@ class AppConstants{
   //Colors
 static const Color backgroundColor = Color(0xff0b1020);
 
-
-
-
-
 }

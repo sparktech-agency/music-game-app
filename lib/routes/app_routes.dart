@@ -136,14 +136,11 @@ List<GetPage> routes = [
 
   GetPage(name: AppRoutes.settingsScreen, page: () => SettingsScreen()),
   GetPage(name: AppRoutes.profileSettings, page: () => ProfileSettingsScreen()),
-  GetPage(name: AppRoutes.accountSettings, page: () => AccountSettingsScreen(), binding: AccountSettingsBinding() ),
+  GetPage(name: AppRoutes.accountSettings, page: () => AccountSettingsScreen(), binding: AccountSettingsBinding()),
 
   GetPage(name: AppRoutes.updateName, page: () => UpdateNameScreen(), binding: ProfileBinding()),
   GetPage(name: AppRoutes.updateNickName, page: () => UpdateNicknameScreen(), binding: ProfileBinding()),
   GetPage(name: AppRoutes.updateProfilePic, page: () => UpdateProfilePictureScreen(), binding: ProfileBinding()),
-
-
-
 
 
 
@@ -195,11 +192,13 @@ List<GetPage> routes = [
   ),
 
   GetPage(name: AppRoutes.spinWheelPage, page: () => SpinWheelPage()),
+
   GetPage(
     name: AppRoutes.songPickLoading,
     page: () => SongPickLoadingPage(),
     binding: SpinFeatureBindings(),
   ),
+
   GetPage(name: AppRoutes.selectedSong, page: () => SelectedSong()),
   GetPage(name: AppRoutes.lyricsPage, page: () => LyricsPage()),
   GetPage(name: AppRoutes.gameplayPage, page: () => GameplayPage()),

@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:get/get.dart';
 import 'package:music_game_app/core/network/base_provider.dart';
 import 'package:music_game_app/features/authentication/data/sources/auth_local_source.dart';
+import 'package:music_game_app/features/profile/data/models/delete_user_model.dart';
 import 'package:music_game_app/features/profile/data/models/update_user_model.dart';
 
 class ProfileRemoteSource extends BaseProvider {
@@ -40,6 +41,24 @@ class ProfileRemoteSource extends BaseProvider {
         return UpdateUserResponseModel.fromJson(response.body);
       } else {
         final errorMessage = response.body?['message'] ?? 'Failed to update profile';
+        throw Exception(errorMessage);
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+
+  Future<DeleteUserResponseModel> deleteUser({required String userId}) async {
+    try {
+      final response = await delete(
+        '/user/$userId',
+      );
+
+      if (response.isOk && response.body != null) {
+        return DeleteUserResponseModel.fromJson(response.body);
+      } else {
+        final errorMessage = response.body?['message'] ?? 'Failed to delete user';
         throw Exception(errorMessage);
       }
     } catch (e) {

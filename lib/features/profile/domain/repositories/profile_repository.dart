@@ -1,3 +1,4 @@
+import 'package:music_game_app/features/profile/domain/entities/delete_user_entity.dart';
 import 'package:music_game_app/features/profile/domain/entities/update_user_entity.dart';
 
 abstract class ProfileRepository {
@@ -9,4 +10,6 @@ abstract class ProfileRepository {
     required String nickName,
     String? profilePath,
   });
+
+  Future<DeleteUserEntity> deleteUser({required String userId});
 }
