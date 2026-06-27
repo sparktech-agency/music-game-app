@@ -23,6 +23,7 @@ import 'package:music_game_app/features/profile/presentation/change_password_scr
 import 'package:music_game_app/features/profile/presentation/profile_screen.dart';
 import 'package:music_game_app/features/profile/presentation/profile_settings_screen.dart';
 import 'package:music_game_app/features/profile/presentation/settings_screen.dart';
+import 'package:music_game_app/features/profile/presentation/spotify_music_screen.dart';
 import 'package:music_game_app/features/profile/presentation/update_name_screen.dart';
 import 'package:music_game_app/features/profile/presentation/update_nickname_screen.dart';
 import 'package:music_game_app/features/profile/presentation/update_profile_picture_screen.dart';
@@ -67,6 +68,7 @@ class AppRoutes {
 
 
   static const String changePassword = "/changePassword";
+  static const String spotifyMusic = "/spotifyMusic";
 
 
   static const String letsSingScreen = "/letsSingScreen";
@@ -147,6 +149,7 @@ List<GetPage> routes = [
   GetPage(name: AppRoutes.updateProfilePic, page: () => UpdateProfilePictureScreen(), binding: ProfileBinding()),
 
   GetPage(name: AppRoutes.changePassword, page: () => ChangePasswordScreen(), binding: ProfileBinding()),
+  GetPage(name: AppRoutes.spotifyMusic, page: () => SpotifyMusicScreen(), binding: ProfileBinding()),
 
 
 

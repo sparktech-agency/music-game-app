@@ -30,7 +30,9 @@ class AccountSettingsScreen extends GetView<AccountSettingsController> {
             _buildSettingsItem(
               icon: Icons.music_note_outlined,
               title: "Connected Music API",
-              onTap: () {},
+              onTap: () {
+                Get.toNamed(AppRoutes.spotifyMusic);
+              },
             ),
             const Divider(color: Colors.white12, thickness: 1, height: 1),
 

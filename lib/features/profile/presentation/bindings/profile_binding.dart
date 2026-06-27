@@ -7,6 +7,7 @@ import 'package:music_game_app/features/profile/domain/usecases/change_password_
 import 'package:music_game_app/features/profile/domain/usecases/update_user_usecase.dart';
 import 'package:music_game_app/features/profile/presentation/controllers/change_password_controller.dart';
 import 'package:music_game_app/features/profile/presentation/controllers/profile_screen_controller.dart';
+import 'package:music_game_app/features/profile/presentation/controllers/spotify_music_controller.dart';
 import 'package:music_game_app/features/profile/presentation/controllers/update_name_controller.dart';
 import 'package:music_game_app/features/profile/presentation/controllers/update_nickname_controller.dart';
 import 'package:music_game_app/features/profile/presentation/controllers/update_profilepic_controller.dart';
@@ -67,6 +68,11 @@ class ProfileBinding extends Bindings {
           () => ChangePasswordController(
         changePasswordUseCase: Get.find<ChangePasswordUseCase>(),
       ),
+      fenix: true,
+    );
+
+    Get.lazyPut<SpotifyMusicController>(
+          () => SpotifyMusicController(),
       fenix: true,
     );
   }
