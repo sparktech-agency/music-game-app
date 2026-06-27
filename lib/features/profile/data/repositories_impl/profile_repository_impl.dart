@@ -1,5 +1,7 @@
+import 'package:music_game_app/features/profile/data/models/change_password_model.dart';
 import 'package:music_game_app/features/profile/data/models/update_user_model.dart';
 import 'package:music_game_app/features/profile/data/sources/profile_remote_source.dart';
+import 'package:music_game_app/features/profile/domain/entities/change_password_entity.dart';
 import 'package:music_game_app/features/profile/domain/entities/delete_user_entity.dart';
 import 'package:music_game_app/features/profile/domain/entities/update_user_entity.dart';
 import 'package:music_game_app/features/profile/domain/repositories/profile_repository.dart';
@@ -30,6 +32,23 @@ class ProfileRepositoryImpl implements ProfileRepository {
       userId: userId,
       request: request,
     );
+
+    return response;
+  }
+
+
+  @override
+  Future<ChangePasswordEntity> changePassword({
+    required String oldPassword,
+    required String newPassword,
+  }) async {
+
+    final request = ChangePasswordRequestModel(
+      oldPassword: oldPassword,
+      newPassword: newPassword,
+    );
+
+    final response = await _remoteSource.changePassword(request);
 
     return response;
   }
