@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:music_game_app/core/widgets/custom_appbar.dart';
 import 'package:music_game_app/features/profile/presentation/controllers/account_settings_controller.dart';
+import 'package:music_game_app/routes/app_routes.dart';
 
 class AccountSettingsScreen extends GetView<AccountSettingsController> {
   const AccountSettingsScreen({super.key});
@@ -20,7 +21,9 @@ class AccountSettingsScreen extends GetView<AccountSettingsController> {
             _buildSettingsItem(
               icon: Icons.lock_outline,
               title: "Change Password",
-              onTap: () {},
+              onTap: () {
+                Get.toNamed(AppRoutes.changePassword);
+              },
             ),
             const Divider(color: Colors.white12, thickness: 1, height: 1),
 
