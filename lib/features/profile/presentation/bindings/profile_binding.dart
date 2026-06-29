@@ -4,7 +4,9 @@ import 'package:music_game_app/features/profile/data/repositories_impl/profile_r
 import 'package:music_game_app/features/profile/data/sources/profile_remote_source.dart';
 import 'package:music_game_app/features/profile/domain/repositories/profile_repository.dart';
 import 'package:music_game_app/features/profile/domain/usecases/change_password_usecase.dart';
+import 'package:music_game_app/features/profile/domain/usecases/delete_user_usecase.dart';
 import 'package:music_game_app/features/profile/domain/usecases/update_user_usecase.dart';
+import 'package:music_game_app/features/profile/presentation/controllers/account_settings_controller.dart';
 import 'package:music_game_app/features/profile/presentation/controllers/change_password_controller.dart';
 import 'package:music_game_app/features/profile/presentation/controllers/profile_screen_controller.dart';
 import 'package:music_game_app/features/profile/presentation/controllers/spotify_music_controller.dart';
@@ -15,9 +17,11 @@ import 'package:music_game_app/features/profile/presentation/controllers/update_
 class ProfileBinding extends Bindings {
   @override
   void dependencies() {
+
     //===== Data Source =====
     Get.lazyPut<AuthLocalSource>(() => AuthLocalSourceImpl(), fenix: true);
     Get.lazyPut<ProfileRemoteSource>(() => ProfileRemoteSource(), fenix: true);
+
 
     //===== Repository =====
     Get.lazyPut<ProfileRepository>(
@@ -35,6 +39,11 @@ class ProfileBinding extends Bindings {
     Get.lazyPut<ChangePasswordUseCase>(
           () => ChangePasswordUseCase(Get.find<ProfileRepository>()),
       fenix: true,
+    );
+
+
+    Get.lazyPut<DeleteUserUseCase>(
+          () => DeleteUserUseCase(Get.find<ProfileRepository>()),
     );
 
     //======= Controllers ===============
@@ -69,6 +78,14 @@ class ProfileBinding extends Bindings {
         changePasswordUseCase: Get.find<ChangePasswordUseCase>(),
       ),
       fenix: true,
+    );
+
+
+    Get.lazyPut<AccountSettingsController>(
+          () => AccountSettingsController(
+        Get.find<AuthLocalSource>(),
+        Get.find<DeleteUserUseCase>(),
+      ),
     );
 
     Get.lazyPut<SpotifyMusicController>(

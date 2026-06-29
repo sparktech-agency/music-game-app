@@ -22,12 +22,13 @@ class LoginResponseModel extends LoginEntity {
     required super.accessToken,
     required super.refreshToken,
     required super.id,
-    super.name,
     required super.email,
     required super.role,
-    required super.isActive,
     required super.isVerified,
-    required super.isDeleted,
+    required super.firstName,
+    required super.lastName,
+    required super.nickName,
+    required super.profile,
     required super.createdAt,
   });
 
@@ -39,12 +40,13 @@ class LoginResponseModel extends LoginEntity {
       accessToken: data['accessToken'] as String,
       refreshToken: data['refreshToken'] as String,
       id: user['_id'] as String,
-      name: user['name'] as String?,
       email: user['email'] as String,
       role: user['role'] as String,
-      isActive: user['isActive'] as String,
       isVerified: user['isVerified'] as bool,
-      isDeleted: user['isDeleted'] as bool,
+      firstName: user['firstName'] ?? "Unknown",
+      lastName: user['lastName'] ?? "",
+      nickName: user['nickName'] ?? "",
+      profile: user['profile'],
       createdAt: DateTime.parse(user['createdAt'] as String),
     );
   }

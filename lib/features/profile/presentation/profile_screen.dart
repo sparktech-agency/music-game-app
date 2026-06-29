@@ -23,8 +23,10 @@ class ProfileScreen extends GetView<ProfileScreenController> {
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
+
                   Color(0xFF00E5FF),
-                  Color(0xFF2979FF)],
+                  Color(0xFF2979FF)
+                ],
               ),
             ),
           ),

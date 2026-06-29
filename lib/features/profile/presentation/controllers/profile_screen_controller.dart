@@ -7,6 +7,8 @@ class ProfileScreenController extends GetxController {
   ProfileScreenController({required AuthLocalSource authLocalSource})
     : _authLocalSource = authLocalSource;
 
+
+
   var userName = "".obs;
   var userEmail = "".obs;
   var nickName = "".obs;
