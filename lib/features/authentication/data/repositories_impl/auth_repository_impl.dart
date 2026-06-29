@@ -33,7 +33,9 @@ class AuthRepositoryImpl implements AuthRepository {
     await _localSource.registerAuthData(
         id: response.id,
         email: response.email,
-        nickName: response.name,
+        firstName: response.firstName,
+        lastName: response.lastName,
+        nickName: response.nickName,
         joinDate: response.createdAt.toIso8601String(),
     );
 

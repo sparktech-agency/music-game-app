@@ -46,7 +46,7 @@ class LoginResponseModel extends LoginEntity {
       firstName: user['firstName'] ?? "Unknown",
       lastName: user['lastName'] ?? "",
       nickName: user['nickName'] ?? "user",
-      profile: user['profile'],
+      profile: user['profile'] as String?,
       createdAt: DateTime.parse(user['createdAt'] as String),
     );
   }
