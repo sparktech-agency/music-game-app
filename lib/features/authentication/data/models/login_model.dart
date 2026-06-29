@@ -45,7 +45,7 @@ class LoginResponseModel extends LoginEntity {
       isVerified: user['isVerified'] as bool,
       firstName: user['firstName'] ?? "Unknown",
       lastName: user['lastName'] ?? "",
-      nickName: user['nickName'] ?? "",
+      nickName: user['nickName'] ?? "user",
       profile: user['profile'],
       createdAt: DateTime.parse(user['createdAt'] as String),
     );
