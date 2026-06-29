@@ -74,7 +74,6 @@ class AuthRepositoryImpl implements AuthRepository {
       accessToken: response.accessToken,
       refreshToken: response.refreshToken,
       email: response.email,
-      role: response.role,
       joinDate: response.createdAt.toIso8601String(),
     );
 

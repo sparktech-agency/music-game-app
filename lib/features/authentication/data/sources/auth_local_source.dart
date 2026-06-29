@@ -1,14 +1,12 @@
 import 'package:get_storage/get_storage.dart';
 
 abstract class AuthLocalSource {
-
   //Login Data Save
   Future<void> saveAuthData({
     required String id,
     required String accessToken,
     required String refreshToken,
     required String email,
-    required String role,
     String? firstName,
     String? lastName,
     String? nickName,
@@ -35,15 +33,23 @@ abstract class AuthLocalSource {
   });
 
   String? getUserId();
+
   String? getAccessToken();
+
   String? getRefreshToken();
+
   String? getEmail();
-  String? getRole();
+
   String? getFirstName();
+
   String? getLastName();
+
   String? getNickName();
+
   String? getProfilePhoto();
+
   String? getJoinDate();
+
   Future<void> clearAuthData();
 }
 
@@ -57,7 +63,6 @@ class AuthLocalSourceImpl implements AuthLocalSource {
     required String accessToken,
     required String refreshToken,
     required String email,
-    required String role,
     String? firstName,
     String? lastName,
     String? nickName,
@@ -67,7 +72,6 @@ class AuthLocalSourceImpl implements AuthLocalSource {
     await _authStorage.write('_id', id);
     await _authStorage.write('access_token', accessToken);
     await _authStorage.write('refresh_token', refreshToken);
-    await _authStorage.write('role', role);
     await _authStorage.write('first_name', firstName ?? '');
     await _authStorage.write('last_name', lastName ?? '');
     await _authStorage.write('nick_name', nickName ?? 'user');
@@ -92,7 +96,6 @@ class AuthLocalSourceImpl implements AuthLocalSource {
     await _authStorage.write('nick_name', nickName ?? 'user');
     await _authStorage.write('join_date', joinDate);
   }
-
 
   @override
   Future<void> updateProfileLocalData({
@@ -122,9 +125,6 @@ class AuthLocalSourceImpl implements AuthLocalSource {
   String? getEmail() => _authStorage.read<String>('email');
 
   @override
-  String? getRole() => _authStorage.read<String>('role');
-
-  @override
   String? getFirstName() => _authStorage.read<String>('first_name');
 
   @override
@@ -145,7 +145,6 @@ class AuthLocalSourceImpl implements AuthLocalSource {
     await _authStorage.remove('access_token');
     await _authStorage.remove('refresh_token');
     await _authStorage.remove('email');
-    await _authStorage.remove('role');
     await _authStorage.remove('first_name');
     await _authStorage.remove('last_name');
     await _authStorage.remove('nick_name');

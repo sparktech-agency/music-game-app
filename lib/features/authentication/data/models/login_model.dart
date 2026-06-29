@@ -28,7 +28,7 @@ class LoginResponseModel extends LoginEntity {
     required super.firstName,
     required super.lastName,
     required super.nickName,
-    required super.profile,
+    super.profile,
     required super.createdAt,
   });
 
