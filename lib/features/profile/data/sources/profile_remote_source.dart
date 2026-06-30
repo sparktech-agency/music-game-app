@@ -7,12 +7,24 @@ import 'package:music_game_app/features/profile/data/models/delete_user_model.da
 import 'package:music_game_app/features/profile/data/models/update_user_model.dart';
 
 class ProfileRemoteSource extends BaseProvider {
+
+
+  final AuthLocalSource _authLocalSource;
+
+  ProfileRemoteSource({required AuthLocalSource authLocalSource})
+      : _authLocalSource = authLocalSource;
+
+
+
+
+
+  //update user
   Future<UpdateUserResponseModel> updateUser({
     required String userId,
     required UpdateUserRequestModel request,
   }) async {
     try {
-      final accessToken = AuthLocalSourceImpl().getAccessToken();
+      final accessToken = _authLocalSource.getAccessToken();
 
       final Map<String, dynamic> fields = {'data': request.toDataJsonString()};
 
@@ -28,7 +40,9 @@ class ProfileRemoteSource extends BaseProvider {
       final response = await patch(
         '/user/$userId',
         formData,
-        headers: {'Authorization': '$accessToken'},
+        headers: {
+          'Authorization': '$accessToken',
+        },
       );
 
       if (response.isOk && response.body != null) {
@@ -43,11 +57,28 @@ class ProfileRemoteSource extends BaseProvider {
     }
   }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   Future<ChangePasswordResponseModel> changePassword(
     ChangePasswordRequestModel request,
   ) async {
     try {
-      final accessToken = AuthLocalSourceImpl().getAccessToken();
+      final accessToken = _authLocalSource.getAccessToken();
 
       final response = await post(
         '/auth/change-password',

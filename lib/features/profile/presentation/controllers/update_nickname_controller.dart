@@ -41,19 +41,15 @@ class UpdateNicknameController extends GetxController {
       isLoading.value = true;
       final String userId = _authLocalSource.getUserId() ?? '';
 
-      final result = await _updateUserUseCase.call(
+      await _updateUserUseCase.call(
         userId: userId,
         firstName: _authLocalSource.getFirstName() ?? '',
         lastName: _authLocalSource.getLastName() ?? '',
         nickName: nickName,
-        profilePath: null,
+        profilePath: _authLocalSource.getProfilePhoto(),
       );
 
-      await _authLocalSource.updateProfileLocalData(
-        firstName: result.firstName,
-        lastName: result.lastName,
-        nickName: result.nickName,
-      );
+
 
       Get.back();
 

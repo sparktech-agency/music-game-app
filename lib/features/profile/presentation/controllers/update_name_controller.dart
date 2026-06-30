@@ -10,17 +10,13 @@ class UpdateNameController extends GetxController {
   UpdateNameController({
     required UpdateUserUseCase updateUserUseCase,
     required AuthLocalSource authLocalSource,
-  })  : _updateUserUseCase = updateUserUseCase,
-        _authLocalSource = authLocalSource;
-
+  }) : _updateUserUseCase = updateUserUseCase,
+       _authLocalSource = authLocalSource;
 
   final firstNameController = TextEditingController();
   final lastNameController = TextEditingController();
 
-
   final isLoading = false.obs;
-
-
 
   @override
   void onInit() {
@@ -28,22 +24,23 @@ class UpdateNameController extends GetxController {
     _loadInitialData();
   }
 
-
   void _loadInitialData() {
     firstNameController.text = _authLocalSource.getFirstName() ?? '';
     lastNameController.text = _authLocalSource.getLastName() ?? '';
   }
-
 
   Future<void> updateName() async {
     final firstName = firstNameController.text.trim();
     final lastName = lastNameController.text.trim();
 
     if (firstName.isEmpty || lastName.isEmpty) {
-      Get.snackbar('Error', 'First Name and Last Name are required',
-          snackPosition: SnackPosition.TOP,
-          backgroundColor: Colors.lightBlueAccent,
-          colorText: Colors.black);
+      Get.snackbar(
+        'Error',
+        'First Name and Last Name are required',
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.lightBlueAccent,
+        colorText: Colors.black,
+      );
       return;
     }
 
@@ -51,33 +48,31 @@ class UpdateNameController extends GetxController {
       isLoading.value = true;
       final String userId = _authLocalSource.getUserId() ?? '';
 
-
-      final result = await _updateUserUseCase.call(
+      await _updateUserUseCase.call(
         userId: userId,
         firstName: firstName,
         lastName: lastName,
-        nickName: _authLocalSource.getNickName() ?? 'User',
-        profilePath: null,
-      );
-
-      await _authLocalSource.updateProfileLocalData(
-        firstName: result.firstName,
-        lastName: result.lastName,
-        nickName: result.nickName,
+        nickName: _authLocalSource.getNickName() ?? '',
+        profilePath: _authLocalSource.getProfilePhoto(),
       );
 
       Get.back();
 
-      Get.snackbar('Success', 'Name updated successfully!',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.green,
-          colorText: Colors.white);
-
+      Get.snackbar(
+        'Success',
+        'Name updated successfully!',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+      );
     } catch (e) {
-      Get.snackbar('Error', e.toString().replaceAll('Exception: ', ''),
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.redAccent,
-          colorText: Colors.white);
+      Get.snackbar(
+        'Error',
+        e.toString().replaceAll('Exception: ', ''),
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.redAccent,
+        colorText: Colors.white,
+      );
     } finally {
       isLoading.value = false;
     }

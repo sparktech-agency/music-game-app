@@ -1,7 +1,4 @@
-
-
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -16,9 +13,8 @@ class UpdateProfilePicController extends GetxController {
   UpdateProfilePicController({
     required UpdateUserUseCase updateUserUseCase,
     required AuthLocalSource authLocalSource,
-  })  : _updateUserUseCase = updateUserUseCase,
-        _authLocalSource = authLocalSource;
-
+  }) : _updateUserUseCase = updateUserUseCase,
+       _authLocalSource = authLocalSource;
 
   final selectedImage = Rx<File?>(null);
   final isLoading = false.obs;
@@ -31,10 +27,8 @@ class UpdateProfilePicController extends GetxController {
   }
 
   void _loadCurrentImage() {
-
     currentImageUrl.value = _authLocalSource.getProfilePhoto() ?? '';
   }
-
 
   Future<void> pickImage(ImageSource source) async {
     try {
@@ -46,20 +40,25 @@ class UpdateProfilePicController extends GetxController {
         selectedImage.value = File(image.path);
       }
     } catch (e) {
-      Get.snackbar('Error', 'Failed to pick image: $e',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.redAccent,
-          colorText: Colors.white);
+      Get.snackbar(
+        'Error',
+        'Failed to pick image: $e',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.redAccent,
+        colorText: Colors.white,
+      );
     }
   }
 
-
   Future<void> updateProfilePicture() async {
     if (selectedImage.value == null) {
-      Get.snackbar('Warning', 'Please select an image first!',
-          snackPosition: SnackPosition.TOP,
-          backgroundColor: Colors.amber,
-          colorText: Colors.black);
+      Get.snackbar(
+        'Warning',
+        'Please select an image first!',
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.amber,
+        colorText: Colors.black,
+      );
       return;
     }
 
@@ -67,33 +66,31 @@ class UpdateProfilePicController extends GetxController {
       isLoading.value = true;
       final String userId = _authLocalSource.getUserId() ?? '';
 
-      final result = await _updateUserUseCase.call(
+      await _updateUserUseCase.call(
         userId: userId,
         firstName: _authLocalSource.getFirstName() ?? '',
         lastName: _authLocalSource.getLastName() ?? '',
-        nickName: _authLocalSource.getNickName() ?? 'User',
+        nickName: _authLocalSource.getNickName() ?? '',
         profilePath: selectedImage.value!.path,
-      );
-
-
-      await _authLocalSource.updateProfileLocalData(
-        firstName: result.firstName,
-        lastName: result.lastName,
-        nickName: result.nickName,
-
       );
 
       Get.back();
 
-      Get.snackbar('Success', 'Profile picture updated successfully!',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.green,
-          colorText: Colors.white);
+      Get.snackbar(
+        'Success',
+        'Profile picture updated successfully!',
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+      );
     } catch (e) {
-      Get.snackbar('Error', e.toString().replaceAll('Exception: ', ''),
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.redAccent,
-          colorText: Colors.white);
+      Get.snackbar(
+        'Error',
+        e.toString().replaceAll('Exception: ', ''),
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.redAccent,
+        colorText: Colors.white,
+      );
     } finally {
       isLoading.value = false;
     }

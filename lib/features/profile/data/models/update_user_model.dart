@@ -1,9 +1,7 @@
 import 'dart:convert';
-import 'package:music_game_app/features/profile/domain/entities/update_user_entity.dart';
+import '../../domain/entities/update_user_entity.dart';
 
-
-//===== Request Model =====
-
+//===== Request Model
 class UpdateUserRequestModel {
   final String firstName;
   final String lastName;
@@ -17,7 +15,6 @@ class UpdateUserRequestModel {
     this.profilePath,
   });
 
-
   String toDataJsonString() {
     return jsonEncode({
       'firstName': firstName,
@@ -27,17 +24,16 @@ class UpdateUserRequestModel {
   }
 }
 
-//===== Response Model =====
+//===== Response Model
 class UpdateUserResponseModel extends UpdateUserEntity {
   const UpdateUserResponseModel({
     required super.id,
     required super.email,
-    required super.isActive,
     required super.isVerified,
     required super.firstName,
     required super.lastName,
     required super.nickName,
-    required super.createdAt,
+    super.profile,
   });
 
   factory UpdateUserResponseModel.fromJson(Map<String, dynamic> json) {
@@ -47,12 +43,11 @@ class UpdateUserResponseModel extends UpdateUserEntity {
     return UpdateUserResponseModel(
       id: data['_id'] as String,
       email: data['email'] as String,
-      isActive: data['isActive'] as String,
       isVerified: data['isVerified'] as bool,
       firstName: data['firstName'] as String,
       lastName: data['lastName'] as String,
       nickName: data['nickName'] as String,
-      createdAt: DateTime.parse(data['createdAt'] as String),
+      profile: data['profile'] as String?,
     );
   }
 }

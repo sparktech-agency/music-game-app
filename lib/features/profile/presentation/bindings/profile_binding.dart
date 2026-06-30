@@ -17,11 +17,13 @@ import 'package:music_game_app/features/profile/presentation/controllers/update_
 class ProfileBinding extends Bindings {
   @override
   void dependencies() {
-
     //===== Data Source =====
     Get.lazyPut<AuthLocalSource>(() => AuthLocalSourceImpl(), fenix: true);
-    Get.lazyPut<ProfileRemoteSource>(() => ProfileRemoteSource(), fenix: true);
 
+    Get.lazyPut<ProfileRemoteSource>(
+      () => ProfileRemoteSource(authLocalSource: Get.find<AuthLocalSource>()),
+      fenix: true,
+    );
 
     //===== Repository =====
     Get.lazyPut<ProfileRepository>(
@@ -31,26 +33,24 @@ class ProfileBinding extends Bindings {
 
     //===== UseCases =====
 
-    Get.lazyPut(
+    Get.lazyPut<UpdateUserUseCase>(
       () => UpdateUserUseCase(Get.find<ProfileRepository>()),
       fenix: true,
     );
 
     Get.lazyPut<ChangePasswordUseCase>(
-          () => ChangePasswordUseCase(Get.find<ProfileRepository>()),
+      () => ChangePasswordUseCase(Get.find<ProfileRepository>()),
       fenix: true,
     );
 
-
     Get.lazyPut<DeleteUserUseCase>(
-          () => DeleteUserUseCase(Get.find<ProfileRepository>()),
+      () => DeleteUserUseCase(Get.find<ProfileRepository>()),
     );
 
     //======= Controllers ===============
     Get.lazyPut<ProfileScreenController>(
-      () => ProfileScreenController(
-        authLocalSource: Get.find<AuthLocalSource>(),
-      ),
+      () =>
+          ProfileScreenController(authLocalSource: Get.find<AuthLocalSource>()),
     );
     Get.lazyPut<UpdateNameController>(
       () => UpdateNameController(
@@ -60,36 +60,35 @@ class ProfileBinding extends Bindings {
     );
 
     Get.lazyPut<UpdateNicknameController>(
-          () => UpdateNicknameController(
+      () => UpdateNicknameController(
         updateUserUseCase: Get.find<UpdateUserUseCase>(),
         authLocalSource: Get.find<AuthLocalSource>(),
       ),
     );
 
     Get.lazyPut<UpdateProfilePicController>(
-          () => UpdateProfilePicController(
+      () => UpdateProfilePicController(
         updateUserUseCase: Get.find<UpdateUserUseCase>(),
         authLocalSource: Get.find<AuthLocalSource>(),
       ),
     );
 
     Get.lazyPut<ChangePasswordController>(
-          () => ChangePasswordController(
+      () => ChangePasswordController(
         changePasswordUseCase: Get.find<ChangePasswordUseCase>(),
       ),
       fenix: true,
     );
 
-
     Get.lazyPut<AccountSettingsController>(
-          () => AccountSettingsController(
+      () => AccountSettingsController(
         Get.find<AuthLocalSource>(),
         Get.find<DeleteUserUseCase>(),
       ),
     );
 
     Get.lazyPut<SpotifyMusicController>(
-          () => SpotifyMusicController(),
+      () => SpotifyMusicController(),
       fenix: true,
     );
   }

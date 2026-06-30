@@ -26,9 +26,8 @@ abstract class AuthLocalSource {
 
 
 
-
-  // update Profile Local Data
-  Future<void> updateProfileLocalData({
+  //update profile data save
+  Future<void> updateProfileData({
     required String firstName,
     required String lastName,
     required String nickName,
@@ -100,19 +99,23 @@ class AuthLocalSourceImpl implements AuthLocalSource {
     await _authStorage.write('join_date', joinDate);
   }
 
+
   @override
-  Future<void> updateProfileLocalData({
+  Future<void> updateProfileData({
+
     required String firstName,
     required String lastName,
     required String nickName,
     String? profilePhoto,
-  }) async {
-    await _authStorage.write('first_name', firstName);
-    await _authStorage.write('last_name', lastName);
-    await _authStorage.write('nick_name', nickName);
-    if (profilePhoto != null) {
-      await _authStorage.write('profile_photo', profilePhoto);
-    }
+
+  }) async{
+
+      await _authStorage.write('first_name', firstName);
+      await _authStorage.write('last_name', lastName);
+      await _authStorage.write('nick_name', nickName);
+      if (profilePhoto != null) {
+        await _authStorage.write('profile_photo', profilePhoto);
+      }
   }
 
   @override

@@ -94,6 +94,15 @@ class ProfileScreen extends GetView<ProfileScreenController> {
 
               const SizedBox(height: 20),
 
+              Obx(() => Text(
+                controller.userName.value,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                ),
+              )),
+
 
               Obx(() => Text(
                 controller.userName.value,

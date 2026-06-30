@@ -19,14 +19,12 @@ class ProfileRepositoryImpl implements ProfileRepository {
     required String nickName,
     String? profilePath,
   }) async {
-
     final request = UpdateUserRequestModel(
       firstName: firstName,
       lastName: lastName,
       nickName: nickName,
       profilePath: profilePath,
     );
-
 
     final response = await _remoteSource.updateUser(
       userId: userId,
@@ -36,13 +34,11 @@ class ProfileRepositoryImpl implements ProfileRepository {
     return response;
   }
 
-
   @override
   Future<ChangePasswordEntity> changePassword({
     required String oldPassword,
     required String newPassword,
   }) async {
-
     final request = ChangePasswordRequestModel(
       oldPassword: oldPassword,
       newPassword: newPassword,
@@ -52,7 +48,6 @@ class ProfileRepositoryImpl implements ProfileRepository {
 
     return response;
   }
-
 
   @override
   Future<DeleteUserEntity> deleteUser({required String userId}) async {
