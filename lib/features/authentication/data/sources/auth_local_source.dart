@@ -2,7 +2,7 @@ import 'package:get_storage/get_storage.dart';
 
 abstract class AuthLocalSource {
   //Login Data Save
-  Future<void> saveAuthData({
+  Future<void> loginAuthData({
     required String id,
     required String accessToken,
     required String refreshToken,
@@ -23,6 +23,9 @@ abstract class AuthLocalSource {
     String? nickName,
     required String joinDate,
   });
+
+
+
 
   // update Profile Local Data
   Future<void> updateProfileLocalData({
@@ -58,7 +61,7 @@ class AuthLocalSourceImpl implements AuthLocalSource {
   final GetStorage _authStorage = GetStorage();
 
   @override
-  Future<void> saveAuthData({
+  Future<void> loginAuthData({
     required String id,
     required String accessToken,
     required String refreshToken,
@@ -72,9 +75,9 @@ class AuthLocalSourceImpl implements AuthLocalSource {
     await _authStorage.write('_id', id);
     await _authStorage.write('access_token', accessToken);
     await _authStorage.write('refresh_token', refreshToken);
-    await _authStorage.write('first_name', firstName ?? '');
-    await _authStorage.write('last_name', lastName ?? '');
-    await _authStorage.write('nick_name', nickName ?? 'user');
+    await _authStorage.write('first_name', firstName);
+    await _authStorage.write('last_name', lastName);
+    await _authStorage.write('nick_name', nickName);
     await _authStorage.write('profile_photo', profilePhoto ?? '');
     await _authStorage.write('email', email);
     await _authStorage.write('join_date', joinDate);
@@ -91,9 +94,9 @@ class AuthLocalSourceImpl implements AuthLocalSource {
   }) async {
     await _authStorage.write('_id', id);
     await _authStorage.write('email', email);
-    await _authStorage.write('first_name', firstName ?? '');
-    await _authStorage.write('last_name', lastName ?? '');
-    await _authStorage.write('nick_name', nickName ?? 'user');
+    await _authStorage.write('first_name', firstName);
+    await _authStorage.write('last_name', lastName);
+    await _authStorage.write('nick_name', nickName);
     await _authStorage.write('join_date', joinDate);
   }
 
