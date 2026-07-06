@@ -19,12 +19,18 @@ class VerifyOtpRequestModel {
 
 class VerifyOtpResponseModel extends VerifyOtpEntity {
   const VerifyOtpResponseModel({
+    required super.accessToken,
     required super.success,
     required super.message,
   });
 
   factory VerifyOtpResponseModel.fromJson(Map<String, dynamic> json) {
+
+
+    final data = json['data'] as Map<String, dynamic>;
+
     return VerifyOtpResponseModel(
+      accessToken: data['accessToken'] as String,
       success: json['success'] as bool,
       message: json['message'] as String,
     );

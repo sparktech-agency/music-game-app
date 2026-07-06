@@ -59,6 +59,8 @@ class AuthRepositoryImpl implements AuthRepository {
     );
 
     final response = await _remoteSource.verifyOtp(request);
+
+    await _localSource.saveAccessToken(accessToken: response.accessToken);
     return response;
   }
 

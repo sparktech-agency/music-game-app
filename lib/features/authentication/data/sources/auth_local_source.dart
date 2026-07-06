@@ -24,7 +24,9 @@ abstract class AuthLocalSource {
     required String joinDate,
   });
 
+  //get access token from send otp[extra]
 
+  Future<void> saveAccessToken({required String accessToken});
 
   //update profile data save
   Future<void> updateProfileData({
@@ -99,23 +101,24 @@ class AuthLocalSourceImpl implements AuthLocalSource {
     await _authStorage.write('join_date', joinDate);
   }
 
+  @override
+  Future<void> saveAccessToken({required String accessToken}) async {
+    await _authStorage.write('access_token', accessToken);
+  }
 
   @override
   Future<void> updateProfileData({
-
     required String firstName,
     required String lastName,
     required String nickName,
     String? profilePhoto,
-
-  }) async{
-
-      await _authStorage.write('first_name', firstName);
-      await _authStorage.write('last_name', lastName);
-      await _authStorage.write('nick_name', nickName);
-      if (profilePhoto != null) {
-        await _authStorage.write('profile_photo', profilePhoto);
-      }
+  }) async {
+    await _authStorage.write('first_name', firstName);
+    await _authStorage.write('last_name', lastName);
+    await _authStorage.write('nick_name', nickName);
+    if (profilePhoto != null) {
+      await _authStorage.write('profile_photo', profilePhoto);
+    }
   }
 
   @override
