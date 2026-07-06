@@ -5,6 +5,7 @@ import 'package:music_game_app/features/profile/data/sources/profile_remote_sour
 import 'package:music_game_app/features/profile/domain/repositories/profile_repository.dart';
 import 'package:music_game_app/features/profile/domain/usecases/change_password_usecase.dart';
 import 'package:music_game_app/features/profile/domain/usecases/delete_user_usecase.dart';
+import 'package:music_game_app/features/profile/domain/usecases/get_user_usecase.dart';
 import 'package:music_game_app/features/profile/domain/usecases/update_user_usecase.dart';
 import 'package:music_game_app/features/profile/presentation/controllers/account_settings_controller.dart';
 import 'package:music_game_app/features/profile/presentation/controllers/change_password_controller.dart';
@@ -47,10 +48,14 @@ class ProfileBinding extends Bindings {
       () => DeleteUserUseCase(Get.find<ProfileRepository>()),
     );
 
+    Get.lazyPut<GetUserUseCase>(
+          () => GetUserUseCase(Get.find<ProfileRepository>()),
+    );
+
     //======= Controllers ===============
     Get.lazyPut<ProfileScreenController>(
       () =>
-          ProfileScreenController(authLocalSource: Get.find<AuthLocalSource>()),
+          ProfileScreenController(authLocalSource: Get.find<AuthLocalSource>(), getUserUseCase: Get.find<GetUserUseCase>()),
     );
     Get.lazyPut<UpdateNameController>(
       () => UpdateNameController(

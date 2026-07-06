@@ -1,11 +1,18 @@
 import 'package:get/get.dart';
 import 'package:music_game_app/features/authentication/data/sources/auth_local_source.dart';
+import 'package:music_game_app/features/profile/domain/usecases/get_user_usecase.dart';
 
 class ProfileScreenController extends GetxController {
+
+  final GetUserUseCase _getUserUseCase;
   final AuthLocalSource _authLocalSource;
 
-  ProfileScreenController({required AuthLocalSource authLocalSource})
-    : _authLocalSource = authLocalSource;
+  ProfileScreenController({
+    required GetUserUseCase getUserUseCase,
+    required AuthLocalSource authLocalSource,
+  })  : _getUserUseCase = getUserUseCase,
+        _authLocalSource = authLocalSource;
+
 
 
 

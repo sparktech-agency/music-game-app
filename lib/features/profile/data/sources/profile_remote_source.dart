@@ -4,6 +4,7 @@ import 'package:music_game_app/core/network/base_provider.dart';
 import 'package:music_game_app/features/authentication/data/sources/auth_local_source.dart';
 import 'package:music_game_app/features/profile/data/models/change_password_model.dart';
 import 'package:music_game_app/features/profile/data/models/delete_user_model.dart';
+import 'package:music_game_app/features/profile/data/models/get_user_model.dart';
 import 'package:music_game_app/features/profile/data/models/update_user_model.dart';
 
 class ProfileRemoteSource extends BaseProvider {
@@ -55,6 +56,10 @@ class ProfileRemoteSource extends BaseProvider {
     } catch (e) {
       rethrow;
     }
+
+
+
+
   }
 
 
@@ -118,4 +123,32 @@ class ProfileRemoteSource extends BaseProvider {
       rethrow;
     }
   }
+
+
+
+
+
+  Future<GetUserResponseModel> getUser({required String userId}) async {
+    try {
+      final accessToken = AuthLocalSourceImpl().getAccessToken();
+
+      final response = await get(
+        '/user/getMe',
+        headers: {
+          'Authorization': '$accessToken',
+        },
+      );
+
+      if (response.isOk && response.body != null) {
+        return GetUserResponseModel.fromJson(response.body);
+      } else {
+        final errorMessage = response.body?['message'] ?? 'Failed to retrieve user data';
+        throw Exception(errorMessage);
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+
 }

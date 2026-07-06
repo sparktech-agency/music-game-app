@@ -1,5 +1,6 @@
 import 'package:music_game_app/features/profile/domain/entities/change_password_entity.dart';
 import 'package:music_game_app/features/profile/domain/entities/delete_user_entity.dart';
+import 'package:music_game_app/features/profile/domain/entities/get_user_entity.dart';
 import 'package:music_game_app/features/profile/domain/entities/update_user_entity.dart';
 
 abstract class ProfileRepository {
@@ -19,5 +20,7 @@ abstract class ProfileRepository {
     required String oldPassword,
     required String newPassword,
   });
+
+  Future<GetUserEntity> getUser({required String userId});
 
 }
