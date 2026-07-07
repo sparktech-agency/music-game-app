@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:music_game_app/features/authentication/data/sources/auth_local_source.dart';
 import 'package:music_game_app/features/profile/domain/usecases/update_user_usecase.dart';
+import 'package:music_game_app/features/profile/presentation/controllers/profile_screen_controller.dart';
 
 class UpdateProfilePicController extends GetxController {
   final UpdateUserUseCase _updateUserUseCase;
@@ -73,6 +74,11 @@ class UpdateProfilePicController extends GetxController {
         nickName: _authLocalSource.getNickName() ?? '',
         profilePath: selectedImage.value!.path,
       );
+
+
+      if (Get.isRegistered<ProfileScreenController>()) {
+        Get.find<ProfileScreenController>().fetchUserProfile();
+      }
 
       Get.back();
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:music_game_app/features/authentication/data/sources/auth_local_source.dart';
 import 'package:music_game_app/features/profile/domain/usecases/update_user_usecase.dart';
+import 'package:music_game_app/features/profile/presentation/controllers/profile_screen_controller.dart';
 
 class UpdateNameController extends GetxController {
   final UpdateUserUseCase _updateUserUseCase;
@@ -56,15 +57,12 @@ class UpdateNameController extends GetxController {
         profilePath: _authLocalSource.getProfilePhoto(),
       );
 
+      if (Get.isRegistered<ProfileScreenController>()) {
+        Get.find<ProfileScreenController>().fetchUserProfile();
+      }
+
       Get.back();
 
-      Get.snackbar(
-        'Success',
-        'Name updated successfully!',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.green,
-        colorText: Colors.white,
-      );
     } catch (e) {
       Get.snackbar(
         'Error',

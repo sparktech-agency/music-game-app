@@ -11,6 +11,8 @@ class ProfileScreen extends GetView<ProfileScreenController> {
   Widget build(BuildContext context) {
 
 
+
+
     return Scaffold(
       backgroundColor: const Color(0xFF1A235E),
       body: Stack(
@@ -66,7 +68,7 @@ class ProfileScreen extends GetView<ProfileScreenController> {
                 "My Profile",
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 24,
+                  fontSize: 22,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -94,24 +96,29 @@ class ProfileScreen extends GetView<ProfileScreenController> {
 
               const SizedBox(height: 20),
 
+
+              //fullName
               Obx(() => Text(
-                controller.userName.value,
+                controller.fullName.value,
                 style: const TextStyle(
                   color: Colors.white,
-                  fontSize: 28,
+                  fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
               )),
 
 
+
+
+              //userName
               Obx(() => Text(
-                controller.userName.value,
+                "@${controller.nickName.value}",
                 style: const TextStyle(
                   color: Colors.white,
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
                 ),
               )),
+
 
               Obx(() => Text(
                 controller.userEmail.value,

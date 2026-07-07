@@ -106,7 +106,8 @@ class ProfileRemoteSource extends BaseProvider {
 
   Future<GetUserResponseModel> getUser({required String userId}) async {
     try {
-      final accessToken = AuthLocalSourceImpl().getAccessToken();
+
+      final accessToken = _authLocalSource.getAccessToken();
 
       final response = await get(
         '/user/getMe',
