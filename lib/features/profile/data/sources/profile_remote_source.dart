@@ -8,16 +8,10 @@ import 'package:music_game_app/features/profile/data/models/get_user_model.dart'
 import 'package:music_game_app/features/profile/data/models/update_user_model.dart';
 
 class ProfileRemoteSource extends BaseProvider {
-
-
   final AuthLocalSource _authLocalSource;
 
   ProfileRemoteSource({required AuthLocalSource authLocalSource})
-      : _authLocalSource = authLocalSource;
-
-
-
-
+    : _authLocalSource = authLocalSource;
 
   //update user
   Future<UpdateUserResponseModel> updateUser({
@@ -41,13 +35,20 @@ class ProfileRemoteSource extends BaseProvider {
       final response = await patch(
         '/user/$userId',
         formData,
-        headers: {
-          'Authorization': '$accessToken',
-        },
+        headers: {'Authorization': '$accessToken'},
       );
 
       if (response.isOk && response.body != null) {
-        return UpdateUserResponseModel.fromJson(response.body);
+        final updatedUser = UpdateUserResponseModel.fromJson(response.body);
+
+        await _authLocalSource.updateProfileData(
+          firstName: updatedUser.firstName,
+          lastName: updatedUser.lastName,
+          nickName: updatedUser.nickName,
+          profilePhoto: updatedUser.profile,
+        );
+
+        return updatedUser;
       } else {
         final errorMessage =
             response.body?['message'] ?? 'Failed to update profile';
@@ -56,28 +57,7 @@ class ProfileRemoteSource extends BaseProvider {
     } catch (e) {
       rethrow;
     }
-
-
-
-
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   Future<ChangePasswordResponseModel> changePassword(
     ChangePasswordRequestModel request,
@@ -90,10 +70,10 @@ class ProfileRemoteSource extends BaseProvider {
 
         request.toJson(),
 
-          headers: {
-            'Authorization': 'Bearer $accessToken',
-            'Content-Type': 'application/json',
-          }
+        headers: {
+          'Authorization': 'Bearer $accessToken',
+          'Content-Type': 'application/json',
+        },
       );
 
       if (response.isOk && response.body != null) {
@@ -124,31 +104,24 @@ class ProfileRemoteSource extends BaseProvider {
     }
   }
 
-
-
-
-
   Future<GetUserResponseModel> getUser({required String userId}) async {
     try {
       final accessToken = AuthLocalSourceImpl().getAccessToken();
 
       final response = await get(
         '/user/getMe',
-        headers: {
-          'Authorization': '$accessToken',
-        },
+        headers: {'Authorization': '$accessToken'},
       );
 
       if (response.isOk && response.body != null) {
         return GetUserResponseModel.fromJson(response.body);
       } else {
-        final errorMessage = response.body?['message'] ?? 'Failed to retrieve user data';
+        final errorMessage =
+            response.body?['message'] ?? 'Failed to retrieve user data';
         throw Exception(errorMessage);
       }
     } catch (e) {
       rethrow;
     }
   }
-
-
 }

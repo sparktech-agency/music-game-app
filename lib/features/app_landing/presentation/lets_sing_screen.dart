@@ -10,7 +10,10 @@ class LetsSingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+
+
     final AuthLocalSource localSource = Get.find<AuthLocalSource>();
+
     final String userName = localSource.getNickName() ?? 'User';
 
 
