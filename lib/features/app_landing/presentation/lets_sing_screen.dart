@@ -17,10 +17,6 @@ class LetsSingScreen extends StatelessWidget {
     final String userName = localSource.getNickName() ?? 'User';
 
 
-
-
-
-
     return Scaffold(
       extendBodyBehindAppBar: true,
 
