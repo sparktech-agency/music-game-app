@@ -7,9 +7,9 @@ class SongPickLoadingPage extends GetView<SongPickLoadingController> {
 
   @override
   Widget build(BuildContext context) {
-
-    controller;
-
+    
+    Get.find<SongPickLoadingController>();
+    
     return Scaffold(
       backgroundColor: const Color(0xFF050A24),
       body: SafeArea(

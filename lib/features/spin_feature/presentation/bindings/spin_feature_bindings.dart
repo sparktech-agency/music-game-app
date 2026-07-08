@@ -3,6 +3,7 @@ import 'package:music_game_app/features/spin_feature/data/repositories_impl/spin
 import 'package:music_game_app/features/spin_feature/data/sources/spin_feature_remote_source.dart';
 import 'package:music_game_app/features/spin_feature/domain/repositories/spin_feature_repository.dart';
 import 'package:music_game_app/features/spin_feature/domain/usecases/get_song_usecase.dart';
+import 'package:music_game_app/features/spin_feature/presentation/controllers/selected_song_controller.dart';
 import 'package:music_game_app/features/spin_feature/presentation/controllers/song_pick_loading_controller.dart';
 import 'package:music_game_app/features/spin_feature/presentation/controllers/spin_wheel_controller.dart';
 import 'package:music_game_app/features/spin_feature/presentation/controllers/turn_management/turn_management_controller.dart';
@@ -39,5 +40,11 @@ class SpinFeatureBindings extends Bindings {
           () => SongPickLoadingController(getSongUseCase: Get.find<GetSongUseCase>()),
       fenix: true,
     );
+
+    Get.lazyPut<SelectedSongController>(
+          () => SelectedSongController(),
+      fenix: true,
+    );
+
   }
 }

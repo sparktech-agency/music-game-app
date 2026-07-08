@@ -207,7 +207,7 @@ List<GetPage> routes = [
     binding: SpinFeatureBindings(),
   ),
 
-  GetPage(name: AppRoutes.selectedSong, page: () => SelectedSong()),
+  GetPage(name: AppRoutes.selectedSong, page: () => SelectedSong(), binding: SpinFeatureBindings(),),
   GetPage(name: AppRoutes.lyricsPage, page: () => LyricsPage()),
   GetPage(name: AppRoutes.gameplayPage, page: () => GameplayPage()),
   GetPage(name: AppRoutes.resultPage, page: () => ResultPage()),

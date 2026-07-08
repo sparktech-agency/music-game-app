@@ -7,7 +7,7 @@ class SelectedSong extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final SelectedSongController controller = Get.put(SelectedSongController());
+    final SelectedSongController controller = Get.find<SelectedSongController>();
 
     return Scaffold(
       body: SizedBox(

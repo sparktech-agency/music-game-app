@@ -30,15 +30,16 @@ class GetSongResponseModel extends GetSongEntity {
   factory GetSongResponseModel.fromJson(Map<String, dynamic> json) {
 
     final data = json['data'] as Map<String, dynamic>;
+    final songData = data['song'] as Map<String, dynamic>;
 
     return GetSongResponseModel(
-      category: data['category'] as String,
-      title: data['title'] as String,
-      artist: data['artist'] as String,
+      category: songData['category'] as String,
+      title: songData['title'] as String,
+      artist: songData['artist'] as String,
 
-      lyrics: List<String>.from(data['lyrics'] as List<dynamic>),
-      albumArt: data['albumArt'] as String,
-      audioPath: data['audioPath'] as String,
+      lyrics: List<String>.from(songData['lyrics'] as List<dynamic>),
+      albumArt: songData['albumArt'] as String,
+      audioPath: songData['audioPath'] as String,
     );
   }
 }
