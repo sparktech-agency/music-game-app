@@ -24,37 +24,26 @@ class WhichTeam extends GetView<WhichTeamController> {
           // Characters
           Obx(() {
             final isSwapped = controller.isSwapped.value;
+            final isTeam1Selected = isSwapped;
+            final isTeam2Selected = !isSwapped;
+
+            final char1 = _AnimatedCharacter(
+              key: const ValueKey('team1'),
+              isSelected: isTeam1Selected,
+              top: isTeam1Selected ? 280 : 120,
+              left: isTeam1Selected ? -60 : 60,
+            );
+
+            final char2 = _AnimatedCharacter(
+              key: const ValueKey('team2'),
+              isSelected: isTeam2Selected,
+              top: isTeam2Selected ? 280 : 120,
+              left: isTeam2Selected ? -60 : 60,
+            );
+
 
             return Stack(
-              children: isSwapped
-                  ? [
-                      _AnimatedCharacter(
-                        key: const ValueKey('team2'),
-                        isSelected: false,
-                        top: 120,
-                        left: 60,
-                      ),
-                      _AnimatedCharacter(
-                        key: const ValueKey('team1'),
-                        isSelected: true,
-                        top: 280,
-                        left: -60,
-                      ),
-                    ]
-                  : [
-                      _AnimatedCharacter(
-                        key: const ValueKey('team1'),
-                        isSelected: false,
-                        top: 120,
-                        left: 60,
-                      ),
-                      _AnimatedCharacter(
-                        key: const ValueKey('team2'),
-                        isSelected: true,
-                        top: 280,
-                        left: -60,
-                      ),
-                    ],
+              children: isTeam1Selected ? [char2, char1] : [char1, char2],
             );
           }),
 
@@ -64,8 +53,8 @@ class WhichTeam extends GetView<WhichTeamController> {
             left: 0,
             right: 0,
             height: MediaQuery.sizeOf(context).height * 0.6,
-            child: Container(
-              decoration: const BoxDecoration(
+            child: const DecoratedBox(
+              decoration: BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
@@ -99,7 +88,7 @@ class WhichTeam extends GetView<WhichTeamController> {
                 SizedBox(
                   height: 70,
                   child: Obx(
-                    () => ListView.separated(
+                        () => ListView.separated(
                       clipBehavior: Clip.none,
                       scrollDirection: Axis.horizontal,
                       itemCount: controller.teamNames.length,
@@ -164,19 +153,21 @@ class _TeamCard extends GetView<WhichTeamController> {
               ),
             ),
             if (isSelected)
-              Positioned(
+              const Positioned(
                 top: -5,
                 right: 8,
-                child: Container(
-                  padding: const EdgeInsets.all(2),
-                  decoration: const BoxDecoration(
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
                     color: Colors.white,
                     shape: BoxShape.circle,
                   ),
-                  child: const Icon(
-                    Icons.check,
-                    size: 14,
-                    color: WhichTeam.accentBlue,
+                  child: Padding(
+                    padding: EdgeInsets.all(2),
+                    child: Icon(
+                      Icons.check,
+                      size: 14,
+                      color: WhichTeam.accentBlue,
+                    ),
                   ),
                 ),
               ),
@@ -209,7 +200,7 @@ class _Header extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-        SizedBox(width: 20,)
+        const SizedBox(width: 20),
       ],
     );
   }
@@ -228,6 +219,14 @@ class _AnimatedCharacter extends StatelessWidget {
     required this.left,
   });
 
+
+  static const List<double> _grayscaleMatrix = [
+    0.2126, 0.7152, 0.0722, 0, 0,
+    0.2126, 0.7152, 0.0722, 0, 0,
+    0.2126, 0.7152, 0.0722, 0, 0,
+    0,      0,      0,      1, 0,
+  ];
+
   @override
   Widget build(BuildContext context) {
     return AnimatedPositioned(
@@ -242,28 +241,7 @@ class _AnimatedCharacter extends StatelessWidget {
         child: ColorFiltered(
           colorFilter: isSelected
               ? const ColorFilter.mode(Colors.transparent, BlendMode.multiply)
-              : const ColorFilter.matrix([
-                  0.2126,
-                  0.7152,
-                  0.0722,
-                  0,
-                  0,
-                  0.2126,
-                  0.7152,
-                  0.0722,
-                  0,
-                  0,
-                  0.2126,
-                  0.7152,
-                  0.0722,
-                  0,
-                  0,
-                  0,
-                  0,
-                  0,
-                  1,
-                  0,
-                ]),
+              : const ColorFilter.matrix(_grayscaleMatrix),
           child: Image.asset(
             'assets/images/three_singer.png',
             fit: BoxFit.contain,
@@ -286,18 +264,15 @@ class _NextButton extends GetView<WhichTeamController> {
       height: 60,
       child: ElevatedButton(
         onPressed: controller.proceedToNextPage,
-        style:
-            ElevatedButton.styleFrom(
-              backgroundColor: Colors.transparent,
-              shadowColor: Colors.transparent,
-              elevation: 0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(35),
-              ),
-              padding: EdgeInsets.zero,
-            ).copyWith(
-              backgroundColor: MaterialStateProperty.resolveWith((_) => null),
-            ),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.transparent,
+          shadowColor: Colors.transparent,
+          elevation: 0,
+          padding: EdgeInsets.zero,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(35),
+          ),
+        ),
         child: Ink(
           decoration: BoxDecoration(
             gradient: const LinearGradient(
