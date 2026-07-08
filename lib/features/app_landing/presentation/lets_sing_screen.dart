@@ -41,7 +41,7 @@ class LetsSingScreen extends StatelessWidget {
           ),
 
           Positioned(
-            bottom: 40,
+            bottom: 20,
             left: 0,
             right: 0,
             child: Image.asset(
