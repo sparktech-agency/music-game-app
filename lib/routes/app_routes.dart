@@ -120,7 +120,11 @@ List<GetPage> routes = [
     binding: AuthBinding(),
   ),
 
-  GetPage(name: AppRoutes.phoneInputScreen, page: () => const PhoneInputPage()),
+  GetPage(
+    name: AppRoutes.phoneInputScreen,
+    page: () => const PhoneInputPage(),
+    binding: AuthBinding(),
+  ),
   GetPage(name: AppRoutes.setPassScreen, page: () => const ResetPasswordPage()),
   GetPage(name: AppRoutes.welcomeSplash, page: () => const WelcomeSplash()),
   GetPage(name: AppRoutes.twoButtonPage, page: () => const TwoButtonPage()),
@@ -138,15 +142,42 @@ List<GetPage> routes = [
   ),
 
   GetPage(name: AppRoutes.settingsScreen, page: () => const SettingsScreen()),
-  GetPage(name: AppRoutes.profileSettings, page: () => const ProfileSettingsScreen()),
-  GetPage(name: AppRoutes.accountSettings, page: () => const AccountSettingsScreen(), binding: ProfileBinding()),
+  GetPage(
+    name: AppRoutes.profileSettings,
+    page: () => const ProfileSettingsScreen(),
+  ),
+  GetPage(
+    name: AppRoutes.accountSettings,
+    page: () => const AccountSettingsScreen(),
+    binding: ProfileBinding(),
+  ),
 
-  GetPage(name: AppRoutes.updateName, page: () => const UpdateNameScreen(), binding: ProfileBinding()),
-  GetPage(name: AppRoutes.updateNickName, page: () => const UpdateNicknameScreen(), binding: ProfileBinding()),
-  GetPage(name: AppRoutes.updateProfilePic, page: () => const UpdateProfilePictureScreen(), binding: ProfileBinding()),
+  GetPage(
+    name: AppRoutes.updateName,
+    page: () => const UpdateNameScreen(),
+    binding: ProfileBinding(),
+  ),
+  GetPage(
+    name: AppRoutes.updateNickName,
+    page: () => const UpdateNicknameScreen(),
+    binding: ProfileBinding(),
+  ),
+  GetPage(
+    name: AppRoutes.updateProfilePic,
+    page: () => const UpdateProfilePictureScreen(),
+    binding: ProfileBinding(),
+  ),
 
-  GetPage(name: AppRoutes.changePassword, page: () => const ChangePasswordScreen(), binding: ProfileBinding()),
-  GetPage(name: AppRoutes.spotifyMusic, page: () => const SpotifyMusicScreen(), binding: ProfileBinding()),
+  GetPage(
+    name: AppRoutes.changePassword,
+    page: () => const ChangePasswordScreen(),
+    binding: ProfileBinding(),
+  ),
+  GetPage(
+    name: AppRoutes.spotifyMusic,
+    page: () => const SpotifyMusicScreen(),
+    binding: ProfileBinding(),
+  ),
 
   GetPage(name: AppRoutes.letsSingScreen, page: () => const LetsSingScreen()),
   GetPage(name: AppRoutes.letsPlayScreen, page: () => const LetsPlayScreen()),
@@ -161,27 +192,11 @@ List<GetPage> routes = [
     page: () => const RoundSelection(),
     binding: SessionBindings(),
   ),
-  GetPage(
-    name: AppRoutes.teamNumber,
-    page: () => const TeamNumber(),
-
-  ),
-  GetPage(
-    name: AppRoutes.singerNumber,
-    page: () => const SingerNumber(),
-  ),
-  GetPage(
-    name: AppRoutes.teamName,
-    page: () => const TeamName(),
-  ),
-  GetPage(
-    name: AppRoutes.whichTeam,
-    page: () => const WhichTeam(),
-  ),
-  GetPage(
-    name: AppRoutes.playerName,
-    page: () => const PlayerName(),
-  ),
+  GetPage(name: AppRoutes.teamNumber, page: () => const TeamNumber()),
+  GetPage(name: AppRoutes.singerNumber, page: () => const SingerNumber()),
+  GetPage(name: AppRoutes.teamName, page: () => const TeamName()),
+  GetPage(name: AppRoutes.whichTeam, page: () => const WhichTeam()),
+  GetPage(name: AppRoutes.playerName, page: () => const PlayerName()),
 
   // ==========================================
   // (Spin Feature Flow)
@@ -191,28 +206,13 @@ List<GetPage> routes = [
     page: () => const SpinFrontPage(),
     binding: SpinFeatureBindings(),
   ),
-  GetPage(
-    name: AppRoutes.spinWheelPage,
-    page: () => const SpinWheelPage(),
-  ),
+  GetPage(name: AppRoutes.spinWheelPage, page: () => const SpinWheelPage()),
   GetPage(
     name: AppRoutes.songPickLoading,
     page: () => const SongPickLoadingPage(),
   ),
-  GetPage(
-    name: AppRoutes.selectedSong,
-    page: () => const SelectedSong(),
-  ),
-  GetPage(
-    name: AppRoutes.lyricsPage,
-    page: () => const LyricsPage(),
-  ),
-  GetPage(
-    name: AppRoutes.gameplayPage,
-    page: () => const GameplayPage(),
-  ),
-  GetPage(
-    name: AppRoutes.resultPage,
-    page: () => const ResultPage(),
-  ),
+  GetPage(name: AppRoutes.selectedSong, page: () => const SelectedSong()),
+  GetPage(name: AppRoutes.lyricsPage, page: () => const LyricsPage()),
+  GetPage(name: AppRoutes.gameplayPage, page: () => const GameplayPage()),
+  GetPage(name: AppRoutes.resultPage, page: () => const ResultPage()),
 ];

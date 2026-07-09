@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:music_game_app/features/authentication/presentation/controllers/phone_controller.dart';
 
-class PhoneInputPage extends StatelessWidget {
+
+class PhoneInputPage extends GetView<PhoneController> {
   const PhoneInputPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final PhoneController controller = Get.put(PhoneController());
-
     return Scaffold(
       backgroundColor: const Color(0xFF050A18),
       resizeToAvoidBottomInset: true,
@@ -24,18 +23,18 @@ class PhoneInputPage extends StatelessWidget {
           style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w500),
         ),
       ),
-      body: SafeArea(
+      body: const SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25),
+          padding: EdgeInsets.symmetric(horizontal: 25),
           child: Column(
             children: [
               Expanded(
                 child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
+                  physics: BouncingScrollPhysics(),
                   child: Column(
                     children: [
-                      const SizedBox(height: 40),
-                      const Text(
+                      SizedBox(height: 40),
+                      Text(
                         'Enter Your Phone Number',
                         style: TextStyle(
                           color: Colors.white,
@@ -43,30 +42,39 @@ class PhoneInputPage extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      const SizedBox(height: 40),
+                      SizedBox(height: 40),
 
 
                       Row(
                         children: [
-                          _buildCountryCodePicker(controller),
-                          const SizedBox(width: 15),
-                          Expanded(child: _buildPhoneField(controller)),
+                          _CountryCodePicker(),
+                          SizedBox(width: 15),
+                          Expanded(child: _PhoneField()),
                         ],
                       ),
                     ],
                   ),
                 ),
               ),
-              _buildBottomActionArea(controller),
+              _BottomActionArea(),
             ],
           ),
         ),
       ),
     );
   }
+}
 
 
-  Widget _buildCountryCodePicker(PhoneController controller) {
+
+class _CountryCodePicker extends StatelessWidget {
+  const _CountryCodePicker();
+
+  @override
+  Widget build(BuildContext context) {
+   
+    final controller = Get.find<PhoneController>();
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12),
       decoration: BoxDecoration(
@@ -93,9 +101,15 @@ class PhoneInputPage extends StatelessWidget {
       )),
     );
   }
+}
 
+class _PhoneField extends StatelessWidget {
+  const _PhoneField();
 
-  Widget _buildPhoneField(PhoneController controller) {
+  @override
+  Widget build(BuildContext context) {
+    final controller = Get.find<PhoneController>();
+
     return TextField(
       controller: controller.phoneController,
       keyboardType: TextInputType.phone,
@@ -118,13 +132,18 @@ class PhoneInputPage extends StatelessWidget {
       ),
     );
   }
+}
 
+class _BottomActionArea extends StatelessWidget {
+  const _BottomActionArea();
 
-  Widget _buildBottomActionArea(PhoneController controller) {
+  @override
+  Widget build(BuildContext context) {
+    final controller = Get.find<PhoneController>();
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-
         GestureDetector(
           onTap: () => controller.verifyPhone(),
           child: Container(

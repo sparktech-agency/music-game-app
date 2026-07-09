@@ -11,6 +11,7 @@ import 'package:music_game_app/features/authentication/domain/usecases/send_otp_
 import 'package:music_game_app/features/authentication/domain/usecases/verify_otp_usecase.dart';
 import 'package:music_game_app/features/authentication/presentation/controllers/enter_email_controller.dart';
 import 'package:music_game_app/features/authentication/presentation/controllers/login_controller.dart';
+import 'package:music_game_app/features/authentication/presentation/controllers/phone_controller.dart';
 import 'package:music_game_app/features/authentication/presentation/controllers/registration_controller.dart';
 import 'package:music_game_app/features/authentication/presentation/controllers/reset_password_controller.dart';
 import 'package:music_game_app/features/authentication/presentation/controllers/verify_email_controller.dart';
@@ -86,6 +87,11 @@ class AuthBinding extends Bindings {
       () => ResetPasswordController(
         resetPassUseCase: Get.find<ResetPassUseCase>(),
       ),
+      fenix: true,
+    );
+
+    Get.lazyPut<PhoneController>(
+          () => PhoneController(),
       fenix: true,
     );
   }
