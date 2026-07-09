@@ -77,6 +77,9 @@ class ResultPageController extends GetxController {
 
   void playAgain() {
     Get.delete<TurnManagementController>(force: true);
+    if (Get.isRegistered<CentralSessionController>()) {
+      Get.find<CentralSessionController>().resetSessionData();
+    }
     Get.offAllNamed(AppRoutes.appLanding);
   }
 }

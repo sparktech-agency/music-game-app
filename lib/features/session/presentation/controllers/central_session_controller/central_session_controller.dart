@@ -12,10 +12,10 @@ class CentralSessionController extends GetxController {
   final CreateRoundUseCase _createRoundUseCase;
 
   CentralSessionController(
-      this._createSessionUseCase,
-      this._startSessionUseCase,
-      this._createRoundUseCase,
-      );
+    this._createSessionUseCase,
+    this._startSessionUseCase,
+    this._createRoundUseCase,
+  );
 
   var numberOfRounds = 1.obs;
   var numberOfTeams = 2.obs;
@@ -34,8 +34,6 @@ class CentralSessionController extends GetxController {
     teamPlayersMap[teamName] = players;
     print("Saved: $teamName -> $players");
   }
-
-
 
   Future<bool> createSession() async {
     try {
@@ -83,10 +81,12 @@ class CentralSessionController extends GetxController {
         roundNumber: 1,
       );
 
-      final turnController = Get.put(TurnManagementController(), permanent: true);
+      final turnController = Get.put(
+        TurnManagementController(),
+        permanent: true,
+      );
       turnController.roundId.value = roundResult.id;
       return true;
-
     } catch (e) {
       Get.snackbar(
         'Error',
@@ -99,14 +99,15 @@ class CentralSessionController extends GetxController {
     }
   }
 
-
-
-
-
-
-
-
-
-
-
+  void resetSessionData() {
+    numberOfRounds.value = 1;
+    numberOfTeams.value = 2;
+    numberOfSingers.value = 2;
+    teamNames.clear();
+    whichTeam.value = " ";
+    teamPlayersMap.clear();
+    createdSession.value = null;
+    isLoading.value = false;
+    print("Session data has been reset successfully.");
+  }
 }
