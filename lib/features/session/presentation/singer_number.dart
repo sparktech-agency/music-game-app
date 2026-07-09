@@ -9,6 +9,8 @@ class SingerNumber extends GetView<SingerNumberController> {
   Widget build(BuildContext context) {
     const Color brandBlue = Color(0xFF2254C9);
     return Scaffold(
+
+      resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           Positioned.fill(
@@ -23,7 +25,7 @@ class SingerNumber extends GetView<SingerNumberController> {
             left: 0,
             right: 0,
             child: Obx(
-              () => AnimatedSwitcher(
+                  () => AnimatedSwitcher(
                 duration: const Duration(milliseconds: 400),
                 transitionBuilder: (child, animation) =>
                     FadeTransition(opacity: animation, child: child),
@@ -87,7 +89,7 @@ class SingerNumber extends GetView<SingerNumberController> {
                           ),
                         ),
                       ),
-                      SizedBox(width: 20,)
+                      const SizedBox(width: 20,)
                     ],
                   ),
                 ),
@@ -189,7 +191,7 @@ class SingerNumber extends GetView<SingerNumberController> {
               child: Center(
                 child: Text(
                   '$singer',
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 24,
                     fontWeight: FontWeight.w900,
