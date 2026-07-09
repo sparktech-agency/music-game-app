@@ -3,15 +3,31 @@ import 'package:get/get.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:music_game_app/routes/app_routes.dart';
 
-class LetsPlayScreen extends StatelessWidget {
+class LetsPlayScreen extends StatefulWidget {
   const LetsPlayScreen({super.key});
 
   @override
+  State<LetsPlayScreen> createState() => _LetsPlayScreenState();
+}
+
+class _LetsPlayScreenState extends State<LetsPlayScreen> {
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    precacheImage(const AssetImage('assets/images/lets_play_bg.png'), context);
+    precacheImage(const AssetImage('assets/images/lets_play.gif'), context);
+  }
+
+  @override
   Widget build(BuildContext context) {
+
+    final screenSize = MediaQuery.sizeOf(context);
+
     return Scaffold(
       body: Stack(
         children: [
-
+          // Background Image
           Positioned.fill(
             child: Image.asset(
               'assets/images/lets_play_bg.png',
@@ -19,22 +35,23 @@ class LetsPlayScreen extends StatelessWidget {
             ),
           ),
 
-
+          // Animated GIF (With optimizations)
           Positioned(
-            top: MediaQuery.of(context).size.height * 0.08,
+            top: screenSize.height * 0.08,
             left: 0,
             right: 0,
             child: Image.asset(
               'assets/images/lets_play.gif',
-              height: MediaQuery.of(context).size.height * 0.55,
+              height: screenSize.height * 0.55,
               fit: BoxFit.cover,
+              gaplessPlayback: true,
             ),
           ),
 
           SafeArea(
             child: Column(
               children: [
-
+                // Close Button
                 Align(
                   alignment: Alignment.topRight,
                   child: Padding(
@@ -49,12 +66,12 @@ class LetsPlayScreen extends StatelessWidget {
                 const Spacer(flex: 12),
 
 
-                _buildShiningTextBox(),
+                const _ShiningTextBox(),
 
                 const Spacer(flex: 4),
 
 
-                _buildLetsPlayButton(context),
+                _LetsPlayButton(width: screenSize.width * 0.75),
 
                 const SizedBox(height: 18),
               ],
@@ -64,14 +81,20 @@ class LetsPlayScreen extends StatelessWidget {
       ),
     );
   }
+}
 
 
-  Widget _buildShiningTextBox() {
+
+class _ShiningTextBox extends StatelessWidget {
+  const _ShiningTextBox();
+
+  @override
+  Widget build(BuildContext context) {
     return Stack(
       clipBehavior: Clip.none,
       alignment: Alignment.center,
       children: [
-
+        // Glass container with Glowing border
         Container(
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
           decoration: BoxDecoration(
@@ -88,17 +111,17 @@ class LetsPlayScreen extends StatelessWidget {
               ),
             ],
           ),
-          child: Column(
+          child: const Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              _buildRichText("No ", "Music"),
-              const SizedBox(height: 5),
-              _buildRichText("Just your ", "Voice"),
+              _RichTextHelper(normal: "No ", bold: "Music"),
+              SizedBox(height: 5),
+              _RichTextHelper(normal: "Just your ", bold: "Voice"),
             ],
           ),
         ),
 
-
+        // Svg Sparkling (Right)
         Positioned(
           top: -34,
           right: -30,
@@ -110,9 +133,9 @@ class LetsPlayScreen extends StatelessWidget {
           ),
         ),
 
-
+        // Svg Sparkling (Left)
         Positioned(
-          bottom:-34,
+          bottom: -34,
           left: -30,
           child: SvgPicture.asset(
             'assets/images/sparkling.svg',
@@ -124,9 +147,16 @@ class LetsPlayScreen extends StatelessWidget {
       ],
     );
   }
+}
 
+class _RichTextHelper extends StatelessWidget {
+  final String normal;
+  final String bold;
 
-  Widget _buildRichText(String normal, String bold) {
+  const _RichTextHelper({required this.normal, required this.bold});
+
+  @override
+  Widget build(BuildContext context) {
     return RichText(
       textAlign: TextAlign.center,
       text: TextSpan(
@@ -138,11 +168,17 @@ class LetsPlayScreen extends StatelessWidget {
       ),
     );
   }
+}
 
+class _LetsPlayButton extends StatelessWidget {
+  final double width;
 
-  Widget _buildLetsPlayButton(BuildContext context) {
+  const _LetsPlayButton({required this.width});
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width * 0.75,
+      width: width,
       height: 60,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(35),
