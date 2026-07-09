@@ -15,7 +15,7 @@ class RegistrationPage extends StatefulWidget {
 }
 
 class _RegistrationPageState extends State<RegistrationPage> {
-  // TextEditingControllers live here — safe lifecycle
+  // TextEditingControllers - safe lifecycle
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
@@ -73,6 +73,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       CustomEmailField(controller: _emailController),
                       const SizedBox(height: 20),
 
+
                       Obx(() => CustomPasswordField(
                         hint: "Set your password",
                         controller: _passwordController,
@@ -81,14 +82,15 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       )),
                       const SizedBox(height: 20),
 
+
                       Obx(() => CustomPasswordField(
                         hint: "Confirm your password",
                         controller: _confirmPasswordController,
                         isVisible: _controller.isConfirmPasswordVisible,
-                        onToggle:
-                        _controller.toggleConfirmPasswordVisibility,
+                        onToggle: _controller.toggleConfirmPasswordVisibility,
                       )),
                       const SizedBox(height: 20),
+
 
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -119,23 +121,27 @@ class _RegistrationPageState extends State<RegistrationPage> {
     );
   }
 
+
   Widget _buildBottomActionArea() {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Obx(() => _controller.isLoading
-            ? const Padding(
-          padding: EdgeInsets.symmetric(vertical: 10),
-          child: CircularProgressIndicator(color: Colors.cyan),
-        )
-            : CustomGradientButton(
-          text: "Register",
-          onPressed: () => _controller.register(
-            _emailController.text.trim(),
-            _passwordController.text.trim(),
-            _confirmPasswordController.text.trim(),
-          ),
-        )),
+        Obx(() {
+          if (_controller.isLoading) {
+            return const Padding(
+              padding: EdgeInsets.symmetric(vertical: 10),
+              child: CircularProgressIndicator(color: Colors.cyan),
+            );
+          }
+          return CustomGradientButton(
+            text: "Register",
+            onPressed: () => _controller.register(
+              _emailController.text.trim(),
+              _passwordController.text.trim(),
+              _confirmPasswordController.text.trim(),
+            ),
+          );
+        }),
         const SizedBox(height: 20),
         const Text(
           'We need to verify if the email has been registered with Lyricraze',
