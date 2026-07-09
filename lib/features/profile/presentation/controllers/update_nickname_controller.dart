@@ -47,7 +47,6 @@ class UpdateNicknameController extends GetxController {
         firstName: _authLocalSource.getFirstName() ?? '',
         lastName: _authLocalSource.getLastName() ?? '',
         nickName: nickName,
-        profilePath: _authLocalSource.getProfilePhoto(),
       );
 
       if (Get.isRegistered<ProfileScreenController>()) {
@@ -62,6 +61,7 @@ class UpdateNicknameController extends GetxController {
           colorText: Colors.white);
 
     } catch (e) {
+      debugPrint('UpdateNickname error: $e');
       Get.snackbar('Error', e.toString().replaceAll('Exception: ', ''),
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.redAccent,

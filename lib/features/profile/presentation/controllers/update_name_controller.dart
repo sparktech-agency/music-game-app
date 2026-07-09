@@ -54,7 +54,6 @@ class UpdateNameController extends GetxController {
         firstName: firstName,
         lastName: lastName,
         nickName: _authLocalSource.getNickName() ?? '',
-        profilePath: _authLocalSource.getProfilePhoto(),
       );
 
       if (Get.isRegistered<ProfileScreenController>()) {
