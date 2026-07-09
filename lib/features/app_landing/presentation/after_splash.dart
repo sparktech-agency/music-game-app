@@ -2,15 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:music_game_app/routes/app_routes.dart';
 
-class AfterSplash extends StatelessWidget {
+class AfterSplash extends StatefulWidget {
   const AfterSplash({super.key});
+
+  @override
+  State<AfterSplash> createState() => _AfterSplashState();
+}
+
+class _AfterSplashState extends State<AfterSplash> {
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    precacheImage(const AssetImage('assets/images/guide_bg.png'), context);
+    precacheImage(const AssetImage('assets/images/mascot_one.png'), context);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         children: [
-
+          // Background Image
           Positioned.fill(
             child: Image.asset(
               'assets/images/guide_bg.png',
@@ -18,6 +30,7 @@ class AfterSplash extends StatelessWidget {
             ),
           ),
 
+          // Mascot Image
           Positioned(
             bottom: 30,
             left: 0,
@@ -29,7 +42,7 @@ class AfterSplash extends StatelessWidget {
             ),
           ),
 
-
+          // Foreground Content
           SafeArea(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -56,10 +69,9 @@ class AfterSplash extends StatelessWidget {
 
                   const Spacer(),
 
+                  // Interactive Button
                   GestureDetector(
-                    onTap: () {
-                      Get.toNamed(AppRoutes.roundSelection);
-                    },
+                    onTap: () => Get.toNamed(AppRoutes.roundSelection),
                     child: Container(
                       width: double.infinity,
                       height: 60,

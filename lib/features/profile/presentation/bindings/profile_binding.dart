@@ -22,78 +22,87 @@ class ProfileBinding extends Bindings {
     Get.lazyPut<AuthLocalSource>(() => AuthLocalSourceImpl(), fenix: true);
 
     Get.lazyPut<ProfileRemoteSource>(
-      () => ProfileRemoteSource(authLocalSource: Get.find<AuthLocalSource>()),
+          () => ProfileRemoteSource(authLocalSource: Get.find<AuthLocalSource>()),
       fenix: true,
     );
 
     //===== Repository =====
     Get.lazyPut<ProfileRepository>(
-      () => ProfileRepositoryImpl(Get.find<ProfileRemoteSource>()),
+          () => ProfileRepositoryImpl(Get.find<ProfileRemoteSource>()),
       fenix: true,
     );
 
     //===== UseCases =====
-
     Get.lazyPut<UpdateUserUseCase>(
-      () => UpdateUserUseCase(Get.find<ProfileRepository>()),
+          () => UpdateUserUseCase(Get.find<ProfileRepository>()),
       fenix: true,
     );
 
     Get.lazyPut<ChangePasswordUseCase>(
-      () => ChangePasswordUseCase(Get.find<ProfileRepository>()),
+          () => ChangePasswordUseCase(Get.find<ProfileRepository>()),
       fenix: true,
     );
 
     Get.lazyPut<DeleteUserUseCase>(
-      () => DeleteUserUseCase(Get.find<ProfileRepository>()),
+          () => DeleteUserUseCase(Get.find<ProfileRepository>()),
+      fenix: true,
     );
 
     Get.lazyPut<GetUserUseCase>(
           () => GetUserUseCase(Get.find<ProfileRepository>()),
+      fenix: true,
     );
 
     //======= Controllers ===============
     Get.lazyPut<ProfileScreenController>(
-      () =>
-          ProfileScreenController(authLocalSource: Get.find<AuthLocalSource>(), getUserUseCase: Get.find<GetUserUseCase>()),
+          () => ProfileScreenController(
+        authLocalSource: Get.find<AuthLocalSource>(),
+        getUserUseCase: Get.find<GetUserUseCase>(),
+      ),
+      fenix: true,
     );
+
     Get.lazyPut<UpdateNameController>(
-      () => UpdateNameController(
+          () => UpdateNameController(
         updateUserUseCase: Get.find<UpdateUserUseCase>(),
         authLocalSource: Get.find<AuthLocalSource>(),
       ),
+      fenix: true,
     );
 
     Get.lazyPut<UpdateNicknameController>(
-      () => UpdateNicknameController(
+          () => UpdateNicknameController(
         updateUserUseCase: Get.find<UpdateUserUseCase>(),
         authLocalSource: Get.find<AuthLocalSource>(),
       ),
+      fenix: true,
     );
 
     Get.lazyPut<UpdateProfilePicController>(
-      () => UpdateProfilePicController(
+          () => UpdateProfilePicController(
         updateUserUseCase: Get.find<UpdateUserUseCase>(),
         authLocalSource: Get.find<AuthLocalSource>(),
       ),
+      fenix: true,
     );
 
     Get.lazyPut<ChangePasswordController>(
-      () => ChangePasswordController(
+          () => ChangePasswordController(
         changePasswordUseCase: Get.find<ChangePasswordUseCase>(),
       ),
       fenix: true,
     );
 
     Get.lazyPut<AccountSettingsController>(
-      () => AccountSettingsController(
+          () => AccountSettingsController(
         Get.find<AuthLocalSource>(),
         Get.find<DeleteUserUseCase>(),
       ),
+      fenix: true,
     );
 
     Get.lazyPut<SpotifyMusicController>(
-      () => SpotifyMusicController(),
+          () => SpotifyMusicController(),
       fenix: true,
     );
   }

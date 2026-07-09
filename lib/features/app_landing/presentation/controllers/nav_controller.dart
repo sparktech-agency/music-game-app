@@ -5,25 +5,23 @@ import 'package:music_game_app/features/profile/presentation/profile_screen.dart
 import 'package:music_game_app/features/song_packs/presentation/song_pack_screen.dart';
 
 class NavController extends GetxController {
-
   final selectedIndex = 0.obs;
-
   late final PageController pageController;
 
-  @override
-  void onInit() {
-    super.onInit();
-
-    pageController = PageController(
-      initialPage: selectedIndex.value,
-    );
-  }
 
   final List<Widget> screens = const [
     LetsSingScreen(),
     SongPackScreen(),
     ProfileScreen(),
   ];
+
+  @override
+  void onInit() {
+    super.onInit();
+    pageController = PageController(
+      initialPage: selectedIndex.value,
+    );
+  }
 
   void changeTab(int index) {
     if (selectedIndex.value == index) return;
@@ -32,7 +30,7 @@ class NavController extends GetxController {
 
     pageController.animateToPage(
       index,
-      duration: const Duration(milliseconds: 350),
+      duration: const Duration(milliseconds: 300),
       curve: Curves.easeOutCubic,
     );
   }

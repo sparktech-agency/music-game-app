@@ -26,6 +26,12 @@ class FirstScreen extends StatelessWidget {
                   'assets/images/logo.svg',
                   width: 80,
                   height: 80,
+                  clipBehavior: Clip.antiAlias,
+
+                  placeholderBuilder: (BuildContext context) => const SizedBox(
+                    width: 80,
+                    height: 80,
+                  ),
                 ),
               ),
 
@@ -36,18 +42,18 @@ class FirstScreen extends StatelessWidget {
                   CustomGradientButton(
                     text: 'Continue With Email',
                     icon: Icons.email_outlined,
-                    onPressed: () {Get.toNamed(AppRoutes.loginPage);},
+                    onPressed: () => Get.toNamed(AppRoutes.loginPage),
                   ),
 
-                  SizedBox(height: 15),
+                  const SizedBox(height: 15),
 
                   CustomGradientButton(
                     text: 'Continue With Phone Number',
                     icon: Icons.phone_in_talk_outlined,
-                    onPressed: () {Get.toNamed(AppRoutes.phoneInputScreen);},
+                    onPressed: () => Get.toNamed(AppRoutes.phoneInputScreen),
                   ),
 
-                  SizedBox(height: 15),
+                  const SizedBox(height: 15),
 
                   AuthButton(
                     iconPath: 'assets/images/Google.png',
@@ -56,7 +62,7 @@ class FirstScreen extends StatelessWidget {
                       print("Google Login Tapped!");
                     },
                   ),
-                  SizedBox(height: 15),
+                  const SizedBox(height: 15),
 
                   AuthButton(
                     iconPath: 'assets/images/Apple.png',
@@ -67,7 +73,7 @@ class FirstScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: 40,)
+              const SizedBox(height: 40),
             ],
           ),
         ),
