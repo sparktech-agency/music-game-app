@@ -38,6 +38,9 @@ class ProfileRemoteSource extends BaseProvider {
         headers: {'Authorization': '$accessToken'},
       );
 
+      print(response.body);
+      print(response.body.runtimeType);
+
       if (response.isOk && response.body != null) {
         final updatedUser = UpdateUserResponseModel.fromJson(response.body);
 
@@ -71,7 +74,7 @@ class ProfileRemoteSource extends BaseProvider {
         request.toJson(),
 
         headers: {
-          'Authorization': 'Bearer $accessToken',
+          'Authorization': '$accessToken',
           'Content-Type': 'application/json',
         },
       );
