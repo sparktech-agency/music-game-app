@@ -65,13 +65,15 @@ class ProfileRemoteSource extends BaseProvider {
     try {
       final accessToken = _authLocalSource.getAccessToken();
 
+      print("ACCESS TOKEN => $accessToken");
+
       final response = await post(
         '/auth/change-password',
 
         request.toJson(),
 
         headers: {
-          'Authorization': 'Bearer $accessToken',
+          'Authorization': '$accessToken',
           'Content-Type': 'application/json',
         },
       );
