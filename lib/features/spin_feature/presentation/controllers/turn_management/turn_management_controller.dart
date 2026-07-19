@@ -4,21 +4,25 @@ import 'package:music_game_app/features/spin_feature/domain/entities/get_song_en
 import 'package:music_game_app/routes/app_routes.dart';
 
 class TurnManagementController extends GetxController {
-  late final CentralSessionController _sessionController;
+ late final CentralSessionController _sessionController;
 
-
-
+  
   var roundId = "".obs;
   var currentRound = 1.obs;
-  var currentTeamIndex = 0.obs;
-  var teamScores = <String, int>{}.obs;
+  
+  
+  var currentSequenceIndex = 0.obs;
 
-
+  
+  var teamScores = <String, int>{}.obs; 
   var teamElapsedTimes = <String, int>{}.obs;
 
-  var remainingSingers = <Map<String, String>>[].obs;
+  
+  var roundSequence = <Map<String, String>>[].obs;
+
   var activeSingerName = "".obs;
   var activeSingerTeam = "".obs;
+  var activeOpponentJudge = "".obs;
 
   var selectedSong = Rxn<GetSongEntity>();
 
@@ -29,7 +33,7 @@ class TurnManagementController extends GetxController {
     initializeGameSession();
   }
 
-
+  
   void initializeGameSession() {
     teamScores.clear();
     teamElapsedTimes.clear();
@@ -38,91 +42,103 @@ class TurnManagementController extends GetxController {
       teamElapsedTimes[name] = 0;
     }
     currentRound.value = 1;
-    currentTeamIndex.value = 0;
-    prepareOpponentSingersForTurn();
+    currentSequenceIndex.value = 0;
+
+    
+    generateRoundSequence();
   }
 
-  String get currentGuessingTeamName {
-    if (_sessionController.teamNames.isNotEmpty &&
-        currentTeamIndex.value < _sessionController.teamNames.length) {
-      return _sessionController.teamNames[currentTeamIndex.value];
-    }
-    return "";
-  }
+  
+  
+  void generateRoundSequence() {
+    roundSequence.clear();
+    int maxPlayersPerTeam = _sessionController.numberOfSingers.value; 
 
-  void prepareOpponentSingersForTurn() {
-    remainingSingers.clear();
-    String guessingTeam = currentGuessingTeamName;
-
-    _sessionController.teamPlayersMap.forEach((teamName, players) {
-      if (teamName != guessingTeam) {
-        for (var player in players) {
-          remainingSingers.add({
-            "name": player,
-            "team": teamName,
+    for (int playerIdx = 0; playerIdx < maxPlayersPerTeam; playerIdx++) {
+      for (int teamIdx = 0; teamIdx < _sessionController.teamNames.length; teamIdx++) {
+        String teamName = _sessionController.teamNames[teamIdx];
+        List<String> players = _sessionController.teamPlayersMap[teamName] ?? [];
+        
+        if (playerIdx < players.length) {
+          roundSequence.add({
+            "playerName": players[playerIdx],
+            "teamName": teamName,
           });
         }
       }
-    });
-
-    _setupNextSinger();
-  }
-
-  bool _setupNextSinger() {
-    if (remainingSingers.isNotEmpty) {
-      final nextSinger = remainingSingers.first;
-      activeSingerName.value = nextSinger["name"] ?? "";
-      activeSingerTeam.value = nextSinger["team"] ?? "";
-      return true;
     }
-    return false;
+
+    _setupActiveTurnData();
   }
 
+  
+  void _setupActiveTurnData() {
+    if (roundSequence.isNotEmpty && currentSequenceIndex.value < roundSequence.length) {
+      final activeSlot = roundSequence[currentSequenceIndex.value];
+      activeSingerName.value = activeSlot["playerName"] ?? "";
+      activeSingerTeam.value = activeSlot["teamName"] ?? "";
 
+    
+      activeOpponentJudge.value = _getOpponentJudge(activeSingerTeam.value);
+    }
+  }
+
+  String _getOpponentJudge(String singerTeamName) {
+    for (var team in _sessionController.teamNames) {
+      if (team != singerTeamName) {
+        List<String> players = _sessionController.teamPlayersMap[team] ?? [];
+        if (players.isNotEmpty) {
+          return players[0]; 
+        }
+      }
+    }
+    return "Opponent";
+  }
+
+  
+  String get currentGuessingTeamName => activeSingerTeam.value;
+
+ 
   void addPointToGuessingTeam(int elapsedSeconds) {
     String guessingTeamName = currentGuessingTeamName;
+    
+    
     if (teamScores.containsKey(guessingTeamName)) {
       teamScores[guessingTeamName] = (teamScores[guessingTeamName] ?? 0) + 1;
     }
 
-
+    
     if (teamElapsedTimes.containsKey(guessingTeamName)) {
       teamElapsedTimes[guessingTeamName] = (teamElapsedTimes[guessingTeamName] ?? 0) + elapsedSeconds;
     }
   }
 
+  
   void completeCurrentSingerPerformance() {
-    if (remainingSingers.isNotEmpty) {
-      remainingSingers.removeAt(0);
-    }
-
-    if (_setupNextSinger()) {
+    if (currentSequenceIndex.value < roundSequence.length - 1) {
+  
+      currentSequenceIndex.value++;
       selectedSong.value = null;
+      _setupActiveTurnData();
       Get.offAllNamed(AppRoutes.spinFrontPage);
     } else {
-      _advanceToNextGuessingTeam();
+      
+      _advanceToNextRound();
     }
   }
 
-  void _advanceToNextGuessingTeam() {
-    if (currentTeamIndex.value < _sessionController.teamNames.length - 1) {
-      currentTeamIndex.value++;
-      _resetForNextTurn();
+  void _advanceToNextRound() {
+    if (currentRound.value < _sessionController.numberOfRounds.value) {
+      currentRound.value++;
+      currentSequenceIndex.value = 0; 
+      selectedSong.value = null;
+      
+    
+      generateRoundSequence();
+      Get.offAllNamed(AppRoutes.spinFrontPage);
     } else {
-      if (currentRound.value < _sessionController.numberOfRounds.value) {
-        currentRound.value++;
-        currentTeamIndex.value = 0;
-        _resetForNextTurn();
-      } else {
-        Get.offAllNamed(AppRoutes.resultPage);
-      }
+     
+      Get.offAllNamed(AppRoutes.resultPage);
     }
-  }
-
-  void _resetForNextTurn() {
-    selectedSong.value = null;
-    remainingSingers.clear();
-    prepareOpponentSingersForTurn();
-    Get.offAllNamed(AppRoutes.spinFrontPage);
   }
 }

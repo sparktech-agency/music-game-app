@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:music_game_app/features/authentication/presentation/controllers/phone_controller.dart';
 
-
 class PhoneInputPage extends GetView<PhoneController> {
   const PhoneInputPage({super.key});
 
@@ -43,15 +42,7 @@ class PhoneInputPage extends GetView<PhoneController> {
                         ),
                       ),
                       SizedBox(height: 40),
-
-
-                      Row(
-                        children: [
-                          _CountryCodePicker(),
-                          SizedBox(width: 15),
-                          Expanded(child: _PhoneField()),
-                        ],
-                      ),
+                      _PhoneField(),
                     ],
                   ),
                 ),
@@ -61,44 +52,6 @@ class PhoneInputPage extends GetView<PhoneController> {
           ),
         ),
       ),
-    );
-  }
-}
-
-
-
-class _CountryCodePicker extends StatelessWidget {
-  const _CountryCodePicker();
-
-  @override
-  Widget build(BuildContext context) {
-   
-    final controller = Get.find<PhoneController>();
-
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12),
-      decoration: BoxDecoration(
-        color: const Color(0xFF101625),
-        borderRadius: BorderRadius.circular(25),
-        border: Border.all(color: const Color(0xFF1E2746)),
-      ),
-      child: Obx(() => DropdownButtonHideUnderline(
-        child: DropdownButton<String>(
-          value: controller.selectedCountryCode.value,
-          dropdownColor: const Color(0xFF101625),
-          icon: const Icon(Icons.keyboard_arrow_down, color: Colors.grey),
-          style: const TextStyle(color: Colors.white, fontSize: 16),
-          items: <String>['+1', '+880', '+91', '+44'].map((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Text(value),
-            );
-          }).toList(),
-          onChanged: (newValue) {
-            controller.selectedCountryCode.value = newValue!;
-          },
-        ),
-      )),
     );
   }
 }
