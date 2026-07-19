@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:music_game_app/core/common_widgets/custom_gradient_button.dart';
-import 'package:music_game_app/features/authentication/presentation/widgets/auth_button.dart';
 import 'package:music_game_app/core/constants/app_constants.dart';
 import 'package:music_game_app/routes/app_routes.dart';
 
@@ -28,10 +27,8 @@ class FirstScreen extends StatelessWidget {
                   height: 80,
                   clipBehavior: Clip.antiAlias,
 
-                  placeholderBuilder: (BuildContext context) => const SizedBox(
-                    width: 80,
-                    height: 80,
-                  ),
+                  placeholderBuilder: (BuildContext context) =>
+                      const SizedBox(width: 80, height: 80),
                 ),
               ),
 
@@ -55,25 +52,10 @@ class FirstScreen extends StatelessWidget {
 
                   const SizedBox(height: 15),
 
-                  AuthButton(
-                    iconPath: 'assets/images/Google.png',
-                    label: 'Continue with Google',
-                    onTap: () {
-                      print("Google Login Tapped!");
-                    },
-                  ),
-                  const SizedBox(height: 15),
-
-                  AuthButton(
-                    iconPath: 'assets/images/Apple.png',
-                    label: 'Continue with Apple',
-                    onTap: () {
-                      print("Apple Login Tapped!");
-                    },
-                  ),
+                  //AuthButton Removed[Google and Apple Login]
                 ],
               ),
-              const SizedBox(height: 40),
+              const Spacer()
             ],
           ),
         ),
