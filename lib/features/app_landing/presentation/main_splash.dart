@@ -67,7 +67,7 @@ class _MainSplashState extends State<MainSplash> {
                   child: _ProgressBar(
                     onComplete: () {
                       if (mounted) {
-                        Get.offNamed(AppRoutes.afterSplash);
+                        Get.offNamed(AppRoutes.roundSelection);
                       }
                     },
                   ),

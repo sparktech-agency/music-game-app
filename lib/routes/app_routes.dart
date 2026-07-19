@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:music_game_app/features/app_landing/presentation/after_splash.dart';
 import 'package:music_game_app/features/app_landing/presentation/app_landing.dart';
 import 'package:music_game_app/features/app_landing/presentation/bindings/app_landing_binding.dart';
 import 'package:music_game_app/features/app_landing/presentation/lets_play_screen.dart';
@@ -71,7 +70,6 @@ class AppRoutes {
   static const String letsSingScreen = "/letsSingScreen";
   static const String letsPlayScreen = "/letsPlayScreen";
   static const String mainSplash = "/mainSplash";
-  static const String afterSplash = "/afterSplash";
   static const String roundSelection = "/roundSelection";
   static const String teamNumber = "/teamNumber";
   static const String singerNumber = "/singerNumber";
@@ -182,7 +180,7 @@ List<GetPage> routes = [
   GetPage(name: AppRoutes.letsSingScreen, page: () => const LetsSingScreen()),
   GetPage(name: AppRoutes.letsPlayScreen, page: () => const LetsPlayScreen()),
   GetPage(name: AppRoutes.mainSplash, page: () => const MainSplash()),
-  GetPage(name: AppRoutes.afterSplash, page: () => const AfterSplash()),
+ 
 
   // ==========================================
   // (Session Setup Flow)

@@ -8,7 +8,10 @@ class PhoneController extends GetxController {
 
   void verifyPhone() {
     String phoneNumber = selectedCountryCode.value + phoneController.text;
+
     if (phoneController.text.isNotEmpty) {
+      print(phoneNumber);
+      
       Get.toNamed(AppRoutes.verifyPhonePage);
 
     } else {
