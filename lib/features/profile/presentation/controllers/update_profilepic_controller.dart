@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:music_game_app/features/authentication/data/sources/auth_local_source.dart';
@@ -32,13 +33,35 @@ class UpdateProfilePicController extends GetxController {
   }
 
   Future<void> pickImage(ImageSource source) async {
-    try {
-      final XFile? image = await _picker.pickImage(
-        source: source,
-        imageQuality: 70,
-      );
+try {
+      
+      final XFile? image = await _picker.pickImage(source: source);
+      
       if (image != null) {
-        selectedImage.value = File(image.path);
+        isLoading.value = true;
+        
+        
+        final String targetPath = image.path.replaceAll(
+          RegExp(r'\.(png|jpg|jpeg|webp)$'), 
+          '_compressed_${DateTime.now().millisecondsSinceEpoch}.jpg'
+        );
+
+        
+        final XFile? compressedXFile = await FlutterImageCompress.compressAndGetFile(
+          image.path,
+          targetPath,
+          quality: 80, 
+          format: CompressFormat.jpeg,
+          minWidth: 1000,
+          minHeight: 1000,
+        );
+
+        if (compressedXFile != null) {
+          selectedImage.value = File(compressedXFile.path);
+        } else {
+          
+          selectedImage.value = File(image.path);
+        }
       }
     } catch (e) {
       Get.snackbar(
@@ -48,6 +71,8 @@ class UpdateProfilePicController extends GetxController {
         backgroundColor: Colors.redAccent,
         colorText: Colors.white,
       );
+    } finally {
+      isLoading.value = false;
     }
   }
 
@@ -82,13 +107,6 @@ class UpdateProfilePicController extends GetxController {
 
       Get.back();
 
-      Get.snackbar(
-        'Success',
-        'Profile picture updated successfully!',
-        snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.green,
-        colorText: Colors.white,
-      );
     } catch (e) {
       Get.snackbar(
         'Error',
