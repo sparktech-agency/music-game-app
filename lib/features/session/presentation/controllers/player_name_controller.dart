@@ -63,7 +63,7 @@ class PlayerNameController extends GetxController {
             .startSessionAndFirstRound(sessionId);
 
         if (isStartedAndRoundCreated) {
-          Get.toNamed(AppRoutes.spinFrontPage);
+          Get.toNamed(AppRoutes.whichTeam);
         }
       }
     }

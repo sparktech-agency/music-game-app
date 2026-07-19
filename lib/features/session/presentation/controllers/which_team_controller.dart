@@ -32,7 +32,7 @@ class WhichTeamController extends GetxController {
       return;
     }
 
-    print("Selected Team: ${sessionController.whichTeam.value}");
-    Get.toNamed(AppRoutes.playerName);
+    
+    Get.toNamed(AppRoutes.spinFrontPage);
   }
 }

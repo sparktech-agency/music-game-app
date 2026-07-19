@@ -28,7 +28,6 @@ class RoundSelectionController extends GetxController {
 
   void proceedToNextPage() {
 
-    print("Selected Rounds: ${numberOfRound.value}");
-    Get.toNamed(AppRoutes.teamNumber);
+    Get.toNamed(AppRoutes.singerNumber);
   }
 }

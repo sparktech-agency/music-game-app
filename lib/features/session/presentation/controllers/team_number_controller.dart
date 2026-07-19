@@ -16,7 +16,7 @@ class TeamNumberController extends GetxController {
 
   // Proceed to next page
   void proceedToNextPage() {
-    print("Selected Teams: ${numberOfTeam.value}");
-    Get.toNamed(AppRoutes.singerNumber);
+    
+    Get.toNamed(AppRoutes.roundSelection);
   }
 }

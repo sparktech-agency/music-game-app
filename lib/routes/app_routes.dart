@@ -185,16 +185,23 @@ List<GetPage> routes = [
   // ==========================================
   // (Session Setup Flow)
   // ==========================================
+
+  GetPage(
+    name: AppRoutes.teamNumber, 
+    page: () => const TeamNumber(), 
+    binding: SessionBindings()
+    ),
+
   GetPage(
     name: AppRoutes.roundSelection,
     page: () => const RoundSelection(),
     binding: SessionBindings(),
   ),
-  GetPage(name: AppRoutes.teamNumber, page: () => const TeamNumber()),
+
   GetPage(name: AppRoutes.singerNumber, page: () => const SingerNumber()),
   GetPage(name: AppRoutes.teamName, page: () => const TeamName()),
-  GetPage(name: AppRoutes.whichTeam, page: () => const WhichTeam()),
   GetPage(name: AppRoutes.playerName, page: () => const PlayerName()),
+  GetPage(name: AppRoutes.whichTeam, page: () => const WhichTeam()),
 
   // ==========================================
   // (Spin Feature Flow)

@@ -53,8 +53,8 @@ class TeamNameController extends GetxController {
     // Save if all good
     centralController.teamNames.value = names;
 
-    print("Saved Teams: ${centralController.teamNames}");
-    Get.toNamed(AppRoutes.whichTeam);
+    
+    Get.toNamed(AppRoutes.playerName);
   }
 
 
