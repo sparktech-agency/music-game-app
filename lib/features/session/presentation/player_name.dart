@@ -17,7 +17,6 @@ class PlayerName extends GetView<PlayerNameController> {
             children: [
               const SizedBox(height: 30),
 
-
               Expanded(
                 child: Obx(
                   () => ListView.separated(
@@ -64,14 +63,28 @@ class PlayerName extends GetView<PlayerNameController> {
       ),
       centerTitle: true,
       title: Obx(
-        () => Text(
-          'Please enter the player\nnicknames for [${controller.currentTeamName}]',
-          textAlign: TextAlign.center,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
+        () => Text.rich(
+          TextSpan(
+            children: [
+              const TextSpan(
+                text: 'Please enter the player\nnicknames for ',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 22,
+                  fontWeight: FontWeight.normal,
+                ),
+              ),
+              TextSpan(
+                text: controller.currentTeamName,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
+            ],
           ),
+          textAlign: TextAlign.center,
         ),
       ),
       actions: [
@@ -82,8 +95,6 @@ class PlayerName extends GetView<PlayerNameController> {
       ],
     );
   }
-
-
 
   Widget _buildNicknameTextField(int index, PlayerNameController controller) {
     return TextField(
