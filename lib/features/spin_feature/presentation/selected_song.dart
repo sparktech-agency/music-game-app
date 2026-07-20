@@ -7,7 +7,10 @@ class SelectedSong extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     final SelectedSongController controller = Get.find<SelectedSongController>();
+
+
 
     return Scaffold(
       body: SizedBox(
@@ -20,9 +23,7 @@ class SelectedSong extends StatelessWidget {
               ),
             ),
             SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                child: Column(
+              child: Column(
                   children: [
                     Align(
                       alignment: Alignment.topRight,
@@ -38,6 +39,10 @@ class SelectedSong extends StatelessWidget {
                         ),
                       ),
                     ),
+
+
+                    _buildOpponentSection(),
+
                     const SizedBox(height: 30),
                     _buildSongCard(controller),
                     const Spacer(),
@@ -45,7 +50,7 @@ class SelectedSong extends StatelessWidget {
                     const SizedBox(height: 30),
                   ],
                 ),
-              ),
+             
             ),
           ],
         ),
@@ -53,12 +58,110 @@ class SelectedSong extends StatelessWidget {
     );
   }
 
+
+
+
+Widget _buildOpponentSection() {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(vertical: 12),
+      decoration: BoxDecoration(
+        color: const Color(0xFF0090FF).withValues(alpha: 0.15),
+        border: Border(
+          top: BorderSide(
+            color: Colors.white.withValues(alpha: 0.8),
+            width: 2,
+          ),
+          bottom: BorderSide(
+            color: Colors.white.withValues(alpha: 0.8),
+            width: 2,
+          ),
+        ),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Text(
+            "Show to opponent",
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 15,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Stack(
+            alignment: Alignment.center,
+            clipBehavior: Clip.none,
+            children: [
+              
+              Container(
+                width: 42,
+                height: 42,
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient: RadialGradient(
+                    colors: [
+                      Color(0xFF3BA2FF),
+                      Color(0xFF1B68FF),
+                    ],
+                  ),
+                ),
+                child: const Center(
+                  child: Text(
+                    "B",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+             
+              Positioned(
+                top: 20,
+                right: -6,
+                child: Container(
+                  padding: const EdgeInsets.all(2),
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Icon(
+                    Icons.pets,
+                    size: 12,
+                    color: Colors.grey,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 6),
+          const Text(
+            "marsbrunny",
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+
+
+
+
+
   Widget _buildSongCard(SelectedSongController controller) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Container(
         width: double.infinity,
-        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 0),
         decoration: BoxDecoration(
           color: Colors.white.withValues(alpha: 0.05),
           borderRadius: BorderRadius.circular(20),
@@ -72,7 +175,7 @@ class SelectedSong extends StatelessWidget {
             const Text(
               "Song title & artist",
               style: TextStyle(
-                color: Color(0xFF53EBF3),
+                color: Colors.white,
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
