@@ -4,13 +4,32 @@ import 'package:get/get.dart';
 import 'package:music_game_app/features/spin_feature/presentation/controllers/spin_wheel_controller.dart';
 import 'package:music_game_app/routes/app_routes.dart';
 
+
+
+
 class CategoryItem {
-  final String label;
+  final String apiValue;
+  final String displayName;
   final Color color;
   final bool isBlank;
 
-  const CategoryItem(this.label, this.color, {this.isBlank = false});
+  const CategoryItem(
+    this.apiValue,
+    this.displayName,
+    this.color, {
+    this.isBlank = false,
+  });
 }
+
+
+
+
+
+
+
+
+
+
 
 class SpinWheelPage extends StatefulWidget {
   const SpinWheelPage({super.key});
@@ -36,17 +55,14 @@ class _SpinWheelPageState extends State<SpinWheelPage>
   final SpinWheelController controller = Get.find<SpinWheelController>();
 
   // Compile-time constant list for memory efficiency
-  static const List<CategoryItem> _items = [
-    CategoryItem("spin", _defaultCyan, isBlank: true),
-    CategoryItem("90s_hits", Color(0xFFFFB300)),
-    CategoryItem("80s_hits", Color(0xFF2196F3)),
-    CategoryItem("rock_ballads", Color(0xFF455A64)),
-    CategoryItem("2010s_hits", Color(0xFFE53935)),
-    CategoryItem("rock_ballads", Color(0xFF3F51B5)),
-    CategoryItem("90s_hits", Color(0xFF4CAF50)),
-    CategoryItem("2010s_hits", Color(0xFF1A237E)),
-    CategoryItem("80s_hits", Color(0xFF90A4AE)),
-  ];
+static const List<CategoryItem> _items = [
+  CategoryItem("", "Spin", _defaultCyan, isBlank: true),
+
+  CategoryItem("90s_hits", "1990's Hits", Color(0xFFFFB300)),
+  CategoryItem("80s_hits", "1980's Hits", Color(0xFF2196F3)),
+  CategoryItem("rock_ballads", "Rock Ballads", Color(0xFF455A64)),
+  CategoryItem("2010s_hits", "2010's Hits", Color(0xFFE53935)),
+];
 
   @override
   void initState() {
@@ -95,7 +111,7 @@ class _SpinWheelPageState extends State<SpinWheelPage>
         _resultColor = _items[randomIndex].color;
         _resultColorDark = _darken(_items[randomIndex].color, 0.22);
       });
-      controller.updateResult(_items[randomIndex].label);
+      controller.updateResult(_items[randomIndex].displayName);
     });
   }
 
@@ -403,7 +419,7 @@ class WheelPainter extends CustomPainter {
 
       final textPainter = TextPainter(
         text: TextSpan(
-          text: item.label,
+          text: item.displayName,
           style: const TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.w900,

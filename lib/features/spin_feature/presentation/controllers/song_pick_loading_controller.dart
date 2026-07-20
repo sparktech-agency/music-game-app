@@ -30,7 +30,23 @@ class SongPickLoadingController extends GetxController {
         throw Exception("Arguments are missing.");
       }
 
-      final String category = Get.arguments as String;
+      final String displayCategory = Get.arguments as String;
+      String category = displayCategory;
+
+      switch (displayCategory) {
+        case "1980's Hits":
+          category = "80s_hits";
+          break;
+        case "1990's Hits":
+          category = "90s_hits";
+          break;
+        case "Rock Ballads":
+          category = "rock_ballads";
+          break;
+        case "2010's Hits":
+          category = "2010s_hits";
+          break;
+      }
       final String roundId = _turnController.roundId.value;
 
       // API call
@@ -42,7 +58,6 @@ class SongPickLoadingController extends GetxController {
 
       // Minimum delay
       final minimumDelay = Future.delayed(const Duration(seconds: 2));
-
 
       final results = await Future.wait([apiCall, minimumDelay]);
       final songResult = results[0];
