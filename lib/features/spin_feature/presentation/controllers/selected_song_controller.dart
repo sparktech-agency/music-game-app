@@ -64,11 +64,11 @@ class SelectedSongController extends GetxController {
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: Text(
-                  "Use headphones so that your team will not hear the song you will be singing.",
+                  "Time to get your headphones on",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 16,
+                    fontSize: 18,
                     height: 1.4,
                   ),
                 ),

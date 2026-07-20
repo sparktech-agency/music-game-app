@@ -17,6 +17,7 @@ class LyricsPage extends StatelessWidget {
             child: Column(
               children: [
                 _buildAppBar(controller),
+                const SizedBox(height: 10,),
                 _buildSongHeader(controller),
                 _buildLyricsList(controller),
                 _buildStartButton(controller),
@@ -36,19 +37,22 @@ class LyricsPage extends StatelessWidget {
       elevation: 0,
       leading: IconButton(
         icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
+
+        //exit game logic should be implemented
         onPressed: () => Get.back(),
+
       ),
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Obx(() => Text(
             "${controller.teamName.value} | ${controller.roundNumber.value}",
-            style: const TextStyle(color: Colors.white70, fontSize: 12),
+            style: const TextStyle(color: Colors.white70, fontSize: 16, fontWeight: FontWeight.bold),
           )),
           Row(
             children: [
-              const Icon(Icons.mic, color: Colors.blueAccent, size: 14),
-              const SizedBox(width: 4),
+              const Icon(Icons.mic, color: Colors.blueAccent, size: 16),
+              const SizedBox(width: 2),
               Obx(() => Text(
                 "${controller.singerName.value} will sing",
                 style: const TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.bold),

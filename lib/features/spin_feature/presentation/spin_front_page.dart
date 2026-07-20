@@ -43,12 +43,13 @@ class SpinFrontPage extends StatelessWidget {
 
                   Obx(
                     () => Text(
-                      "Team ${turnController.currentGuessingTeamName}, Your\nCategory Awaits!",
+                      "Team ${turnController.currentGuessingTeamName},Your\nCategory Awaits!",
                       textAlign: TextAlign.center,
                       style: const TextStyle(
                         color: Colors.white,
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
+                        fontSize: 32,
+                        fontWeight: FontWeight.w900,
+                        height: 1.2,
                       ),
                     ),
                   ),
@@ -56,16 +57,15 @@ class SpinFrontPage extends StatelessWidget {
 
                   const SizedBox(height: 10),
 
-                  Obx(
-                    () => Text(
-                      "It's ${turnController.activeSingerTeam.value} — ${turnController.activeSingerName.value}'s turn to sing!",
+                  Text(
+                      "It's your turn to sing!",
                       textAlign: TextAlign.center,
                       style: const TextStyle(
                         color: Color(0xFF9EADDC),
-                        fontSize: 16,
+                        fontSize: 18,
                       ),
                     ),
-                  ),
+                  
 
                   const SizedBox(height: 20),
 
@@ -161,7 +161,7 @@ class SpinFrontPage extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: 10),
+        const SizedBox(height: 5),
         Text(
           singerName,
           style: TextStyle(

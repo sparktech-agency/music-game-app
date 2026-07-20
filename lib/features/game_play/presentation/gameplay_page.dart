@@ -15,6 +15,7 @@ class GameplayPage extends StatelessWidget {
         child: Column(
           children: [
             _buildHeader(controller),
+            const SizedBox(height: 10,),
             _buildSongStrip(controller),
             _buildScoreAndSmallTimer(controller),
             _buildMainAnimatedTimer(controller),
@@ -35,6 +36,8 @@ class GameplayPage extends StatelessWidget {
         children: [
           IconButton(
             icon: const Icon(Icons.arrow_back_ios, color: Colors.white, size: 20),
+
+            //exit popup should be implemented
             onPressed: () => Get.back(),
           ),
           const SizedBox(width: 10),
@@ -45,11 +48,11 @@ class GameplayPage extends StatelessWidget {
               children: [
                 Obx(() => Text(
                   controller.teamInfo.value,
-                  style: const TextStyle(color: Colors.white70, fontSize: 12, fontWeight: FontWeight.bold),
+                  style: const TextStyle(color: Colors.white70, fontSize: 14, fontWeight: FontWeight.bold),
                 )),
                 Row(
                   children: [
-                    const Icon(Icons.mic, color: Colors.blueAccent, size: 14),
+                    const Icon(Icons.mic, color: Colors.blueAccent, size: 16),
                     const SizedBox(width: 4),
                     Obx(() => Text(
                       controller.singerStatus.value,
