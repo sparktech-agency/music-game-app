@@ -175,7 +175,7 @@ class GameplayController extends GetxController {
               onTap: () {
                 _audioPlayer.stop();
                 Get.back();
-                _turnController.addPointToGuessingTeam(_secondsElapsed);
+                _turnController.addElapsedTime(_secondsElapsed);
                 _turnController.completeCurrentSingerPerformance();
               },
               child: Container(
@@ -209,6 +209,7 @@ class GameplayController extends GetxController {
 
   void _onTimeOut() {
     _audioPlayer.stop();
+    _turnController.addElapsedTime(60); 
     _turnController.completeCurrentSingerPerformance();
   }
 
@@ -264,6 +265,7 @@ class GameplayController extends GetxController {
                   _audioPlayer.stop();
                   Get.back();
                   _stopAllTimers();
+                  _turnController.addElapsedTime(60); 
                   _turnController.completeCurrentSingerPerformance();
                 },
                 style: ElevatedButton.styleFrom(

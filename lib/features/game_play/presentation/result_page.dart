@@ -152,8 +152,8 @@ class ResultPage extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            _buildStatBox(guesses, "total guessed"),
-            const SizedBox(width: 15),
+            //_buildStatBox(guesses, "total guessed"),
+            //const SizedBox(width: 15),
             _buildStatBox(time, "total time"),
           ],
         ),

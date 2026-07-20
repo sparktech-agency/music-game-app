@@ -41,77 +41,70 @@ class ResultPageController extends GetxController {
     _calculateWinnerAndRankings();
   }
 
-  void _calculateWinnerAndRankings() {
-    final scores = _turnController.teamScores;
-    final centralSessionController = Get.find<CentralSessionController>();
-    final int totalRounds = centralSessionController.numberOfRounds.value;
+  
 
-    if (scores.isEmpty) {
-      winnerTeamName.value = "No Game Played";
-      return;
-    }
+void _calculateWinnerAndRankings() {
+  final scores = _turnController.teamScores; 
+  
+  if (scores.isEmpty) {
+    winnerTeamName.value = "No Game Played";
+    return;
+  }
 
+  List<TeamResultModel> tempResults = [];
 
-    List<TeamResultModel> tempResults = [];
+  scores.forEach((teamName, _) {
+    final int totalSeconds = _turnController.teamElapsedTimes[teamName] ?? 0;
+    final String formatted = _formatElapsedTime(totalSeconds);
 
-    scores.forEach((teamName, score) {
-      final List<String> players = centralSessionController.teamPlayersMap[teamName] ?? [];
-      final int totalSongsOffered = players.length * totalRounds;
-      final int totalSeconds = _turnController.teamElapsedTimes[teamName] ?? 0;
+    tempResults.add(
+      TeamResultModel(
+        teamName: teamName,
+        score: 0, 
+        scoreRatio: formatted,
+        totalSeconds: totalSeconds,
+        formattedTime: formatted,
+      ),
+    );
+  });
 
-      tempResults.add(
-        TeamResultModel(
-          teamName: teamName,
-          score: score,
-          scoreRatio: "$score/$totalSongsOffered",
-          totalSeconds: totalSeconds,
-          formattedTime: _formatElapsedTime(totalSeconds),
-        ),
-      );
-    });
+ 
+  tempResults.sort((a, b) => a.totalSeconds.compareTo(b.totalSeconds));
 
-
-    tempResults.sort((a, b) {
-      if (b.score != a.score) {
-        return b.score.compareTo(a.score);
-      } else {
-        return a.totalSeconds.compareTo(b.totalSeconds);
-      }
-    });
+  rankedTeams.assignAll(tempResults);
 
 
-    rankedTeams.assignAll(tempResults);
+  if (tempResults.length > 1) {
+    final lowestTime = tempResults[0].totalSeconds;
 
+  
+    final tieTeams = tempResults.where((team) => team.totalSeconds == lowestTime).toList();
 
-    if (tempResults.length > 1) {
-      final highestScore = tempResults[0].score;
-
-
-      final tieTeams = tempResults.where((team) => team.score == highestScore).toList();
-
-      if (tieTeams.length > 1) {
-
-        isDraw.value = true;
-        winnerTeamName.value = "Draw!";
-        winnerScoreText.value = "$highestScore";
-        totalTimeText.value = "N/A";
-      } else {
-
-        isDraw.value = false;
-        final winner = tempResults[0];
-        winnerTeamName.value = winner.teamName;
-        winnerScoreText.value = winner.scoreRatio;
-        totalTimeText.value = winner.formattedTime;
-      }
-    } else if (tempResults.length == 1) {
-
+    if (tieTeams.length > 1) {
+      isDraw.value = true;
+      winnerTeamName.value = "Draw!";
+      winnerScoreText.value = "N/A";
+      totalTimeText.value = tempResults[0].formattedTime;
+    } else {
       isDraw.value = false;
       final winner = tempResults[0];
       winnerTeamName.value = winner.teamName;
-      winnerScoreText.value = winner.scoreRatio;
+      winnerScoreText.value = "Best Time";
       totalTimeText.value = winner.formattedTime;
     }
+  } else if (tempResults.length == 1) {
+    isDraw.value = false;
+    final winner = tempResults[0];
+    winnerTeamName.value = winner.teamName;
+    winnerScoreText.value = "Best Time";
+    totalTimeText.value = winner.formattedTime;
   }
+}
+
+
+
+
+  
 
   String _formatElapsedTime(int totalSeconds) {
     if (totalSeconds <= 0) return "0s";
