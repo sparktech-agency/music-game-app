@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:music_game_app/features/spin_feature/presentation/controllers/selected_song_controller.dart';
 
@@ -7,10 +8,8 @@ class SelectedSong extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    final SelectedSongController controller = Get.find<SelectedSongController>();
-
-
+    final SelectedSongController controller =
+        Get.find<SelectedSongController>();
 
     return Scaffold(
       body: SizedBox(
@@ -24,33 +23,31 @@ class SelectedSong extends StatelessWidget {
             ),
             SafeArea(
               child: Column(
-                  children: [
-                    Align(
-                      alignment: Alignment.topRight,
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 5),
-                        child: IconButton(
-                          icon: const Icon(
-                            Icons.close,
-                            color: Colors.white,
-                            size: 28,
-                          ),
-                          onPressed: () => Get.back(),
+                children: [
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 5),
+                      child: IconButton(
+                        icon: const Icon(
+                          Icons.close,
+                          color: Colors.white,
+                          size: 28,
                         ),
+                        onPressed: () => Get.back(),
                       ),
                     ),
+                  ),
 
+                  _buildOpponentSection(controller),
 
-                    _buildOpponentSection(),
-
-                    const SizedBox(height: 30),
-                    _buildSongCard(controller),
-                    const Spacer(),
-                    _buildNextButton(controller),
-                    const SizedBox(height: 30),
-                  ],
-                ),
-             
+                  const SizedBox(height: 30),
+                  _buildSongCard(controller),
+                  const Spacer(),
+                  _buildNextButton(controller),
+                  const SizedBox(height: 30),
+                ],
+              ),
             ),
           ],
         ),
@@ -58,20 +55,14 @@ class SelectedSong extends StatelessWidget {
     );
   }
 
-
-
-
-Widget _buildOpponentSection() {
+  Widget _buildOpponentSection(SelectedSongController controller) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(vertical: 12),
       decoration: BoxDecoration(
         color: const Color(0xFF0090FF).withValues(alpha: 0.15),
         border: Border(
-          top: BorderSide(
-            color: Colors.white.withValues(alpha: 0.8),
-            width: 2,
-          ),
+          top: BorderSide(color: Colors.white.withValues(alpha: 0.8), width: 2),
           bottom: BorderSide(
             color: Colors.white.withValues(alpha: 0.8),
             width: 2,
@@ -90,71 +81,45 @@ Widget _buildOpponentSection() {
             ),
           ),
           const SizedBox(height: 8),
-          Stack(
-            alignment: Alignment.center,
-            clipBehavior: Clip.none,
-            children: [
-              
-              Container(
-                width: 42,
-                height: 42,
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  gradient: RadialGradient(
-                    colors: [
-                      Color(0xFF3BA2FF),
-                      Color(0xFF1B68FF),
-                    ],
-                  ),
-                ),
-                child: const Center(
-                  child: Text(
-                    "B",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+
+          Container(
+            width: 40,
+            height: 40,
+            decoration: const BoxDecoration(
+              shape: BoxShape.circle,
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [Color(0xFF42E8FF), Color(0xFF3B82F6)],
+              ),
+            ),
+            child: Center(
+              child: SvgPicture.asset(
+                'assets/images/logo_only.svg',
+                width: 22,
+                height: 22,
+                colorFilter: const ColorFilter.mode(
+                  Colors.white,
+                  BlendMode.srcIn,
                 ),
               ),
-             
-              Positioned(
-                top: 20,
-                right: -6,
-                child: Container(
-                  padding: const EdgeInsets.all(2),
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    shape: BoxShape.circle,
-                  ),
-                  child: const Icon(
-                    Icons.pets,
-                    size: 12,
-                    color: Colors.grey,
-                  ),
-                ),
-              ),
-            ],
+            ),
           ),
-          const SizedBox(height: 6),
-          const Text(
-            "marsbrunny",
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
+          const SizedBox(height: 2),
+          Obx(
+            () => Text(
+              controller.activeOpponent.value,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
         ],
       ),
     );
   }
-
-
-
-
-
 
   Widget _buildSongCard(SelectedSongController controller) {
     return Padding(
@@ -182,7 +147,6 @@ Widget _buildOpponentSection() {
             ),
             const SizedBox(height: 10),
 
-
             Obx(() {
               final String path = controller.albumArt.value;
               final bool isNetworkImage = path.startsWith('http');
@@ -199,22 +163,24 @@ Widget _buildOpponentSection() {
                       ? _buildPlaceholder()
                       : isNetworkImage
                       ? Image.network(
-                    path,
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) => _buildPlaceholder(),
-                  )
+                          path,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) =>
+                              _buildPlaceholder(),
+                        )
                       : Image.asset(
-                    path,
-                    fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) => _buildPlaceholder(),
-                  ),
+                          path,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) =>
+                              _buildPlaceholder(),
+                        ),
                 ),
               );
             }),
 
             const SizedBox(height: 10),
             Obx(
-                  () => Text(
+              () => Text(
                 controller.songTitle.value,
                 textAlign: TextAlign.center,
                 style: const TextStyle(
@@ -226,7 +192,7 @@ Widget _buildOpponentSection() {
             ),
             const SizedBox(height: 8),
             Obx(
-                  () => Text(
+              () => Text(
                 controller.artistName.value,
                 style: TextStyle(
                   color: Colors.white.withValues(alpha: 0.9),
@@ -241,16 +207,11 @@ Widget _buildOpponentSection() {
     );
   }
 
-
   Widget _buildPlaceholder() {
     return Container(
       height: 180,
       color: Colors.black26,
-      child: const Icon(
-        Icons.music_note,
-        color: Colors.white,
-        size: 50,
-      ),
+      child: const Icon(Icons.music_note, color: Colors.white, size: 50),
     );
   }
 
@@ -264,10 +225,7 @@ Widget _buildOpponentSection() {
           height: 60,
           decoration: BoxDecoration(
             gradient: const LinearGradient(
-              colors: [
-                Color(0xFF54EAF2),
-                Color(0xFF3867FF),
-              ],
+              colors: [Color(0xFF54EAF2), Color(0xFF3867FF)],
               begin: Alignment.centerLeft,
               end: Alignment.centerRight,
             ),

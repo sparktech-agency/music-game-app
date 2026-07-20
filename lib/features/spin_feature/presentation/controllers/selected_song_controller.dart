@@ -9,6 +9,7 @@ class SelectedSongController extends GetxController {
   var songTitle = "Loading...".obs;
   var artistName = "".obs;
   var albumArt = "".obs;
+  var activeOpponent = "".obs;
 
   @override
   void onInit() {
@@ -20,6 +21,8 @@ class SelectedSongController extends GetxController {
   }
 
   void _loadSelectedSongData() {
+    activeOpponent.value = _turnController.activeOpponentJudge.value;
+
     final song = _turnController.selectedSong.value;
     if (song != null) {
       songTitle.value = song.title;
