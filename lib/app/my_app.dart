@@ -20,6 +20,7 @@ class MyApp extends StatelessWidget {
       defaultTransition: Transition.rightToLeft,
       theme: appTheme,
       initialRoute: AppRoutes.firstScreen,
+      //initialRoute: AppRoutes.connectMusicScreen,
       getPages: routes,
     );
   }

@@ -21,7 +21,8 @@ class _WelcomeSplashState extends State<WelcomeSplash> {
   void _navigateToNext() {
     Timer(const Duration(seconds: 10), () {
       if (mounted) {
-        Get.offNamed(AppRoutes.twoButtonPage);
+       // Get.offNamed(AppRoutes.twoButtonPage);
+        Get.offAllNamed(AppRoutes.connectMusicScreen);
       }
     });
   }

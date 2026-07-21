@@ -13,6 +13,7 @@ import 'package:music_game_app/features/authentication/presentation/registration
 import 'package:music_game_app/features/authentication/presentation/reset_password_page.dart';
 import 'package:music_game_app/features/authentication/presentation/verify_email_page.dart';
 import 'package:music_game_app/features/authentication/presentation/verify_phone_page.dart';
+import 'package:music_game_app/features/connect_music_app/presentation/connect_music_screen.dart';
 import 'package:music_game_app/features/game_play/presentation/gameplay_page.dart';
 import 'package:music_game_app/features/game_play/presentation/result_page.dart';
 import 'package:music_game_app/features/profile/presentation/account_settings_screen.dart';
@@ -53,6 +54,9 @@ class AppRoutes {
   static const String phoneInputScreen = "/phoneInputScreen";
   static const String setPassScreen = "/setPassScreen";
   static const String welcomeSplash = "/welcomeSplash";
+
+  static const String connectMusicScreen = "/connectMusicScreen";
+
   static const String twoButtonPage = "/twoButtonPage";
   static const String appLanding = "/appLanding";
   static const String profileScreen = "/profileScreen";
@@ -125,6 +129,10 @@ List<GetPage> routes = [
   ),
   GetPage(name: AppRoutes.setPassScreen, page: () => const ResetPasswordPage()),
   GetPage(name: AppRoutes.welcomeSplash, page: () => const WelcomeSplash()),
+
+
+  GetPage(name: AppRoutes.connectMusicScreen, page: () => const ConnectMusicScreen()),
+
   GetPage(name: AppRoutes.twoButtonPage, page: () => const TwoButtonPage()),
 
   GetPage(
