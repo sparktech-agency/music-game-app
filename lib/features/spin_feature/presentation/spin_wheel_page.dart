@@ -56,7 +56,7 @@ class _SpinWheelPageState extends State<SpinWheelPage>
 
   // Compile-time constant list for memory efficiency
 static const List<CategoryItem> _items = [
-  CategoryItem("", "Spin", _defaultCyan, isBlank: true),
+  CategoryItem("", "SPIN", _defaultCyan, isBlank: false),
 
   CategoryItem("90s_hits", "1990's Hits", Color(0xFFFFB300)),
   CategoryItem("80s_hits", "1980's Hits", Color(0xFF2196F3)),
@@ -199,7 +199,7 @@ static const List<CategoryItem> _items = [
                   const SizedBox(height: 6),
                   const Text(
                     "Let's start",
-                    style: TextStyle(color: Colors.white60, fontSize: 15),
+                    style: TextStyle(color: Colors.white, fontSize: 15),
                   ),
                   const SizedBox(height: 20),
 

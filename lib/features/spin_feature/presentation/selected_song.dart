@@ -58,7 +58,7 @@ class SelectedSong extends StatelessWidget {
   Widget _buildOpponentSection(SelectedSongController controller) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(vertical: 12),
+      padding: const EdgeInsets.symmetric(vertical: 32),
       decoration: BoxDecoration(
         color: const Color(0xFF0090FF).withValues(alpha: 0.15),
         border: Border(
@@ -76,7 +76,7 @@ class SelectedSong extends StatelessWidget {
             "Show to opponent",
             style: TextStyle(
               color: Colors.white,
-              fontSize: 15,
+              fontSize: 18,
               fontWeight: FontWeight.w600,
             ),
           ),
