@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:music_game_app/features/exit_game/presentation/exit_game_dialogue.dart';
 import 'package:music_game_app/features/spin_feature/presentation/controllers/lyrics_controller.dart';
 
 class LyricsPage extends StatelessWidget {
@@ -64,7 +65,12 @@ class LyricsPage extends StatelessWidget {
       actions: [
         IconButton(
           icon: const Icon(Icons.close, color: Colors.white, size: 30),
-          onPressed: () => Get.back(),
+          onPressed: () {
+            Get.dialog(
+              ExitGameDialogue(),
+              barrierDismissible: false     
+            );
+          },
         ),
       ],
     );

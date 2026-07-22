@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:music_game_app/features/exit_game/presentation/exit_game_dialogue.dart';
 import 'package:music_game_app/features/spin_feature/presentation/controllers/selected_song_controller.dart';
 
 class SelectedSong extends StatelessWidget {
@@ -34,7 +35,12 @@ class SelectedSong extends StatelessWidget {
                           color: Colors.white,
                           size: 28,
                         ),
-                        onPressed: () => Get.back(),
+                        onPressed: () {
+                          Get.dialog(
+                            ExitGameDialogue(),
+                            barrierDismissible: false,
+                          );
+                        },
                       ),
                     ),
                   ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:music_game_app/features/exit_game/presentation/exit_game_dialogue.dart';
 import 'package:music_game_app/features/spin_feature/presentation/controllers/spin_front_page_controller.dart';
 import 'package:music_game_app/features/spin_feature/presentation/controllers/turn_management/turn_management_controller.dart';
 
@@ -39,8 +40,6 @@ class SpinFrontPage extends StatelessWidget {
                 children: [
                   const SizedBox(height: 20),
 
-
-
                   Obx(
                     () => Text(
                       "Team ${turnController.currentGuessingTeamName},Your\nCategory Awaits!",
@@ -54,18 +53,16 @@ class SpinFrontPage extends StatelessWidget {
                     ),
                   ),
 
-
                   const SizedBox(height: 10),
 
                   Text(
-                      "It's your turn to sing!",
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        color: Color(0xFF9EADDC),
-                        fontSize: 18,
-                      ),
+                    "It's your turn to sing!",
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      color: Color(0xFF9EADDC),
+                      fontSize: 18,
                     ),
-                  
+                  ),
 
                   const SizedBox(height: 20),
 
@@ -114,7 +111,12 @@ class SpinFrontPage extends StatelessWidget {
     return Obx(() {
       if (controller.showCross.value) {
         return GestureDetector(
-          onTap: () => Get.back(),
+          onTap: () {
+            Get.dialog(
+              ExitGameDialogue(),
+              barrierDismissible: false     
+            );
+          },
           child: Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(

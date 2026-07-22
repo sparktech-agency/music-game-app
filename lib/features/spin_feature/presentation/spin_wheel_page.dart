@@ -1,11 +1,9 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:music_game_app/features/exit_game/presentation/exit_game_dialogue.dart';
 import 'package:music_game_app/features/spin_feature/presentation/controllers/spin_wheel_controller.dart';
 import 'package:music_game_app/routes/app_routes.dart';
-
-
-
 
 class CategoryItem {
   final String apiValue;
@@ -20,16 +18,6 @@ class CategoryItem {
     this.isBlank = false,
   });
 }
-
-
-
-
-
-
-
-
-
-
 
 class SpinWheelPage extends StatefulWidget {
   const SpinWheelPage({super.key});
@@ -55,14 +43,14 @@ class _SpinWheelPageState extends State<SpinWheelPage>
   final SpinWheelController controller = Get.find<SpinWheelController>();
 
   // Compile-time constant list for memory efficiency
-static const List<CategoryItem> _items = [
-  CategoryItem("", "SPIN", _defaultCyan, isBlank: false),
+  static const List<CategoryItem> _items = [
+    CategoryItem("", "SPIN", _defaultCyan, isBlank: false),
 
-  CategoryItem("90s_hits", "1990's Hits", Color(0xFFFFB300)),
-  CategoryItem("80s_hits", "1980's Hits", Color(0xFF2196F3)),
-  CategoryItem("rock_ballads", "Rock Ballads", Color(0xFF455A64)),
-  CategoryItem("2010s_hits", "2010's Hits", Color(0xFFE53935)),
-];
+    CategoryItem("90s_hits", "1990's Hits", Color(0xFFFFB300)),
+    CategoryItem("80s_hits", "1980's Hits", Color(0xFF2196F3)),
+    CategoryItem("rock_ballads", "Rock Ballads", Color(0xFF455A64)),
+    CategoryItem("2010s_hits", "2010's Hits", Color(0xFFE53935)),
+  ];
 
   @override
   void initState() {
@@ -101,9 +89,9 @@ static const List<CategoryItem> _items = [
 
     _targetRotation =
         _currentRotation +
-            spinOffset +
-            finalAngle -
-            (_currentRotation % (math.pi * 2));
+        spinOffset +
+        finalAngle -
+        (_currentRotation % (math.pi * 2));
 
     _controller.forward(from: 0).then((_) {
       setState(() {
@@ -180,7 +168,12 @@ static const List<CategoryItem> _items = [
                             color: Colors.white,
                             size: 24,
                           ),
-                          onPressed: () => Get.back(),
+                          onPressed: () {
+                            Get.dialog(
+                              ExitGameDialogue(),
+                              barrierDismissible: false,
+                            );
+                          },
                         ),
                       ],
                     ),
@@ -205,7 +198,7 @@ static const List<CategoryItem> _items = [
 
                   // ===== Top Result Button =====
                   Obx(
-                        () => AnimatedContainer(
+                    () => AnimatedContainer(
                       duration: const Duration(milliseconds: 500),
                       curve: Curves.easeInOut,
                       padding: const EdgeInsets.symmetric(
@@ -263,13 +256,17 @@ static const List<CategoryItem> _items = [
                             shape: BoxShape.circle,
                             boxShadow: [
                               BoxShadow(
-                                color: const Color(0xFF3B5CFF).withValues(alpha: 0.4),
+                                color: const Color(
+                                  0xFF3B5CFF,
+                                ).withValues(alpha: 0.4),
                                 blurRadius: 32,
                                 spreadRadius: 8,
                               ),
                             ],
                             border: Border.all(
-                              color: const Color(0xFF4A6FFF).withValues(alpha: 0.75),
+                              color: const Color(
+                                0xFF4A6FFF,
+                              ).withValues(alpha: 0.75),
                               width: 10,
                             ),
                           ),
@@ -283,12 +280,11 @@ static const List<CategoryItem> _items = [
                             painter: WheelPainter(_items),
                           ),
                           builder: (context, child) {
-                            final double angle = _currentRotation +
-                                (_animation.value * (_targetRotation - _currentRotation));
-                            return Transform.rotate(
-                              angle: angle,
-                              child: child,
-                            );
+                            final double angle =
+                                _currentRotation +
+                                (_animation.value *
+                                    (_targetRotation - _currentRotation));
+                            return Transform.rotate(angle: angle, child: child);
                           },
                         ),
 
@@ -325,7 +321,7 @@ static const List<CategoryItem> _items = [
                               ],
                             ),
                             child: Obx(
-                                  () => Icon(
+                              () => Icon(
                                 controller.hasSpun.value
                                     ? Icons.check_rounded
                                     : Icons.play_arrow_rounded,
@@ -342,14 +338,14 @@ static const List<CategoryItem> _items = [
 
                   // ===== Get Song Button =====
                   Obx(
-                        () => GestureDetector(
+                    () => GestureDetector(
                       onTap: controller.hasSpun.value
                           ? () {
-                        Get.offNamed(
-                          AppRoutes.songPickLoading,
-                          arguments: controller.resultText.value,
-                        );
-                      }
+                              Get.offNamed(
+                                AppRoutes.songPickLoading,
+                                arguments: controller.resultText.value,
+                              );
+                            }
                           : null,
                       child: Container(
                         width: 300,
@@ -358,12 +354,17 @@ static const List<CategoryItem> _items = [
                         decoration: BoxDecoration(
                           gradient: controller.hasSpun.value
                               ? const LinearGradient(
-                            colors: [Color(0xFF54EAF2), Color(0xFF3867FF)],
-                            begin: Alignment.centerLeft,
-                            end: Alignment.centerRight,
-                          )
+                                  colors: [
+                                    Color(0xFF54EAF2),
+                                    Color(0xFF3867FF),
+                                  ],
+                                  begin: Alignment.centerLeft,
+                                  end: Alignment.centerRight,
+                                )
                               : null,
-                          color: controller.hasSpun.value ? null : Colors.black26,
+                          color: controller.hasSpun.value
+                              ? null
+                              : Colors.black26,
                           borderRadius: BorderRadius.circular(32),
                         ),
                         child: Center(
@@ -477,7 +478,8 @@ class WheelPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant WheelPainter oldDelegate) => items != oldDelegate.items;
+  bool shouldRepaint(covariant WheelPainter oldDelegate) =>
+      items != oldDelegate.items;
 }
 
 // ===== Triangle Pointer =====
