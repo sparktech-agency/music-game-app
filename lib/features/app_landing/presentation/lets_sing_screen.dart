@@ -37,18 +37,18 @@ class LetsSingScreen extends StatelessWidget {
           ),
 
           Positioned(
-            bottom: 20,
+            bottom: 0,
             left: 0,
             right: 0,
             child: Image.asset(
               'assets/images/lets_sing.png',
-              fit: BoxFit.contain,
-              height: MediaQuery.of(context).size.height * 0.6,
+              fit: BoxFit.cover,
+            
             ),
           ),
 
           Positioned(
-            bottom: 120,
+            bottom: 20,
             left: 0,
             right: 0,
             child: _buildStartSingingButton(
