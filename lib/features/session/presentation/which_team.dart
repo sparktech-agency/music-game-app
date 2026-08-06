@@ -41,7 +41,6 @@ class WhichTeam extends GetView<WhichTeamController> {
               left: isTeam2Selected ? -60 : 60,
             );
 
-
             return Stack(
               children: isTeam1Selected ? [char2, char1] : [char1, char2],
             );
@@ -64,51 +63,71 @@ class WhichTeam extends GetView<WhichTeamController> {
             ),
           ),
 
-          // Header
-          const Positioned(top: 40, left: 10, right: 10, child: _Header()),
-
-          // Selection + Next Button
-          Positioned(
-            bottom: 40,
-            left: 20,
-            right: 20,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Text(
-                  'Please select',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+          SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                children: [
+                  const Positioned(
+                    top: 40,
+                    left: 10,
+                    right: 10,
+                    child: _Header(),
                   ),
-                ),
-                const SizedBox(height: 25),
 
-                SizedBox(
-                  height: 70,
-                  child: Obx(
-                        () => ListView.separated(
-                      clipBehavior: Clip.none,
-                      scrollDirection: Axis.horizontal,
-                      itemCount: controller.teamNames.length,
-                      separatorBuilder: (_, __) => const SizedBox(width: 10),
-                      itemBuilder: (_, index) {
-                        final teamName = controller.teamNames[index];
-                        return SizedBox(
-                          width: 150,
-                          child: _TeamCard(title: teamName),
-                        );
-                      },
+                  const Spacer(),
+
+                  Positioned(
+                    bottom: 40,
+                    left: 20,
+                    right: 20,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Text(
+                          'Please select',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 25),
+
+                        SizedBox(
+                          height: 70,
+                          child: Obx(
+                            () => ListView.separated(
+                              clipBehavior: Clip.none,
+                              scrollDirection: Axis.horizontal,
+                              itemCount: controller.teamNames.length,
+                              separatorBuilder: (_, __) =>
+                                  const SizedBox(width: 10),
+                              itemBuilder: (_, index) {
+                                final teamName = controller.teamNames[index];
+                                return SizedBox(
+                                  width: 150,
+                                  child: _TeamCard(title: teamName),
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+
+                        const SizedBox(height: 30),
+                        const _NextButton(),
+                        const SizedBox(height: 20),
+                      ],
                     ),
                   ),
-                ),
-
-                const SizedBox(height: 60),
-                const _NextButton(),
-              ],
+                ],
+              ),
             ),
           ),
+
+          // Header
+
+          // Selection + Next Button
         ],
       ),
     );
@@ -219,12 +238,27 @@ class _AnimatedCharacter extends StatelessWidget {
     required this.left,
   });
 
-
   static const List<double> _grayscaleMatrix = [
-    0.2126, 0.7152, 0.0722, 0, 0,
-    0.2126, 0.7152, 0.0722, 0, 0,
-    0.2126, 0.7152, 0.0722, 0, 0,
-    0,      0,      0,      1, 0,
+    0.2126,
+    0.7152,
+    0.0722,
+    0,
+    0,
+    0.2126,
+    0.7152,
+    0.0722,
+    0,
+    0,
+    0.2126,
+    0.7152,
+    0.0722,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
   ];
 
   @override
