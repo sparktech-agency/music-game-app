@@ -219,44 +219,43 @@ class GameplayPage extends StatelessWidget {
 
 
   Widget _buildLyricsSection(GameplayController controller) {
-    return Expanded(
-      child: Obx(() {
-        if (controller.lyrics.isEmpty) {
-          return const Center(
+  return Expanded(
+    child: Obx(() {
+      if (controller.lyrics.isEmpty) {
+        return const Center(
+          child: Text(
+            "No lyrics found",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.white70,
+              fontSize: 18,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        );
+      }
+
+      return ListView.builder(
+        itemCount: controller.lyrics.length,
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 10),
             child: Text(
-              "No lyrics found",
+              controller.lyrics[index],
               textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.white70,
+              style: const TextStyle(
+                color: Colors.white,
                 fontSize: 18,
-                fontWeight: FontWeight.w500,
+                fontWeight: FontWeight.w400,
               ),
             ),
           );
-        }
-
-        return ListView.builder(
-          itemCount: controller.lyrics.length,
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          itemBuilder: (context, index) {
-            bool isCurrent = controller.currentLyricIndex.value == index;
-            return Padding(
-              padding: const EdgeInsets.only(bottom: 10),
-              child: Text(
-                controller.lyrics[index],
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: isCurrent ? const Color(0xFF42E8FF) : Colors.white,
-                  fontSize: 18,
-                  fontWeight: isCurrent ? FontWeight.bold : FontWeight.w400,
-                ),
-              ),
-            );
-          },
-        );
-      }),
-    );
-  }
+        },
+      );
+    }),
+  );
+}
 
   Widget _buildBottomControls(GameplayController controller) {
     return Padding(

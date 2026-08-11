@@ -3,7 +3,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:music_game_app/features/spin_feature/presentation/controllers/turn_management/turn_management_controller.dart';
-import 'package:music_game_app/features/session/presentation/controllers/central_session_controller/central_session_controller.dart'; // নতুন ইম্পোর্ট
+import 'package:music_game_app/features/session/presentation/controllers/central_session_controller/central_session_controller.dart';
 
 class GameplayController extends GetxController {
 
@@ -25,12 +25,12 @@ class GameplayController extends GetxController {
   var timeElapsed = "00:00".obs;
   var mainTimer = "60".obs;
 
-  var currentLyricIndex = 0.obs;
+  
   var timerColor = const Color(0xFF42E8FF).obs;
 
   Timer? _countdownTimer;
   Timer? _elapsedTimer;
-  Timer? _lyricScrollTimer;
+  
   int _secondsLeft = 60;
   int _secondsElapsed = 0;
 
@@ -105,15 +105,6 @@ class GameplayController extends GetxController {
       timeElapsed.value = "${m.toString().padLeft(2, '0')}:${s.toString().padLeft(2, '0')}";
     });
 
-    if (lyrics.isNotEmpty) {
-      _lyricScrollTimer = Timer.periodic(const Duration(seconds: 2), (timer) {
-        if (currentLyricIndex.value < lyrics.length - 1) {
-          currentLyricIndex.value++;
-        } else {
-          timer.cancel();
-        }
-      });
-    }
   }
 
   void _updateTimerColor(int seconds) {
@@ -126,7 +117,12 @@ class GameplayController extends GetxController {
     }
   }
 
-  void onCorrectGuess() {
+
+
+  //===============Client Update====================//
+
+  void onCorrectGuess() async {
+    await _audioPlayer.pause();
     _stopAllTimers();
     showCorrectGuessModal();
   }
@@ -171,32 +167,70 @@ class GameplayController extends GetxController {
               ),
             ),
             const SizedBox(height: 20),
-            GestureDetector(
-              onTap: () {
-                _audioPlayer.stop();
-                Get.back();
-                _turnController.addElapsedTime(_secondsElapsed);
-                _turnController.completeCurrentSingerPerformance();
-              },
-              child: Container(
-                width: double.infinity,
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                child: const Center(
-                  child: Text(
-                    "Stop Song",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
+
+
+            //stop song and keep singing
+
+           Row(
+            children: [
+              Expanded(
+                child: GestureDetector(
+                  onTap: () {
+                    _audioPlayer.stop();
+                    Get.back();
+                    _turnController.addElapsedTime(_secondsElapsed);
+                    _turnController.completeCurrentSingerPerformance();
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    child: const Center(
+                      child: Text(
+                        "Stop Song",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: GestureDetector(
+                  onTap: () async {
+                    await _audioPlayer.resume(); // Resume song
+                    Get.back();
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    decoration: BoxDecoration(
+                      color: Colors.greenAccent,
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    child: const Center(
+                      child: Text(
+                        "Keep Singing",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+
+
+
             const SizedBox(height: 15),
           ],
         ),
@@ -204,6 +238,7 @@ class GameplayController extends GetxController {
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       enableDrag: true,
+      isDismissible: false
     );
   }
 
@@ -318,7 +353,7 @@ class GameplayController extends GetxController {
   void _stopAllTimers() {
     _countdownTimer?.cancel();
     _elapsedTimer?.cancel();
-    _lyricScrollTimer?.cancel();
+    
   }
 
   @override
