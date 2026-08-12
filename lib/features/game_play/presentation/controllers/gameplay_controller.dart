@@ -130,7 +130,10 @@ class GameplayController extends GetxController {
 
   void showCorrectGuessModal() {
     Get.bottomSheet(
-      Container(
+      SafeArea(
+
+        
+        child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 30),
         decoration: const BoxDecoration(
           gradient: LinearGradient(
@@ -239,7 +242,7 @@ class GameplayController extends GetxController {
             const SizedBox(height: 15),
           ],
         ),
-      ),
+      ),),
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       enableDrag: true,
