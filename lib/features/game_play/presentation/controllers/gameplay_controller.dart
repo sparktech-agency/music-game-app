@@ -123,6 +123,7 @@ class GameplayController extends GetxController {
 
   void onCorrectGuess() async {
     await _audioPlayer.pause();
+    _turnController.addCorrectGuess();
     _stopAllTimers();
     showCorrectGuessModal();
   }
@@ -158,6 +159,10 @@ class GameplayController extends GetxController {
               ),
             ),
             const SizedBox(height: 10),
+
+
+
+
             const Text(
               "Correct Guess",
               style: TextStyle(

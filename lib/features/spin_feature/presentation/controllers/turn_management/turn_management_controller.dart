@@ -104,6 +104,19 @@ class TurnManagementController extends GetxController {
     }
   }
 
+
+//Currect Guessed Songs(Game play page)
+
+  void addCorrectGuess() {
+  String guessingTeamName = currentGuessingTeamName;
+
+  if (teamScores.containsKey(guessingTeamName)) {
+    teamScores[guessingTeamName] =
+        (teamScores[guessingTeamName] ?? 0) + 1;
+  }
+}
+
+
   void completeCurrentSingerPerformance() {
     if (currentSequenceIndex.value < roundSequence.length - 1) {
       currentSequenceIndex.value++;
