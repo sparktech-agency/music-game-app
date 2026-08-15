@@ -68,19 +68,16 @@ class WhichTeam extends GetView<WhichTeamController> {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
                 children: [
-                  const Positioned(
-                    top: 40,
-                    left: 10,
-                    right: 10,
+                  const SizedBox(height: 5),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10),
                     child: _Header(),
                   ),
 
                   const Spacer(),
 
-                  Positioned(
-                    bottom: 40,
-                    left: 20,
-                    right: 20,
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 20),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
@@ -124,10 +121,6 @@ class WhichTeam extends GetView<WhichTeamController> {
               ),
             ),
           ),
-
-          // Header
-
-          // Selection + Next Button
         ],
       ),
     );
@@ -269,6 +262,9 @@ class _AnimatedCharacter extends StatelessWidget {
       top: top,
       left: left,
       right: 0,
+    
+
+
       child: AnimatedScale(
         duration: const Duration(milliseconds: 600),
         scale: isSelected ? 1.1 : 0.85,
