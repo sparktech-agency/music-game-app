@@ -70,7 +70,7 @@ class WhichTeam extends GetView<WhichTeamController> {
                 children: [
                   const SizedBox(height: 5),
                   const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    padding: EdgeInsets.symmetric(horizontal: 0),
                     child: _Header(),
                   ),
 
